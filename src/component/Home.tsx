@@ -1,13 +1,24 @@
 import { motion } from "framer-motion";
+import CountUp from "./Count";
+import { useState } from "react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0 },
 };
 
+
 const Home = () => {
+  const [active, setActive] = useState("Accueil");
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
+      const scrollToSection = (id: string) => {
+    setActive(id);
+    setOpenDropdown(null);
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
   return (
-    <main id="Accueil" className="min-h-screen bg-[#ffffff] flex items-center px-6 md:px-16">
+    <main id="Accueil" className="min-h-screen bg-linear-to-r from-[#e0f7f1] to-[#ffffff] flex items-center px-6 md:px-10">
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 items-center gap-12">
 
         {/* ================= LEFT CONTENT ================= */}
@@ -16,33 +27,26 @@ const Home = () => {
           initial="hidden"
           animate="visible"
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="space-y-5"
+          className="space-y-3"
         >
-          <p className="text-lg italic text-gray-700">
-            Yapithe & Partners
-          </p>
-
-          <h1 className="text-xl md:text-xl font-extrabold leading-tight text-[#23c367]">
+            <h2 className="font-michroma text-4xl md:text-5xl text-[#0a4d7c] mb-6">
+    Yapithe <br/>& Partners
+  </h2>
+          <p className="text-4xl md:text-4xl font-extrabold leading-tight bg-linear-to-r from-[#23c367] to-[#0a4d7c] text-transparent bg-clip-text">
             Cabinet de conseil <br />
-            en <span className="font-serif font-normal">contrôle de gestion</span>
+            en contrôle de gestion
             <br />
-            <span className="block text-4xl md:text-5xl">
               & pilotage de la performance
-            </span>
-          </h1>
-
-          <p className="max-w-md text-[#7090a6] leading-relaxed">
-            Nous accompagnons les organisations publiques et privées dans la
-            structuration de leurs outils de gestion, le suivi de la performance
-            et la prise de décision stratégique.
           </p>
 
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
-            className="px-6 py-3 rounded-full bg-[#23c367] text-white font-medium"
+            className="px-6 py-3 rounded-full bg-gradient-to-r from-[#23c367] via-[#23c367]/90 to-[#23c367]/80 text-white font-medium"
+                                onClick={() => scrollToSection("Contact")}
           >
             Travaillons ensemble
+            
           </motion.button>
         </motion.div>
 
@@ -56,14 +60,14 @@ const Home = () => {
           <div className="
             relative
             w-[280px] md:w-[360px]
-            h-[420px] md:h-[520px]
-            rounded-[180px]
+            h-[320px] md:h-[420px]
+            rounded-t-[180px]
             overflow-hidden
-            bg-[#d8d2cb]
+            bg-[#ffffff]
             shadow-xl
           ">
             <img
-              src="/hero-yapithe.jpg" // 👉 image corporate / équipe / dirigeant
+              src="/yapth.jpeg" // 👉 image corporate / équipe / dirigeant
               alt="Yapithe & Partners"
               className="w-full h-full object-cover"
             />
@@ -79,17 +83,20 @@ const Home = () => {
           className="space-y-10 text-center md:text-left"
         >
           <div>
-            <p className="text-4xl font-bold text-[#23c367]">10+</p>
+            <p className="text-4xl font-bold  bg-linear-to-r from-[#23c367] to-[#0a4d7c] text-transparent bg-clip-text">
+              <CountUp value={10} suffix="+" />
+            </p>
+
             <p className="text-[#7090a6]">Années d’expérience</p>
           </div>
 
           <div>
-            <p className="text-4xl font-bold text-[#23c367]">Afrique & Europe</p>
+            <p className="text-4xl font-bold  bg-linear-to-r from-[#23c367] to-[#0a4d7c] text-transparent bg-clip-text">Afrique & Europe</p>
             <p className="text-[#7090a6]">Présence internationale</p>
           </div>
 
           <div>
-            <p className="text-4xl font-bold text-[#23c367]">
+            <p className="text-4xl font-bold  bg-linear-to-r from-[#23c367] to-[#0a4d7c] text-transparent bg-clip-text">
               Organisations publiques & privées
             </p>
             <p className="text-[#7090a6]">Accompagnées</p>

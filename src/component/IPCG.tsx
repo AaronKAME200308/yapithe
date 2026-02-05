@@ -12,9 +12,9 @@ const IPCG = () => {
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="max-w-7xl mx-auto px-6 py-20 bg-gray-50"
+      className="max-w-7xl mx-auto px-6 py-20 bg-linear-to-r from-[#e0f7f1] to-[#ffffff]"
     >
-      <h2 className="text-4xl font-bold text-[#23c367] mb-6">IPCG</h2>
+      <h2 className="text-4xl font-bold bg-linear-to-r from-[#23c367] to-[#0a4d7c] text-transparent bg-clip-text mb-6">IPCG</h2>
       <p className="text-lg text-[#7090a6] leading-relaxed mb-8">
         The IPCG (Institute for Performance & Governance Control) is our dedicated platform for research, training, and guidance in management and performance evaluation.
       </p>

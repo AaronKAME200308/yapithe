@@ -12,11 +12,11 @@ const WhoWeAre = () => {
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center"
+      className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center bg-linear-to-r from-[#e0f7f1] to-[#ffffff]"
     >
       {/* Texte */}
       <div className="space-y-5">
-        <h2 className="text-4xl font-bold text-[#23c367]">Qui sommes-nous ?</h2>
+        <h2 className="text-4xl font-bold  bg-linear-to-r from-[#23c367] to-[#0a4d7c] text-transparent bg-clip-text">Qui sommes-nous ?</h2>
         <p className="text-lg text-[#7090a6] leading-relaxed">
           Yapithe & Partners est un cabinet spécialisé dans le conseil et l'accompagnement stratégique des entreprises. 
           Nous fournissons des solutions innovantes et efficaces pour aider nos clients à se développer durablement.
@@ -34,11 +34,11 @@ const WhoWeAre = () => {
         transition={{ duration: 0.9, ease: "easeOut", delay: 0.2 }}
         className="flex justify-center"
       >
-        <div className="relative w-[280px] md:w-[360px] h-[420px] md:h-[520px] rounded-[180px] overflow-hidden bg-[#d8d2cb] shadow-xl">
+        <div className="relative border shadow-[#0a4d7c] w-[280px] md:w-[360px] h-[420px] md:h-[520px] rounded-[180px] overflow-hidden shadow-xl">
           <img
-            src="/about-who.jpg"
+            src="/images.png"
             alt="Qui sommes-nous ?"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
         </div>
       </motion.div>

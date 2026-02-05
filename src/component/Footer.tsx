@@ -1,24 +1,13 @@
 import { Linkedin, Facebook, Instagram } from "lucide-react";
 import { motion } from "framer-motion";
 
-const logos = [
-  "/logo1.jpeg",
-  "/logo2.png",
-  "/logo3.png",
-  "/logo4.jpeg",
-  "/logo5.jpeg",
-  "/logo6.jpeg",
-  "/logo7.jpeg",
-  "/logo8.png",
-  "/logo9.png",
-  "/logo10.png",
-  "/logo11.png",
-  "/logo12.jpeg",
-  "/logo13.jpeg",
-  "/logo14.jpeg",
-  "/logo15.jpeg",
-  "/logo16.jpeg",
-];
+ const logos = [
+    "/logo1.png","/logo2.png","/logo3.jpeg","/logo4.jpeg",
+    "/logo5.png","/logo6.png","/logo7.png","/logo8.jpeg",
+    "/logo9.jpg","/logo10.png","/logo11.png","/logo12.jpg",
+    "/logo13.png","/logo14.png","/logo15.svg","/logo16.png",
+    "/logo17.jpg","/logo18.png","/logo19.svg",
+  ];
 
 const Footer = () => {
   return (
@@ -57,8 +46,8 @@ const Footer = () => {
 
         {/* ===================== LOCALISATION & HORAIRES ===================== */}
         <div className="text-sm opacity-95 mb-4">
-          <p className="font-semibold">Location: 123 Business Street, Bonapriso, Douala, Cameroon</p>
-          <p>Opening Hours: Mon – Fri: 08:00 – 17:00 | Sat: 09:00 – 13:00 | Sun: Closed</p>
+          <p className="font-semibold">Localisation: 123 Business Street, Bastos, Yaounde, Cameroon</p>
+          <p>Ouvert: Lun – Ven: 08:00 – 17:00 | Sam: 09:00 – 13:00 | Dim: Fermée</p>
         </div>
 
         {/* ===================== COPYRIGHT ===================== */}
