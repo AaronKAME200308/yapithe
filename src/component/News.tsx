@@ -1,13 +1,86 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+/* ================= ANIMATION ================= */
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0 },
 };
+
+/* ================= TEXT DATA ================= */
+const sectionContent = [
+  {
+    title: "Actualités",
+    desc: "Retrouvez toutes les dernières actualités de Yapithe & Partners, nos projets, interventions et publications récentes.",
+    button: "Explorer",
+  },
+];
+
+/* ================= SLIDER DATA ================= */
+const sliderData = [
+  {
+    id: 1,
+    number: "7",
+    title: "personnalités scientifiques",
+    desc: "De haut niveau et de renommée internationale qui composent un Conseil Scientifique.",
+    image: "/images/p1.jpg",
+  },
+  {
+    id: 2,
+    number: "12",
+    title: "partenaires académiques",
+    desc: "Collaborations avec des universités et centres de recherche.",
+    image: "/images/p2.jpg",
+  },
+  {
+    id: 3,
+    number: "5",
+    title: "experts internationaux",
+    desc: "Experts impliqués dans nos programmes scientifiques.",
+    image: "/images/p3.jpg",
+  },
+];
+
 const News = () => {
-  const [visible, setVisible] = useState(false)
-  const [activeNews, setActiveNews] = useState<string | null>(null);
-  const [modalLoaded, setModalLoaded] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [[page, direction], setPage] = useState([0, 0]);
+
+  /* ================= AUTOPLAY ================= */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      paginate(1);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [page]);
+
+  const paginate = (newDirection) => {
+    setPage([page + newDirection, newDirection]);
+    setIndex(
+      (prev) =>
+        (prev + newDirection + sliderData.length) %
+        sliderData.length
+    );
+  };
+
+  /* ================= SWIPE ================= */
+  const swipeConfidenceThreshold = 50;
+
+  const swipePower = (offset, velocity) => {
+    return Math.abs(offset) * velocity;
+  };
+
+  const variants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 120 : -120,
+      opacity: 0,
+    }),
+    center: { x: 0, opacity: 1 },
+    exit: (direction) => ({
+      x: direction < 0 ? 120 : -120,
+      opacity: 0,
+    }),
+  };
 
   return (
     <motion.section
@@ -16,76 +89,123 @@ const News = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: 0.8 }}
       className="max-w-7xl mx-auto px-6 py-20 bg-linear-to-r from-[#e0f7f1] to-[#ffffff]"
     >
-      <h2 className="text-4xl font-bold bg-linear-to-r from-[#23c367] to-[#0a4d7c] text-transparent bg-clip-text mb-6">Actualités</h2>
-      <p className="text-lg text-[#7090a6] leading-relaxed mb-8">
-        Retrouvez toutes les dernières actualités de Yapithe & Partners, nos projets, interventions et publications récentes.
-      </p>
+      <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-      <div className="grid md:grid-cols-3 gap-8">
-        {[1, 2, 3].map((n) => (
-          <motion.div
-            style={{ backgroundImage: `url("/news${n}.jpeg")` }}
-            onMouseEnter={() => setVisible(true)}
-            onMouseLeave={() => setVisible(false)}
-            key={n}
-            className="bg-contain hover:shadow-teal-800 hover:border-[#0a4d7c] h-50 hover:border-2 rounded-xl overflow-hidden shadow-lg">
-            <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2">Titre de la news {n}</h3>
-              <p className="my-4 h-10 text-[#ffffff] text-sm">
-              </p>
-              <button
-                onClick={() => setActiveNews(`news${n}.jpeg`)}
-                className="
-                  px-6 py-3
-                  rounded-full
-                  bg-gradient-to-r from-[#23c367] via-[#23c367]/90 to-[#23c367]/80
-                  text-white font-medium
-                  shadow-lg
-                  hover:scale-105 hover:shadow-2xl
-                  transition-all duration-300 ease-in-out
-                  relative overflow-hidden
-                "
-              >
-                <span className="relative z-10">Voir Plus</span>
-              </button>
+        {/* ================= LEFT TEXT ================= */}
+        {sectionContent.map((content, i) => (
+          <div key={i}>
+            <h2 className="text-4xl font-bold bg-linear-to-r from-[#23c367] to-[#0a4d7c] text-transparent bg-clip-text mb-6">
+              {content.title}
+            </h2>
 
-            </div>
-          </motion.div>
+            <p className="text-lg text-[#7090a6] leading-relaxed mb-8">
+              {content.desc}
+            </p>
+
+            <button
+              className="
+                px-8 py-4 rounded-full
+                bg-gradient-to-r
+                from-[#23c367] via-[#23c367]/90 to-[#23c367]/80
+                text-white font-medium
+                shadow-lg
+                hover:scale-105 hover:shadow-2xl
+                transition-all duration-300
+              "
+            >
+              {content.button}
+            </button>
+          </div>
         ))}
-      </div>
-      <AnimatePresence>
-        {activeNews && (
-          <motion.div
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActiveNews(null)}
-          >
-            <div className="relative">
-              {!modalLoaded && (
-                <div className="absolute inset-0 rounded-lg bg-gray-300 animate-pulse" />
-              )}
 
-              <motion.img
-                src={activeNews}
-                alt="Preview"
-                onLoad={() => setModalLoaded(true)}
-                initial={{ scale: 0.9 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-                className={`max-w-[90vw] max-h-[90vh] object-contain rounded-lg transition-opacity duration-500
-                 ${modalLoaded ? "opacity-100" : "opacity-0"}`}
+{/* ================= RIGHT SLIDER ================= */}
+<div className="relative w-full flex justify-center">
+
+  {/* Wrapper de centrage mobile */}
+  <div className="relative flex justify-center w-full">
+
+    <div
+      className="
+        relative
+        w-[340px] md:w-[420px]
+        h-[320px]
+
+        /* CENTRAGE VISUEL MOBILE */
+        -translate-x-3 md:translate-x-0
+      "
+    >
+
+      {/* Background layers */}
+      <div className="absolute top-6 left-6 w-full h-full bg-[#23c367] rounded-xl"></div>
+      <div className="absolute top-12 left-12 w-full h-full bg-[#0a4d7c] rounded-xl"></div>
+
+      <AnimatePresence initial={false} custom={direction}>
+        {sliderData
+          .filter((_, i) => i === index)
+          .map((item) => (
+            <motion.div
+              key={page}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.5 }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipe = swipePower(
+                  offset.x,
+                  velocity.x
+                );
+
+                if (swipe < -swipeConfidenceThreshold) {
+                  paginate(1);
+                } else if (swipe > swipeConfidenceThreshold) {
+                  paginate(-1);
+                }
+              }}
+              className="
+                absolute top-0 left-0 w-full h-full
+                bg-gray-200 rounded-xl p-8
+                flex flex-col justify-between
+                cursor-grab active:cursor-grabbing
+              "
+            >
+              <div>
+                <h1 className="text-6xl font-bold">
+                  {item.number}
+                </h1>
+
+                <h2 className="text-2xl font-bold leading-tight">
+                  {item.title}
+                </h2>
+
+                <p className="text-gray-700 mt-4 text-sm">
+                  {item.desc}
+                </p>
+              </div>
+
+              <img
+                src={item.image}
+                alt=""
+                className="
+                  w-20 h-20 rounded-full
+                  object-cover border-4
+                  border-white shadow-lg
+                "
               />
-            </div>
-
-          </motion.div>
-        )}
+            </motion.div>
+          ))}
       </AnimatePresence>
+    </div>
+  </div>
+</div>
+
+      </div>
     </motion.section>
   );
 };
