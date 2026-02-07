@@ -42,7 +42,7 @@ const Footer = () => {
     },
     {
       icon: <Mail className="w-5 h-5" />,
-      text: "info@yapithe.com",
+      text: "michel.yapithe@yapithepartners.com",
     },
     {
       icon: <Phone className="w-5 h-5" />,

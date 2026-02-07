@@ -43,7 +43,7 @@ const Partners = () => {
 
   return (
     <motion.div
-      id="logos"
+      id="partners"
       variants={fadeUp}
       initial="hidden"
       whileInView="visible"

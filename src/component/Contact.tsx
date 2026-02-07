@@ -27,8 +27,8 @@ const Contact = () => {
     {
       icon: <Mail className="w-6 h-6" />,
       label: "Email",
-      value: "info@yapithe.com",
-      link: "mailto:info@yapithe.com",
+      value: "michel.yapithe@yapithepartners.com",
+      link: "mailto:michel.yapithe@yapithepartners.com",
       color: "from-purple-500 to-indigo-600",
     },
     {
@@ -140,7 +140,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="Jean Dupont"
+                  placeholder="Vous"
                   className="w-full p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#23c367] focus:border-transparent transition-all duration-300"
                 />
               </div>
@@ -151,7 +151,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="email"
-                  placeholder="jean.dupont@email.com"
+                  placeholder="vous@email.com"
                   className="w-full p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#23c367] focus:border-transparent transition-all duration-300"
                 />
               </div>

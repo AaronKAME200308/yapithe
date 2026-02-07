@@ -111,8 +111,7 @@ const WhoWeAre = () => {
               <p className="text-base md:text-lg text-[#7090a6] leading-relaxed">
                 Notre expertise couvre{" "}
                 <span className="font-semibold text-[#23c367]">
-                  l'exploitation forestière, la logistique, le transport, le
-                  commerce général et le BTP
+                  Diagnostic & Structuration, Performance & Pilotage, Accompagnement stratégique
                 </span>
                 . Nous mettons notre savoir-faire au service de votre réussite.
               </p>
