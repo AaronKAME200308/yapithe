@@ -18,7 +18,7 @@ const Partners = () => {
 
   const visibleCount = 5; // nombre de logos visibles
   const [currentIndex, setCurrentIndex] = useState(0);
-  const intervalRef = useRef<number>();
+  const intervalRef = useRef<number>(0);
 
   const prev = () => {
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
@@ -49,7 +49,7 @@ const Partners = () => {
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="max-w-7xl mx-auto px-6 py-20 bg-gradient-to-r from-[#e0f7f1] to-[#ffffff]"
+      className="max-w-7xl mx-auto px-6 py-20 bg-linear-to-r from-[#e0f7f1] to-[#ffffff]"
     >
       <h2 className="text-4xl font-bold  bg-linear-to-r from-[#23c367] to-[#0a4d7c] text-transparent bg-clip-text mb-6">Nos Partenaires</h2>
       <p className="text-lg text-[#7090a6] leading-relaxed mb-4">
@@ -79,7 +79,6 @@ const Partners = () => {
           </div>
         </div>
 
-        {/* Buttons */}
         <button
           onClick={prev}
           disabled={currentIndex === 0}

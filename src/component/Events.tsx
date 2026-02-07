@@ -1,12 +1,79 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { Calendar, MapPin, Users, ArrowRight, Clock } from "lucide-react";
+import type { Variants } from "framer-motion";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0 },
 };
+
 const Events = () => {
   const navigate = useNavigate();
+
+  const eventsData = [
+    {
+      id: 1,
+      title: "Conférence Annuelle 2026",
+      description: "Découvrez les tendances en gestion d'entreprise et stratégies de croissance pour l'année à venir.",
+      date: "15 Mars 2026",
+      time: "14:00 - 18:00",
+      location: "Hôtel Hilton, Yaoundé",
+      participants: "120+ participants",
+      image: "/event1.jpg",
+      category: "Conférence",
+      status: "À venir",
+    },
+    {
+      id: 2,
+      title: "Atelier Performance & KPI",
+      description: "Formation pratique sur le pilotage de la performance et l'utilisation des indicateurs clés.",
+      date: "05 Février 2026",
+      time: "09:00 - 17:00",
+      location: "Centre de formation, Douala",
+      participants: "45 participants",
+      image: "/event2.jpg",
+      category: "Atelier",
+      status: "Terminé",
+    },
+    {
+      id: 3,
+      title: "Networking Business Leaders",
+      description: "Rencontre exclusive entre dirigeants d'entreprises pour échanger sur les meilleures pratiques.",
+      date: "28 Janvier 2026",
+      time: "18:30 - 21:00",
+      location: "Restaurant Le Beau Rivage",
+      participants: "30 participants",
+      image: "/event3.jpg",
+      category: "Networking",
+      status: "Terminé",
+    },
+  ];
+
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+  };
+
   return (
     <motion.section
       id="events"
@@ -15,53 +82,183 @@ const Events = () => {
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="max-w-7xl mx-auto px-6 py-20 bg-[#0a4d7c] "
+      className="w-full py-16 md:py-24 bg-linear-to-br from-[#0a4d7c] via-[#0c5d94] to-[#0a4d7c] relative overflow-hidden"
     >
-      <h2 className="text-4xl font-bold bg-linear-to-r from-[#23c367] to-[#0a4d7c] text-transparent bg-clip-text mb-6">Événements</h2>
-      <p className="text-lg text-[#ffffff] leading-relaxed mb-8">
-        Découvrez nos événements récents, conférences, ateliers et rencontres organisés par Yapithe & Partners.
-      </p>
+      {/* Éléments décoratifs */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#23c367]/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
 
-      <div className="grid md:grid-cols-3 gap-8">
-        {[1,2,3].map((n) => (
-          <div key={n} className="border shadow-amber-50 rounded-xl overflow-hidden shadow-lg">
-            <img
-              src={`/event${n}.jpg`}
-              alt={`Event ${n}`}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2">Événement {n}</h3>
-              <button
-                onClick={() => setActiveNews(`news${n}.jpeg`)}
-                className="
-                  px-6 py-3
-                  rounded-full
-                  bg-gradient-to-r from-[#23c367] via-[#23c367]/90 to-[#23c367]/80
-                  text-white font-medium
-                  shadow-lg
-                  hover:scale-105 hover:shadow-2xl
-                  transition-all duration-300 ease-in-out
-                  relative overflow-hidden
-                "
-              >
-                <span
-                 onClick={() =>
-                  navigate("/voir-plus", {
-                    state: {
-                      media: `/event${n}.jpg`, // image ou vidéo
-                      type: "image", // ou "video"
-                      title: `Événement ${n}`,
-                      description: "Description complète liée à cette publication.",
-                      date: "05 Février 2026",
-                    },
-                  })
-                }
-                 className="relative z-10">Voir Plus</span>
-              </button>
-            </div>
-          </div>
-        ))}
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <motion.div
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, type: "spring" }}
+            className="inline-block px-4 py-2 bg-[#23c367]/20 backdrop-blur-sm rounded-full mb-4"
+          >
+            <span className="text-[#23c367] font-semibold text-sm uppercase tracking-wider">
+              Nos Événements
+            </span>
+          </motion.div>
+
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            Rejoignez-nous lors de nos{" "}
+            <span className="bg-linear-to-r from-[#23c367] to-[#1fa85a] text-transparent bg-clip-text">
+              événements
+            </span>
+          </h2>
+
+          <p className="text-base md:text-lg text-white/80 leading-relaxed max-w-3xl mx-auto">
+            Découvrez nos événements récents, conférences, ateliers et rencontres
+            organisés par Yapithe & Partners pour favoriser l'échange et le partage
+            d'expertise.
+          </p>
+        </motion.div>
+
+        {/* Grid d'événements */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {eventsData.map((event, _index) => (
+            <motion.div
+              key={event.id}
+              variants={cardVariants}
+              whileHover={{ y: -10 }}
+              className="group bg-white rounded-3xl overflow-hidden shadow-2xl hover:shadow-[0_20px_60px_rgba(35,195,103,0.3)] transition-all duration-500"
+            >
+              {/* Image avec overlay */}
+              <div className="relative h-56 overflow-hidden">
+                <motion.img
+                  src={event.image}
+                  alt={event.title}
+                  className="w-full h-full object-cover"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.6 }}
+                />
+
+                {/* Overlay linear */}
+                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent"></div>
+
+                {/* Badge statut */}
+                <div className="absolute top-4 left-4">
+                  <span
+                    className={`px-3 py-1.5 backdrop-blur-sm rounded-full text-xs font-semibold shadow-lg ${
+                      event.status === "À venir"
+                        ? "bg-[#23c367] text-white"
+                        : "bg-white/90 text-gray-700"
+                    }`}
+                  >
+                    {event.status}
+                  </span>
+                </div>
+
+                {/* Badge catégorie */}
+                <div className="absolute top-4 right-4">
+                  <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold text-[#0a4d7c] shadow-lg">
+                    {event.category}
+                  </span>
+                </div>
+
+                {/* Date en bas */}
+                <div className="absolute bottom-4 left-4 flex items-center gap-2 text-white">
+                  <div className="bg-white/20 backdrop-blur-sm px-3 py-2 rounded-xl">
+                    <Calendar className="w-4 h-4 mb-1" />
+                    <p className="text-xs font-semibold">{event.date}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Contenu */}
+              <div className="p-6">
+                <h3 className="text-xl md:text-2xl font-bold text-[#0a4d7c] mb-3 leading-tight group-hover:text-[#23c367] transition-colors duration-300">
+                  {event.title}
+                </h3>
+
+                <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-4 line-clamp-2">
+                  {event.description}
+                </p>
+
+                {/* Informations */}
+                <div className="space-y-2 mb-6">
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <Clock className="w-4 h-4 text-[#23c367]" />
+                    <span>{event.time}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <MapPin className="w-4 h-4 text-[#23c367]" />
+                    <span className="line-clamp-1">{event.location}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <Users className="w-4 h-4 text-[#23c367]" />
+                    <span>{event.participants}</span>
+                  </div>
+                </div>
+
+                {/* Bouton */}
+                <motion.button
+                  onClick={() =>
+                    navigate("/voir-plus", {
+                      state: {
+                        data: [
+                          {
+                            media: event.image,
+                            type: "image",
+                            title: event.title,
+                            desc: event.description,
+                            date: event.date,
+                          },
+                        ],
+                        category: "Événements",
+                      },
+                    })
+                  }
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="group/btn w-full px-6 py-3.5 rounded-xl bg-linear-to-r from-[#23c367] to-[#1fa85a] text-white font-semibold shadow-lg hover:shadow-xl relative overflow-hidden transition-all duration-300"
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    En savoir plus
+                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform duration-300" />
+                  </span>
+                  <div className="absolute inset-0 bg-linear-to-r from-[#1fa85a] to-[#23c367] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
+                </motion.button>
+              </div>
+
+              {/* Accent line */}
+              <div className="h-1.5 bg-linear-to-r from-[#23c367] to-[#1fa85a] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* CTA voir tous les événements */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="text-center mt-12"
+        >
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white font-semibold rounded-xl hover:bg-white hover:text-[#0a4d7c] transition-all duration-300 inline-flex items-center gap-2"
+          >
+            Voir tous les événements
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </motion.button>
+        </motion.div>
       </div>
     </motion.section>
   );

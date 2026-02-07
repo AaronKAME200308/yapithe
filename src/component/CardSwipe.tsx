@@ -43,19 +43,16 @@ export default function ScientificSlider() {
     setIndex((prev) => (prev + 1) % data.length);
   };
 
-  const prev = () => {
-    setIndex((prev) => (prev - 1 + data.length) % data.length);
-  };
 
   /* ================= SWIPE ================= */
   const swipeConfidenceThreshold = 50;
 
-  const swipePower = (offset, velocity) => {
+  const swipePower = (offset: number, velocity: number) => {
     return Math.abs(offset) * velocity;
   };
 
   const variants = {
-    enter: (direction) => ({
+    enter: (direction: number) => ({
       x: direction > 0 ? 100 : -100,
       opacity: 0,
     }),
@@ -63,7 +60,7 @@ export default function ScientificSlider() {
       x: 0,
       opacity: 1,
     },
-    exit: (direction) => ({
+    exit: (direction: number) => ({
       x: direction < 0 ? 100 : -100,
       opacity: 0,
     }),
@@ -71,7 +68,7 @@ export default function ScientificSlider() {
 
   const [[page, direction], setPage] = useState([0, 0]);
 
-  const paginate = (newDirection) => {
+  const paginate = (newDirection: number) => {
     setPage([page + newDirection, newDirection]);
     setIndex(
       (prev) => (prev + newDirection + data.length) % data.length
@@ -101,7 +98,7 @@ export default function ScientificSlider() {
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={1}
-            onDragEnd={(e, { offset, velocity }) => {
+            onDragEnd={(_, { offset, velocity }) => {
               const swipe = swipePower(offset.x, velocity.x);
 
               if (swipe < -swipeConfidenceThreshold) {

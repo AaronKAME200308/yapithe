@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { Menu, X, ChevronDown } from "lucide-react";
 
 /* ===================== NAV DATA ===================== */
 const navLinks = [
@@ -41,7 +42,7 @@ const Navbar = () => {
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      const sections = document.querySelectorAll("section");
+      const sections = document.querySelectorAll("section, div[id]");
       let current = "Accueil";
 
       sections.forEach((section) => {
@@ -62,183 +63,258 @@ const Navbar = () => {
   const scrollToSection = (id: string) => {
     setActive(id);
     setOpenDropdown(null);
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 100;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
   };
 
   /* ===================== LINK CLASS ===================== */
-  const linkClass = (id: string, children?: any[]) => {
+  const linkClass = (id: string, children?: any[], isMobile = false) => {
     const isActive =
       active === id || (children && children.some((c) => c.id === active));
-    return `w-fit whitespace-nowrap px-4 py-1 rounded-full transition-all duration-300 flex items-center gap-1
+    
+    if (isMobile) {
+      return `w-full px-4 py-3 rounded-xl transition-all duration-300 flex items-center justify-between font-medium
+        ${isActive
+          ? "bg-[#23c367] text-white shadow-lg"
+          : "text-white hover:bg-white/10"
+        }`;
+    }
+
+    return `px-4 py-2 rounded-full transition-all duration-300 flex items-center gap-1.5 font-medium text-sm whitespace-nowrap
       ${isActive
-        ? "bg-[#23c367] text-white shadow-md"
-        : "text-[#23c367] hover:bg-gray-100 hover:scale-105 hover:text-[#23c367]"
+        ? "bg-[#23c367] text-white shadow-lg scale-105"
+        : scrolled
+        ? "text-white hover:bg-white/20"
+        : "text-[#0a4d7c] hover:bg-[#23c367]/10"
       }`;
   };
 
   return (
-    <header
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
       className={`sticky top-0 z-50 transition-all duration-300
         ${scrolled
           ? " border bg-transparent backdrop-blur-md shadow-lg md:rounded-full md:mx-5 md:top-2 transition-all text-white"
           : "bg-linear-to-r from-[#0a4d7c] via-[#0a4d7c] to-[#0a4c7ce7]"
         }`}
     >
-      {/* ===== CONTAINER ===== */}
-      <div className="max-w-6xl mx-auto px-3 py-1">
-        {/* GRID 3 ZONES */}
-        <div className="grid grid-cols-2 md:grid-cols-3 items-center">
-          {/* ================= LOGO ================= */}
-          <motion.div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.4 }}
-            className="flex items-center"
-          >
-            {scrolled ? <img src="/logoorigin.png" alt="Logo" className="ml-4 w-[70px] h-[50px]" /> : <img src="/logoorigin.jpeg" alt="Logo" className="ml-4 w-[70px] h-[50px]" />}
-          </motion.div>
-          {/* ================= NAV CENTER ================= */}
-          <nav className="hidden md:flex justify-center">
-            <ul className={`flex gap-6 items-center text-sm border px-1 py-1 rounded-full
-                ${scrolled ? "bg-[#0a4d7c] " : "bg-white text-[#23c367]"}
-              `}>
-              {navLinks.filter((l) => l.label !== "Contact").map((link) => (
-                <li
-                  key={link.label}
-                  className="relative"
-                  onMouseEnter={() => setOpenDropdown(link.label)}
-                  onMouseLeave={() => setOpenDropdown(null)}
-                >
-                  <button
-                    className={linkClass(link.id, link.children)}
-                    onClick={() => !link.children && scrollToSection(link.id)}
+      <div
+        className={`max-w-7xl mx-auto transition-all duration-500
+          ${scrolled
+            ? "mx-4 md:mx-8 lg:mx-auto rounded-2xl bg-[#0a4d7c]/95 backdrop-blur-xl shadow-2xl border border-white/10"
+            : "bg-linear-to-r from-[#0a4d7c] via-[#0c5d94] to-[#0a4d7c] shadow-lg"
+          }`}
+      >
+        {/* ===== CONTAINER ===== */}
+        <div className="px-4 md:px-6 py-3">
+          {/* GRID 3 ZONES */}
+          <div className="grid grid-cols-2 md:grid-cols-3 items-center gap-4">
+            {/* ================= LOGO ================= */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="flex items-center cursor-pointer"
+              onClick={() => scrollToSection("Accueil")}
+            >
+              <img
+                src={scrolled ? "/logoorigin.png" : "/logoorigin.jpeg"}
+                alt="Yapithe & Partners"
+                className="h-12 md:h-14 w-auto object-contain transition-all duration-300"
+              />
+            </motion.div>
+
+            {/* ================= NAV CENTER ================= */}
+            <nav className="hidden lg:flex justify-center">
+              <ul
+                className={`flex gap-2 items-center px-3 py-2 rounded-full transition-all duration-300
+                  ${scrolled
+                    ? "bg-white/10 backdrop-blur-sm border border-white/20"
+                    : "bg-white shadow-lg"
+                  }`}
+              >
+                {navLinks.filter((l) => l.label !== "Contact").map((link) => (
+                  <li
+                    key={link.label}
+                    className="relative"
+                    onMouseEnter={() => link.children && setOpenDropdown(link.label)}
+                    onMouseLeave={() => setOpenDropdown(null)}
                   >
-                    {link.label} {link.children && (
-                      <span className="text-xs">▾</span>)}
-                  </button>
-                  {/* DROPDOWN */}
-                  <AnimatePresence>
-                    {link.children && openDropdown === link.label && (
-                      <motion.ul
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 mt-2 w-52 bg-white rounded-xl shadow-xl p-2"
-                      >
-                        {link.children.map((child) => (
-                          <li key={child.id}>
-                            <button onClick={() => scrollToSection(child.id)}
-                              className={`w-full text-left px-4 py-2 rounded-lg text-[#23c367]
-                              ${active === child.id ? "bg-[#23c367] text-white" : "hover:bg-[#23c367]/20"}`}
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={linkClass(link.id, link.children)}
+                      onClick={() => !link.children && scrollToSection(link.id)}
+                    >
+                      {link.label}
+                      {link.children && (
+                        <motion.div
+                          animate={{ rotate: openDropdown === link.label ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <ChevronDown className="w-4 h-4" />
+                        </motion.div>
+                      )}
+                    </motion.button>
+
+                    {/* DROPDOWN */}
+                    <AnimatePresence>
+                      {link.children && openDropdown === link.label && (
+                        <motion.ul
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute top-full left-0 mt-2 w-60 bg-white rounded-2xl shadow-2xl p-2 border border-gray-100"
+                        >
+                          {link.children.map((child) => (
+                            <motion.li
+                              key={child.id}
+                              whileHover={{ x: 4 }}
+                              transition={{ duration: 0.2 }}
                             >
-                              {child.label}
-                            </button>
-                          </li>))}
-                      </motion.ul>)}
-                  </AnimatePresence>
-                </li>))}
-            </ul>
-          </nav>
-          {/* ================= CONTACT RIGHT ================= */}
-          <div className="hidden md:flex justify-end">
-            <button
-              onClick={() => scrollToSection("Contact")}
-              className="px-5 py-2 rounded-full font-semibold bg-gradient-to-r from-[#23c367] via-[#23c367]/90 to-[#23c367]/80 text-white shadow-md hover:scale-105 transition-all" >
-              Contact
-            </button>
+                              <button
+                                onClick={() => scrollToSection(child.id)}
+                                className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
+                                  ${active === child.id
+                                    ? "bg-linear-to-r from-[#23c367] to-[#1fa85a] text-white shadow-lg"
+                                    : "text-[#0a4d7c] hover:bg-[#23c367]/10"
+                                  }`}
+                              >
+                                {child.label}
+                              </button>
+                            </motion.li>
+                          ))}
+                        </motion.ul>
+                      )}
+                    </AnimatePresence>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            {/* ================= CONTACT RIGHT ================= */}
+            <div className="hidden lg:flex justify-end">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => scrollToSection("Contact")}
+                className="group relative px-6 py-2.5 rounded-full font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+              >
+                <span className="relative z-10">Contact</span>
+                <div className="absolute inset-0 bg-linear-to-r from-[#23c367] to-[#1fa85a]"></div>
+                <div className="absolute inset-0 bg-linear-to-r from-[#1fa85a] to-[#23c367] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </motion.button>
+            </div>
+
+            {/* ================= MOBILE BTN ================= */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                setOpen(!open);
+                setOpenDropdown(null);
+              }}
+              className="lg:hidden justify-self-end w-12 h-12 flex items-center justify-center bg-[#23c367] rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl"
+            >
+              {open ? (
+                <X className="w-6 h-6 text-white" />
+              ) : (
+                <Menu className="w-6 h-6 text-white" />
+              )}
+            </motion.button>
           </div>
-          {/* ================= MOBILE BTN ================= */}
-          <button
-            onClick={() => {
-              setOpen(!open);
-              setOpenDropdown(null);
-            }}
-            className="
-              md:hidden
-              w-10 h-10
-              flex items-center justify-self-end justify-center
-              text-2xl
-              font-bold
-              text-white
-              bg-[#0a4d7c]
-              rounded-xl
-              shadow-lg
-              transition-all duration-300
-              hover:bg-[#23c367]
-              hover:scale-105
-              active:scale-95
-            "
-          >
-            {open ? "✕" : "☰"}
-          </button>
-
         </div>
-      </div>
 
-      {/* MOBILE MENU */}
-      <AnimatePresence>
-        {open && (
-          <motion.nav
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden backdrop-blur-md bg-[#0a4d7c]"
-          >
-            <ul className="flex flex-col gap-1 px-4 py-4">
-              {navLinks.map((link) => (
-                <li key={link.label} className="w-full">
-                  <button
-                    onClick={() => !link.children && scrollToSection(link.id)}
+        {/* MOBILE MENU */}
+        <AnimatePresence>
+          {open && (
+            <motion.nav
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="lg:hidden overflow-hidden bg-linear-to-b from-[#0a4d7c] to-[#0c5d94]"
+            >
+              <ul className="flex flex-col gap-2 px-4 py-4 max-h-[70vh] overflow-y-auto">
+                {navLinks.map((link) => (
+                  <li key={link.label} className="w-full">
+                    <motion.button
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => {
+                        if (link.children) {
+                          setOpenDropdown(
+                            openDropdown === link.label ? null : link.label
+                          );
+                        } else {
+                          scrollToSection(link.id);
+                        }
+                      }}
+                      className={linkClass(link.id, link.children, true)}
+                    >
+                      <span>{link.label}</span>
+                      {link.children && (
+                        <motion.div
+                          animate={{
+                            rotate: openDropdown === link.label ? 180 : 0,
+                          }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <ChevronDown className="w-5 h-5" />
+                        </motion.div>
+                      )}
+                    </motion.button>
 
-                    className={`w-full ${linkClass(link.id, link.children)} justify-between text-white`}
-                  >
-                    {link.label}
-                    {link.children && (
-                      <motion.span
-                        animate={{ rotate: openDropdown === link.label ? 180 : 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="inline-block"
-                      >
-                        ▾
-                      </motion.span>
-                    )}
-                  </button>
-
-
-                  {/* MOBILE SUBMENU */}
-                  <AnimatePresence>
-                    {link.children && openDropdown === link.label && (
-                      <motion.ul
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.25 }}
-                        className="flex flex-col pl-4 mt-1 gap-1"
-                      >
-                        {link.children.map((child) => (
-                          <li key={child.id}>
-                            <button
-                              onClick={() => scrollToSection(child.id)}
-
-                              className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-300
-                                ${active === child.id ? "bg-[#23c367] text-white" : "text-white hover:bg-[#23c367]/20"}`}
+                    {/* MOBILE SUBMENU */}
+                    <AnimatePresence>
+                      {link.children && openDropdown === link.label && (
+                        <motion.ul
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.25 }}
+                          className="flex flex-col pl-4 mt-2 gap-1 overflow-hidden"
+                        >
+                          {link.children.map((child) => (
+                            <motion.li
+                              key={child.id}
+                              initial={{ x: -10, opacity: 0 }}
+                              animate={{ x: 0, opacity: 1 }}
+                              transition={{ duration: 0.2 }}
                             >
-                              {child.label}
-                            </button>
-                          </li>
-                        ))}
-                      </motion.ul>
-                    )}
-                  </AnimatePresence>
-                </li>
-              ))}
-            </ul>
-          </motion.nav>
-        )}
-      </AnimatePresence>
-    </header>
+                              <button
+                                onClick={() => scrollToSection(child.id)}
+                                className={`w-full text-left px-4 py-2.5 rounded-lg transition-all duration-200 font-medium text-sm
+                                  ${active === child.id
+                                    ? "bg-[#23c367] text-white shadow-lg"
+                                    : "text-white/90 hover:bg-white/10"
+                                  }`}
+                              >
+                                {child.label}
+                              </button>
+                            </motion.li>
+                          ))}
+                        </motion.ul>
+                      )}
+                    </AnimatePresence>
+                  </li>
+                ))}
+              </ul>
+            </motion.nav>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.header>
   );
 };
 
