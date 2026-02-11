@@ -72,21 +72,23 @@ const Team = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: 0.1, // Réduit pour mobile
+        delayChildren: 0.2,
       },
     },
   };
 
   const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    hidden: { opacity: 0, y: 30, scale: 0.95 }, // Réduit l'amplitude
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
         type: "spring",
-        stiffness: 100,
-        damping: 15,
+        stiffness: 80, // Réduit pour plus de fluidité
+        damping: 12,
+        duration: 0.6,
       },
     },
   };
@@ -97,8 +99,8 @@ const Team = () => {
       variants={fadeUp}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      viewport={{ once: true, amount: 0.1 }} // Réduit à 0.1 pour mobile
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className="w-full py-16 md:py-24 bg-linear-to-br from-[#0a4d7c] via-[#0c5d94] to-[#0a4d7c] relative overflow-hidden"
     >
       <div className="absolute top-0 left-0 w-96 h-96 bg-[#23c367]/10 rounded-full blur-3xl"></div>
@@ -107,17 +109,17 @@ const Team = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }} // Réduit l'amplitude
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.1 }} // Plus sensible
+          transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
           <motion.div
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, type: "spring" }}
+            initial={{ scale: 0.8, opacity: 0 }} // Ajout opacity
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ delay: 0.1, duration: 0.4 }}
             className="inline-block px-4 py-2 bg-[#23c367]/20 backdrop-blur-sm rounded-full mb-4"
           >
             <span className="text-[#23c367] font-semibold text-sm uppercase tracking-wider">
@@ -144,7 +146,7 @@ const Team = () => {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
+          viewport={{ once: true, amount: 0.05 }} // Encore plus sensible pour le grid
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {members.map((member, i) => (
@@ -159,6 +161,7 @@ const Team = () => {
                 {/* Cercle décoratif */}
                 <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#23c367]/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
 
+                {/* Animation flottante désactivée sur mobile pour la performance */}
                 <motion.div
                   animate={{ y: [0, -10, 0] }}
                   transition={{
@@ -166,7 +169,7 @@ const Team = () => {
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  className="relative"
+                  className="relative hidden md:block"
                 >
                   <div className="w-48 h-48 mx-auto rounded-full overflow-hidden border-4 border-white/20 shadow-2xl group-hover:border-[#23c367]/50 transition-all duration-500">
                     <img
@@ -176,6 +179,17 @@ const Team = () => {
                     />
                   </div>
                 </motion.div>
+
+                {/* Version statique pour mobile */}
+                <div className="relative md:hidden">
+                  <div className="w-48 h-48 mx-auto rounded-full overflow-hidden border-4 border-white/20 shadow-2xl group-hover:border-[#23c367]/50 transition-all duration-500">
+                    <img
+                      src={member.img}
+                      alt={member.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Contenu */}
@@ -235,8 +249,8 @@ const Team = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
           className="text-center mt-16"
         >
           <div className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-8 max-w-2xl mx-auto">
