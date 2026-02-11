@@ -2,16 +2,9 @@
 
 @font-face {
   font-family: 'ComicSansMS';
-  src: url('/font/ComicSansMS.ttf') format('truetype');
+  src: url('/fonts/ComicSansMS.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-}
-
-body {
-  font-family: "ComicSansMS", "Comic Sans", cursive;
-  background:white;
-  color: white;
-  overflow-x: hidden;
 }
 
 @font-face {
@@ -21,12 +14,17 @@ body {
   font-style: normal;
 }
 
-
-
 .font-michroma {
   font-family: "Michroma", sans-serif;
   letter-spacing: 2px;
   text-transform: uppercase;
+}
+
+body {
+  font-family: "ComicSansMS", "Comic Sans", cursive;
+  background:white;
+  color: white;
+  overflow-x: hidden;
 }
 
 
