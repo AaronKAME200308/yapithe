@@ -43,7 +43,7 @@ const Home = () => {
   ];
 
   return (
-    <main
+    <div
       id="Accueil"
       className="min-h-screen bg-linear-to-br from-[#e0f7f1] via-white to-[#f0f9ff] flex items-center px-6 md:px-10 relative overflow-hidden"
     >
@@ -221,7 +221,7 @@ const Home = () => {
           ))}
         </motion.div>
       </div>
-    </main>
+    </div>
   );
 };
 

@@ -94,7 +94,7 @@ const Navbar = () => {
       ${isActive
         ? "bg-[#23c367] text-white shadow-lg scale-105"
         : scrolled
-        ? "text-white hover:bg-white/20"
+        ? "text-[#0a4d7c] hover:bg-[#23c367]/10"
         : "text-[#0a4d7c] hover:bg-[#23c367]/10"
       }`;
   };
@@ -110,13 +110,7 @@ const Navbar = () => {
           : "bg-linear-to-r from-[#0a4d7c] via-[#0a4d7c] to-[#0a4c7ce7]"
         }`}
     >
-      <div
-        className={`max-w-7xl mx-auto transition-all duration-500
-          ${scrolled
-            ? "mx-4 md:mx-8 lg:mx-auto rounded-2xl bg-[#0a4d7c]/95 backdrop-blur-xl shadow-2xl border border-white/10"
-            : "bg-linear-to-r from-[#0a4d7c] via-[#0c5d94] to-[#0a4d7c] shadow-lg"
-          }`}
-      >
+
         {/* ===== CONTAINER ===== */}
         <div className="px-4 md:px-6 py-3">
           {/* GRID 3 ZONES */}
@@ -139,7 +133,7 @@ const Navbar = () => {
               <ul
                 className={`flex gap-2 items-center px-3 py-2 rounded-full transition-all duration-300
                   ${scrolled
-                    ? "bg-white/10 backdrop-blur-sm border border-white/20"
+                    ? "bg-white backdrop-blur-sm border border-white/20"
                     : "bg-white shadow-lg"
                   }`}
               >
@@ -244,7 +238,7 @@ const Navbar = () => {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden overflow-hidden bg-linear-to-b from-[#0a4d7c] to-[#0c5d94]"
+              className="lg:hidden overflow-hidden bg-[#0a4d7c]"
             >
               <ul className="flex flex-col gap-2 px-4 py-4 max-h-[70vh] overflow-y-auto">
                 {navLinks.map((link) => (
@@ -313,7 +307,6 @@ const Navbar = () => {
             </motion.nav>
           )}
         </AnimatePresence>
-      </div>
     </motion.header>
   );
 };
