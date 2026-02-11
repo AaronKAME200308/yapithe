@@ -173,12 +173,13 @@ const Footer = () => {
                 duration: 30,
                 ease: "linear",
               }}
+              style={{ willChange: "transform" }}
             >
               {[...logos, ...logos].map((logo, index) => (
                 <motion.div
                   key={index}
                   whileHover={{ scale: 1.1 }}
-                  className="shrink-0"
+                  className="shrink-0"                  
                 >
                   <img
                     src={logo}
