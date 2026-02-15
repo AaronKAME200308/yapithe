@@ -60,26 +60,26 @@ const Home = () => {
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 items-center gap-12 relative z-10">
         {/* ================= LEFT CONTENT ================= */}
         <motion.div
-          variants={isMobile ? {} : fadeUp}
-          initial={isMobile ? {} : "hidden"}
-          animate={isMobile ? {} : "visible"}
+          variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}
+          initial="hidden"
+          animate="visible"
           transition={isMobile ? {} : { duration: 0.8, ease: "easeOut" }}
           className="space-y-6 lg:col-span-1"
         >
           {/* Logo/Nom */}
           <motion.h1
-            initial={isMobile ? {} : { opacity: 0, x: -20 }}
-            animate={isMobile ? {} : { opacity: 1, x: 0 }}
+            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={isMobile ? {} : { delay: 0.3 }}
-            className="font-michroma mt-4 text-3xl md:text-4xl text-[#0a4d7c] leading-tight"
+            className="font-michroma text-3xl md:text-4xl text-[#0a4d7c] leading-tight"
           >
             Yapithe <br />& Partners
           </motion.h1>
 
           {/* Tagline principal */}
           <motion.p
-            initial={isMobile ? {} : { opacity: 0, y: 20 }}
-            animate={isMobile ? {} : { opacity: 1, y: 0 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={isMobile ? {} : { delay: 0.4 }}
             style={{
               background: 'linear-gradient(to right, #23c367, #0a4d7c)',
@@ -87,7 +87,7 @@ const Home = () => {
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
             }}
-            className="text-1xl md:text-2xl lg:text-3xl font-extrabold leading-tight"
+            className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight"
           >
             Cabinet de conseil
             <br />
@@ -97,8 +97,8 @@ const Home = () => {
 
           {/* Description courte */}
           <motion.p
-            initial={isMobile ? {} : { opacity: 0 }}
-            animate={isMobile ? {} : { opacity: 1 }}
+            initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={isMobile ? {} : { delay: 0.5 }}
             className="text-base md:text-lg text-[#7090a6] leading-relaxed"
           >
@@ -108,8 +108,8 @@ const Home = () => {
 
           {/* Boutons CTA */}
           <motion.div
-            initial={isMobile ? {} : { opacity: 0, y: 20 }}
-            animate={isMobile ? {} : { opacity: 1, y: 0 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={isMobile ? {} : { delay: 0.6 }}
             className="flex flex-wrap gap-4"
           >
@@ -137,8 +137,8 @@ const Home = () => {
 
         {/* ================= CENTER IMAGE ================= */}
         <motion.div
-          initial={isMobile ? {} : { opacity: 0, scale: 0.92 }}
-          animate={isMobile ? {} : { opacity: 1, scale: 1 }}
+          initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={isMobile ? {} : { duration: 0.9, ease: "easeOut", delay: 0.2 }}
           className="flex justify-center lg:col-span-1"
         >
@@ -160,8 +160,8 @@ const Home = () => {
               ></div>
 
               <motion.div
-                initial={isMobile ? {} : { opacity: 0, y: 20 }}
-                animate={isMobile ? {} : { opacity: 1, y: 0 }}
+                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={isMobile ? {} : { delay: 1 }}
                 className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl"
               >
@@ -178,17 +178,17 @@ const Home = () => {
 
         {/* ================= RIGHT STATS ================= */}
         <motion.div
-          variants={isMobile ? {} : fadeUp}
-          initial={isMobile ? {} : "hidden"}
-          animate={isMobile ? {} : "visible"}
+          variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}
+          initial="hidden"
+          animate="visible"
           transition={isMobile ? {} : { duration: 0.8, delay: 0.4 }}
           className="space-y-6 lg:col-span-1"
         >
           {stats.map((stat, index) => (
             <motion.div
               key={index}
-              initial={isMobile ? {} : { opacity: 0, x: 20 }}
-              animate={isMobile ? {} : { opacity: 1, x: 0 }}
+              initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={isMobile ? {} : { delay: 0.5 + index * 0.1 }}
               whileHover={isMobile ? {} : { scale: 1.05, x: 10 }}
               className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group"
@@ -196,7 +196,13 @@ const Home = () => {
               <div className="flex items-start gap-4">
                 {/* Icône */}
                 <div
-                  style={{ background: `linear-gradient(to bottom right, ${stat.color.includes('blue') ? '#3b82f6, #06b6d4' : stat.color.includes('emerald') ? '#10b981, #14b8a6' : '#a855f7, #6366f1'})` }}
+                  style={{ 
+                    background: `linear-gradient(to bottom right, ${
+                      stat.color.includes('blue') ? '#3b82f6, #06b6d4' :
+                      stat.color.includes('emerald') ? '#10b981, #14b8a6' :
+                      '#a855f7, #6366f1'
+                    })` 
+                  }}
                   className="w-14 h-14 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300"
                 >
                   {stat.icon}

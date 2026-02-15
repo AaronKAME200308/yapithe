@@ -48,17 +48,17 @@ const WhoWeAre = () => {
   ];
 
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: isMobile ? { opacity: 1 } : { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: isMobile ? 0 : 0.1,
       },
     },
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, x: -20 },
+    hidden: isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 },
     visible: {
       opacity: 1,
       x: 0,
@@ -72,9 +72,9 @@ const WhoWeAre = () => {
   return (
     <motion.div
       id="about"
-      variants={isMobile ? {} : fadeUp}
-      initial={isMobile ? {} : "hidden"}
-      whileInView={isMobile ? {} : "visible"}
+      variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
       transition={isMobile ? {} : { duration: 0.8, ease: "easeOut" }}
       style={{ background: 'linear-gradient(to bottom right, #e0f7f1, white, #f0f9ff)' }}
@@ -88,15 +88,15 @@ const WhoWeAre = () => {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Texte */}
           <motion.div
-            initial={isMobile ? {} : { opacity: 0, x: -30 }}
-            whileInView={isMobile ? {} : { opacity: 1, x: 0 }}
+            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+            whileInView={isMobile ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={isMobile ? {} : { duration: 0.6 }}
             className="space-y-6"
           >
             <motion.div
-              initial={isMobile ? {} : { scale: 0 }}
-              whileInView={isMobile ? {} : { scale: 1 }}
+              initial={isMobile ? { scale: 1 } : { scale: 0 }}
+              whileInView={isMobile ? { scale: 1 } : { scale: 1 }}
               viewport={{ once: true }}
               transition={isMobile ? {} : { delay: 0.2, type: "spring" }}
               style={{ background: 'linear-gradient(to right, rgba(35, 195, 103, 0.2), rgba(10, 77, 124, 0.2))' }}
@@ -149,16 +149,16 @@ const WhoWeAre = () => {
 
             {/* Points clés */}
             <motion.div
-              variants={isMobile ? {} : containerVariants}
-              initial={isMobile ? {} : "hidden"}
-              whileInView={isMobile ? {} : "visible"}
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
               className="grid grid-cols-2 gap-4 pt-6"
             >
               {highlights.map((highlight, index) => (
                 <motion.div
                   key={index}
-                  variants={isMobile ? {} : itemVariants}
+                  variants={itemVariants}
                   whileHover={isMobile ? {} : { y: -5, scale: 1.02 }}
                   className="group bg-white rounded-2xl p-5 shadow-lg hover:shadow-xl border border-gray-100 hover:border-[#23c367]/30 transition-all duration-300 relative overflow-hidden"
                 >
@@ -205,8 +205,8 @@ const WhoWeAre = () => {
 
             {/* CTA */}
             <motion.div
-              initial={isMobile ? {} : { opacity: 0, y: 20 }}
-              whileInView={isMobile ? {} : { opacity: 1, y: 0 }}
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={isMobile ? {} : { delay: 0.5 }}
               className="pt-4"
@@ -224,8 +224,8 @@ const WhoWeAre = () => {
 
           {/* Image avec design amélioré */}
           <motion.div
-            initial={isMobile ? {} : { opacity: 0, x: 30 }}
-            whileInView={isMobile ? {} : { opacity: 1, x: 0 }}
+            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+            whileInView={isMobile ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={isMobile ? {} : { duration: 0.6, delay: 0.2 }}
             className="relative flex justify-center lg:justify-end"
@@ -245,8 +245,8 @@ const WhoWeAre = () => {
               <div className="relative">
                 {/* Cadre décoratif 1 */}
                 <motion.div
-                  initial={isMobile ? {} : { rotate: -5, scale: 0.9 }}
-                  whileInView={isMobile ? {} : { rotate: 0, scale: 1 }}
+                  initial={isMobile ? { rotate: 0, scale: 1 } : { rotate: -5, scale: 0.9 }}
+                  whileInView={isMobile ? { rotate: 0, scale: 1 } : { rotate: 0, scale: 1 }}
                   transition={isMobile ? {} : { duration: 0.8, delay: 0.3 }}
                   style={{ background: 'linear-gradient(to bottom right, #23c367, #1fa85a)' }}
                   className="absolute -top-4 -left-4 w-full h-full rounded-[200px] opacity-20"
@@ -254,8 +254,8 @@ const WhoWeAre = () => {
 
                 {/* Cadre décoratif 2 */}
                 <motion.div
-                  initial={isMobile ? {} : { rotate: 5, scale: 0.9 }}
-                  whileInView={isMobile ? {} : { rotate: 0, scale: 1 }}
+                  initial={isMobile ? { rotate: 0, scale: 1 } : { rotate: 5, scale: 0.9 }}
+                  whileInView={isMobile ? { rotate: 0, scale: 1 } : { rotate: 0, scale: 1 }}
                   transition={isMobile ? {} : { duration: 0.8, delay: 0.4 }}
                   style={{ background: 'linear-gradient(to bottom right, #0a4d7c, #0c5d94)' }}
                   className="absolute -bottom-4 -right-4 w-full h-full rounded-[200px] opacity-20"
@@ -263,8 +263,8 @@ const WhoWeAre = () => {
 
                 {/* Image principale */}
                 <motion.div
-                  initial={isMobile ? {} : { opacity: 0, scale: 0.92 }}
-                  whileInView={isMobile ? {} : { opacity: 1, scale: 1 }}
+                  initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }}
+                  whileInView={isMobile ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={isMobile ? {} : { duration: 0.9, ease: "easeOut", delay: 0.5 }}
                   whileHover={isMobile ? {} : { scale: 1.05 }}
@@ -283,11 +283,11 @@ const WhoWeAre = () => {
                   ></div>
                 </motion.div>
 
-                {/* Badge flottant - ANIMATION CONSERVÉE SUR MOBILE */}
+                {/* Badge flottant */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0, rotate: -10 }}
                   whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                  transition={{ delay: 0.8, type: "spring" }}
+                  transition={{ delay: isMobile ? 0 : 0.8, type: "spring" }}
                   className="absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-2xl p-4 border-4 border-[#23c367]"
                 >
                   <div className="text-center">
