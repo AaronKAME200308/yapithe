@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Target, Award, Users, TrendingUp } from "lucide-react";
 import type { Variants } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -8,6 +9,17 @@ const fadeUp = {
 };
 
 const WhoWeAre = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const highlights = [
     {
       icon: <Target className="w-6 h-6" />,
@@ -60,12 +72,13 @@ const WhoWeAre = () => {
   return (
     <motion.div
       id="about"
-      variants={fadeUp}
-      initial="hidden"
-      whileInView="visible"
+      variants={isMobile ? {} : fadeUp}
+      initial={isMobile ? {} : "hidden"}
+      whileInView={isMobile ? {} : "visible"}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="w-full py-16 md:py-24 bg-linear-to-br from-[#e0f7f1] via-white to-[#f0f9ff] relative overflow-hidden"
+      transition={isMobile ? {} : { duration: 0.8, ease: "easeOut" }}
+      style={{ background: 'linear-gradient(to bottom right, #e0f7f1, white, #f0f9ff)' }}
+      className="w-full py-16 md:py-24 relative overflow-hidden"
     >
       {/* Éléments décoratifs */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#23c367]/5 rounded-full blur-3xl"></div>
@@ -75,25 +88,42 @@ const WhoWeAre = () => {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Texte */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={isMobile ? {} : { opacity: 0, x: -30 }}
+            whileInView={isMobile ? {} : { opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={isMobile ? {} : { duration: 0.6 }}
             className="space-y-6"
           >
             <motion.div
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
+              initial={isMobile ? {} : { scale: 0 }}
+              whileInView={isMobile ? {} : { scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.2, type: "spring" }}
-              className="inline-block px-4 py-2 bg-linear-to-r from-[#23c367]/20 to-[#0a4d7c]/20 backdrop-blur-sm rounded-full mb-2"
+              transition={isMobile ? {} : { delay: 0.2, type: "spring" }}
+              style={{ background: 'linear-gradient(to right, rgba(35, 195, 103, 0.2), rgba(10, 77, 124, 0.2))' }}
+              className="inline-block px-4 py-2 backdrop-blur-sm rounded-full mb-2"
             >
-              <span className="bg-linear-to-r from-[#23c367] to-[#0a4d7c] text-transparent bg-clip-text font-semibold text-sm uppercase tracking-wider">
+              <span 
+                style={{
+                  background: 'linear-gradient(to right, #23c367, #0a4d7c)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}
+                className="font-semibold text-sm uppercase tracking-wider"
+              >
                 À propos
               </span>
             </motion.div>
 
-            <h2 className="text-3xl md:text-5xl font-bold bg-linear-to-r from-[#23c367] to-[#0a4d7c] text-transparent bg-clip-text leading-tight">
+            <h2 
+              style={{
+                background: 'linear-gradient(to right, #23c367, #0a4d7c)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}
+              className="text-3xl md:text-5xl font-bold leading-tight"
+            >
               Qui sommes-nous ?
             </h2>
 
@@ -119,28 +149,44 @@ const WhoWeAre = () => {
 
             {/* Points clés */}
             <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
+              variants={isMobile ? {} : containerVariants}
+              initial={isMobile ? {} : "hidden"}
+              whileInView={isMobile ? {} : "visible"}
               viewport={{ once: true }}
               className="grid grid-cols-2 gap-4 pt-6"
             >
               {highlights.map((highlight, index) => (
                 <motion.div
                   key={index}
-                  variants={itemVariants}
-                  whileHover={{ y: -5, scale: 1.02 }}
+                  variants={isMobile ? {} : itemVariants}
+                  whileHover={isMobile ? {} : { y: -5, scale: 1.02 }}
                   className="group bg-white rounded-2xl p-5 shadow-lg hover:shadow-xl border border-gray-100 hover:border-[#23c367]/30 transition-all duration-300 relative overflow-hidden"
                 >
-                  {/* linear hover effect */}
+                  {/* gradient hover effect */}
                   <div
-                    className={`absolute inset-0 bg-linear-to-br ${highlight.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
+                    style={{ 
+                      background: `linear-gradient(to bottom right, ${
+                        highlight.color.includes('blue') ? '#3b82f6, #06b6d4' :
+                        highlight.color.includes('#23c367') ? '#23c367, #1fa85a' :
+                        highlight.color.includes('purple') ? '#a855f7, #4f46e5' :
+                        '#f97316, #ef4444'
+                      })` 
+                    }}
+                    className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300"
                   ></div>
 
                   <div className="relative">
                     {/* Icône */}
                     <div
-                      className={`w-12 h-12 rounded-xl bg-linear-to-br ${highlight.color} flex items-center justify-center text-white mb-3 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300`}
+                      style={{ 
+                        background: `linear-gradient(to bottom right, ${
+                          highlight.color.includes('blue') ? '#3b82f6, #06b6d4' :
+                          highlight.color.includes('#23c367') ? '#23c367, #1fa85a' :
+                          highlight.color.includes('purple') ? '#a855f7, #4f46e5' :
+                          '#f97316, #ef4444'
+                        })` 
+                      }}
+                      className="w-12 h-12 rounded-xl flex items-center justify-center text-white mb-3 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300"
                     >
                       {highlight.icon}
                     </div>
@@ -159,16 +205,17 @@ const WhoWeAre = () => {
 
             {/* CTA */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={isMobile ? {} : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? {} : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
+              transition={isMobile ? {} : { delay: 0.5 }}
               className="pt-4"
             >
               <motion.button
-                whileHover={{ scale: 1.05 }}
+                whileHover={isMobile ? {} : { scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-linear-to-r from-[#23c367] to-[#1fa85a] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                style={{ background: 'linear-gradient(to right, #23c367, #1fa85a)' }}
+                className="px-8 py-4 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 Découvrir nos services
               </motion.button>
@@ -177,42 +224,50 @@ const WhoWeAre = () => {
 
           {/* Image avec design amélioré */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={isMobile ? {} : { opacity: 0, x: 30 }}
+            whileInView={isMobile ? {} : { opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={isMobile ? {} : { duration: 0.6, delay: 0.2 }}
             className="relative flex justify-center lg:justify-end"
           >
             <div className="relative">
               {/* Cercle décoratif arrière */}
-              <div className="absolute -top-8 -right-8 w-72 h-72 bg-linear-to-br from-[#23c367]/20 to-[#1fa85a]/20 rounded-full blur-3xl"></div>
-              <div className="absolute -bottom-8 -left-8 w-72 h-72 bg-linear-to-br from-[#0a4d7c]/20 to-[#0c5d94]/20 rounded-full blur-3xl"></div>
+              <div 
+                style={{ background: 'linear-gradient(to bottom right, rgba(35, 195, 103, 0.2), rgba(31, 168, 90, 0.2))' }}
+                className="absolute -top-8 -right-8 w-72 h-72 rounded-full blur-3xl"
+              ></div>
+              <div 
+                style={{ background: 'linear-gradient(to bottom right, rgba(10, 77, 124, 0.2), rgba(12, 93, 148, 0.2))' }}
+                className="absolute -bottom-8 -left-8 w-72 h-72 rounded-full blur-3xl"
+              ></div>
 
               {/* Container image principal */}
               <div className="relative">
                 {/* Cadre décoratif 1 */}
                 <motion.div
-                  initial={{ rotate: -5, scale: 0.9 }}
-                  whileInView={{ rotate: 0, scale: 1 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                  className="absolute -top-4 -left-4 w-full h-full bg-linear-to-br from-[#23c367] to-[#1fa85a] rounded-[200px] opacity-20"
+                  initial={isMobile ? {} : { rotate: -5, scale: 0.9 }}
+                  whileInView={isMobile ? {} : { rotate: 0, scale: 1 }}
+                  transition={isMobile ? {} : { duration: 0.8, delay: 0.3 }}
+                  style={{ background: 'linear-gradient(to bottom right, #23c367, #1fa85a)' }}
+                  className="absolute -top-4 -left-4 w-full h-full rounded-[200px] opacity-20"
                 ></motion.div>
 
                 {/* Cadre décoratif 2 */}
                 <motion.div
-                  initial={{ rotate: 5, scale: 0.9 }}
-                  whileInView={{ rotate: 0, scale: 1 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  className="absolute -bottom-4 -right-4 w-full h-full bg-linear-to-br from-[#0a4d7c] to-[#0c5d94] rounded-[200px] opacity-20"
+                  initial={isMobile ? {} : { rotate: 5, scale: 0.9 }}
+                  whileInView={isMobile ? {} : { rotate: 0, scale: 1 }}
+                  transition={isMobile ? {} : { duration: 0.8, delay: 0.4 }}
+                  style={{ background: 'linear-gradient(to bottom right, #0a4d7c, #0c5d94)' }}
+                  className="absolute -bottom-4 -right-4 w-full h-full rounded-[200px] opacity-20"
                 ></motion.div>
 
                 {/* Image principale */}
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.92 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  initial={isMobile ? {} : { opacity: 0, scale: 0.92 }}
+                  whileInView={isMobile ? {} : { opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.9, ease: "easeOut", delay: 0.5 }}
-                  whileHover={{ scale: 1.05 }}
+                  transition={isMobile ? {} : { duration: 0.9, ease: "easeOut", delay: 0.5 }}
+                  whileHover={isMobile ? {} : { scale: 1.05 }}
                   className="relative w-80 md:w-96 h-96 md:h-[28rem] rounded-[200px] overflow-hidden shadow-2xl border-8 border-white"
                 >
                   <img
@@ -222,10 +277,13 @@ const WhoWeAre = () => {
                   />
 
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-linear-to-t from-[#0a4d7c]/20 via-transparent to-transparent"></div>
+                  <div 
+                    style={{ background: 'linear-gradient(to top, rgba(10, 77, 124, 0.2), transparent, transparent)' }}
+                    className="absolute inset-0"
+                  ></div>
                 </motion.div>
 
-                {/* Badge flottant */}
+                {/* Badge flottant - ANIMATION CONSERVÉE SUR MOBILE */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0, rotate: -10 }}
                   whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
@@ -233,7 +291,15 @@ const WhoWeAre = () => {
                   className="absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-2xl p-4 border-4 border-[#23c367]"
                 >
                   <div className="text-center">
-                    <p className="text-3xl font-bold bg-linear-to-r from-[#23c367] to-[#1fa85a] text-transparent bg-clip-text">
+                    <p 
+                      style={{
+                        background: 'linear-gradient(to right, #23c367, #1fa85a)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text'
+                      }}
+                      className="text-3xl font-bold"
+                    >
                       15+
                     </p>
                     <p className="text-xs font-semibold text-gray-600">
