@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Navbar from './component/Navbar'
 import Home from './component/Home'
 import Footer from './component/Footer'
@@ -8,12 +9,31 @@ import Services from './component/Services'
 import IPCG from './component/IPCG'
 import Chroniques from './component/Chroniques'
 import Contact from './component/Contact'
-import VoirPlus from './component/VoirPlus' // <-- nouvelle page
+import VoirPlus from './component/VoirPlus'
+
+// Composant pour gérer le scroll en haut à chaque changement de route
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant" // ou "smooth" si tu veux une animation
+    });
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen w-screen flex flex-col bg-portfolio-bg text-white bg-linear-to-r from-[#e0f7f1] to-[#ffffff]">
+      <ScrollToTop />
+      <div 
+        style={{ background: 'linear-gradient(to right, #e0f7f1, #ffffff)' }}
+        className="min-h-screen w-screen flex flex-col bg-portfolio-bg text-white"
+      >
         <Navbar />
 
         <Routes>

@@ -195,11 +195,8 @@ const Navbar = () => {
   };
 
   return (
-    <motion.header
+    <header
       ref={navRef}
-      initial={isMobile ? false : { y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
       style={{
         background: scrolled && !isMobile 
           ? 'transparent' 
@@ -440,7 +437,7 @@ const Navbar = () => {
           </motion.nav>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 };
 

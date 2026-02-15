@@ -51,198 +51,204 @@ const Home = () => {
     <div
       id="Accueil"
       style={{ background: 'linear-gradient(to bottom right, #e0f7f1, white, #f0f9ff)' }}
-      className="min-h-screen flex items-center px-6 md:px-10 relative overflow-hidden"
+      className="min-h-screen flex flex-col justify-center px-6 md:px-10 py-20 md:py-10 relative overflow-hidden"
     >
       {/* Éléments décoratifs réduits */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#23c367]/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl"></div>
 
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 items-center gap-12 relative z-10">
-        {/* ================= LEFT CONTENT ================= */}
+      <div className="max-w-7xl mx-auto w-full relative z-10 space-y-12">
+        {/* ================= TITRE CENTRÉ EN HAUT ================= */}
         <motion.div
-          variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}
-          initial="hidden"
-          animate="visible"
-          transition={isMobile ? {} : { duration: 0.8, ease: "easeOut" }}
-          className="space-y-6 lg:col-span-1"
+          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={isMobile ? {} : { duration: 0.6 }}
+          className="text-center"
         >
-          {/* Logo/Nom */}
-          <motion.h1
-            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={isMobile ? {} : { delay: 0.3 }}
-            className="font-michroma text-3xl md:text-4xl text-[#0a4d7c] leading-tight"
-          >
-            Yapithe <br />& Partners
-          </motion.h1>
+          <h1 className="font-michroma text-4xl md:text-5xl lg:text-6xl text-[#0a4d7c] leading-tight">
+            Yapithe & Partners
+          </h1>
+        </motion.div>
 
-          {/* Tagline principal */}
-          <motion.p
-            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={isMobile ? {} : { delay: 0.4 }}
-            style={{
-              background: 'linear-gradient(to right, #23c367, #0a4d7c)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
-            }}
-            className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight"
-          >
-            Cabinet de conseil
-            <br />
-            en contrôle de gestion
-            <br />& pilotage de la performance
-          </motion.p>
-
-          {/* Description courte */}
-          <motion.p
-            initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={isMobile ? {} : { delay: 0.5 }}
-            className="text-base md:text-lg text-[#7090a6] leading-relaxed"
-          >
-            Nous accompagnons les organisations dans leur transformation et leur
-            quête d'excellence opérationnelle.
-          </motion.p>
-
-          {/* Boutons CTA */}
+        {/* ================= GRID 3 COLONNES ================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 items-start gap-8 lg:gap-12">
+          
+          {/* ================= LEFT CONTENT ================= */}
           <motion.div
-            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={isMobile ? {} : { delay: 0.6 }}
-            className="flex flex-wrap gap-4"
+            variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}
+            initial="hidden"
+            animate="visible"
+            transition={isMobile ? {} : { duration: 0.8, ease: "easeOut" }}
+            className="space-y-6"
           >
-            <motion.button
-              whileHover={isMobile ? {} : { scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-              style={{ background: 'linear-gradient(to right, #23c367, #1fa85a)' }}
-              className="group px-8 py-4 rounded-xl text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2"
-              onClick={() => scrollToSection("Contact")}
+            {/* Tagline principal */}
+            <motion.p
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={isMobile ? {} : { delay: 0.2 }}
+              style={{
+                background: 'linear-gradient(to right, #23c367, #0a4d7c)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}
+              className="text-2xl md:text-3xl lg:text-4xl font-extrabold leading-tight"
             >
-              Travaillons ensemble
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </motion.button>
+              Cabinet de conseil
+              <br />
+              en contrôle de gestion
+              <br />& pilotage de la performance
+            </motion.p>
 
-            <motion.button
-              whileHover={isMobile ? {} : { scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-              className="px-8 py-4 rounded-xl bg-white/80 backdrop-blur-sm border-2 border-[#0a4d7c]/20 text-[#0a4d7c] font-semibold hover:bg-white hover:border-[#0a4d7c]/40 transition-all duration-300"
-              onClick={() => scrollToSection("Services")}
+            {/* Description courte */}
+            <motion.p
+              initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={isMobile ? {} : { delay: 0.3 }}
+              className="text-base md:text-lg text-[#7090a6] leading-relaxed"
             >
-              Nos services
-            </motion.button>
-          </motion.div>
-        </motion.div>
+              Nous accompagnons les organisations dans leur transformation et leur
+              quête d'excellence opérationnelle.
+            </motion.p>
 
-        {/* ================= CENTER IMAGE ================= */}
-        <motion.div
-          initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={isMobile ? {} : { duration: 0.9, ease: "easeOut", delay: 0.2 }}
-          className="flex justify-center lg:col-span-1"
-        >
-          <div className="relative group">
-            {/* Container image */}
-            <div 
-              style={{ background: 'linear-gradient(to bottom right, #0a4d7c, #0c5d94)' }}
-              className="relative w-72 md:w-96 h-80 md:h-[450px] rounded-t-[180px] overflow-hidden shadow-2xl group-hover:shadow-[0_20px_60px_rgba(35,195,103,0.3)] transition-all duration-500"
-            >
-              <img
-                src="/yapth.jpeg"
-                alt="Yapithe & Partners"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-
-              <div 
-                style={{ background: 'linear-gradient(to top, rgba(10, 77, 124, 0.5), transparent)' }}
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              ></div>
-
-              <motion.div
-                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={isMobile ? {} : { delay: 1 }}
-                className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl"
-              >
-                <p className="text-sm font-semibold text-[#0a4d7c]">
-                  Expertise reconnue
-                </p>
-                <p className="text-xs text-gray-600">
-                  En Afrique et en Europe
-                </p>
-              </motion.div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ================= RIGHT STATS ================= */}
-        <motion.div
-          variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}
-          initial="hidden"
-          animate="visible"
-          transition={isMobile ? {} : { duration: 0.8, delay: 0.4 }}
-          className="space-y-6 lg:col-span-1"
-        >
-          {stats.map((stat, index) => (
+            {/* Boutons CTA */}
             <motion.div
-              key={index}
-              initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={isMobile ? {} : { delay: 0.5 + index * 0.1 }}
-              whileHover={isMobile ? {} : { scale: 1.05, x: 10 }}
-              className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group"
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={isMobile ? {} : { delay: 0.4 }}
+              className="flex flex-wrap gap-4"
             >
-              <div className="flex items-start gap-4">
-                {/* Icône */}
-                <div
-                  style={{ 
-                    background: `linear-gradient(to bottom right, ${
-                      stat.color.includes('blue') ? '#3b82f6, #06b6d4' :
-                      stat.color.includes('emerald') ? '#10b981, #14b8a6' :
-                      '#a855f7, #6366f1'
-                    })` 
-                  }}
-                  className="w-14 h-14 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300"
-                >
-                  {stat.icon}
-                </div>
+              <motion.button
+                whileHover={isMobile ? {} : { scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                style={{ background: 'linear-gradient(to right, #23c367, #1fa85a)' }}
+                className="group px-6 py-3 md:px-8 md:py-4 rounded-xl text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2 text-sm md:text-base"
+                onClick={() => scrollToSection("Contact")}
+              >
+                Travaillons ensemble
+                <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+              </motion.button>
 
-                {/* Contenu */}
-                <div className="flex-1">
-                  {stat.value !== undefined ? (
-                    <p 
-                      style={{
-                        background: 'linear-gradient(to right, #23c367, #0a4d7c)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        backgroundClip: 'text'
-                      }}
-                      className="text-3xl md:text-4xl font-bold"
-                    >
-                      <CountUp value={stat.value} suffix={stat.suffix} />
-                    </p>
-                  ) : (
-                    <p 
-                      style={{
-                        background: 'linear-gradient(to right, #23c367, #0a4d7c)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        backgroundClip: 'text'
-                      }}
-                      className="text-2xl md:text-3xl font-bold leading-tight"
-                    >
-                      {stat.text}
-                    </p>
-                  )}
-                  <p className="text-sm md:text-base text-[#7090a6] mt-1">
-                    {stat.label}
-                  </p>
-                </div>
-              </div>
+              <motion.button
+                whileHover={isMobile ? {} : { scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-6 py-3 md:px-8 md:py-4 rounded-xl bg-white/80 backdrop-blur-sm border-2 border-[#0a4d7c]/20 text-[#0a4d7c] font-semibold hover:bg-white hover:border-[#0a4d7c]/40 transition-all duration-300 text-sm md:text-base"
+                onClick={() => scrollToSection("Services")}
+              >
+                Nos services
+              </motion.button>
             </motion.div>
-          ))}
-        </motion.div>
+          </motion.div>
+
+          {/* ================= CENTER IMAGE ================= */}
+          <motion.div
+            initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={isMobile ? {} : { duration: 0.9, ease: "easeOut", delay: 0.2 }}
+            className="flex justify-center"
+          >
+            <div className="relative group">
+              {/* Container image */}
+              <div 
+                style={{ background: 'linear-gradient(to bottom right, #0a4d7c, #0c5d94)' }}
+                className="relative w-64 md:w-80 lg:w-96 h-72 md:h-96 lg:h-[450px] rounded-t-[180px] overflow-hidden shadow-2xl group-hover:shadow-[0_20px_60px_rgba(35,195,103,0.3)] transition-all duration-500"
+              >
+                <img
+                  src="/yapth.jpeg"
+                  alt="Yapithe & Partners"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+
+                <div 
+                  style={{ background: 'linear-gradient(to top, rgba(10, 77, 124, 0.5), transparent)' }}
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                ></div>
+
+                <motion.div
+                  initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={isMobile ? {} : { delay: 1 }}
+                  className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-3 md:p-4 shadow-xl"
+                >
+                  <p className="text-xs md:text-sm font-semibold text-[#0a4d7c]">
+                    Expertise reconnue
+                  </p>
+                  <p className="text-[10px] md:text-xs text-gray-600">
+                    En Afrique et en Europe
+                  </p>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ================= RIGHT STATS ================= */}
+          <motion.div
+            variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}
+            initial="hidden"
+            animate="visible"
+            transition={isMobile ? {} : { duration: 0.8, delay: 0.4 }}
+            className="space-y-4 lg:space-y-6"
+          >
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={isMobile ? {} : { delay: 0.5 + index * 0.1 }}
+                whileHover={isMobile ? {} : { scale: 1.05, x: 10 }}
+                className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group"
+              >
+                <div className="flex items-start gap-3 md:gap-4">
+                  {/* Icône */}
+                  <div
+                    style={{ 
+                      background: `linear-gradient(to bottom right, ${
+                        stat.color.includes('blue') ? '#3b82f6, #06b6d4' :
+                        stat.color.includes('emerald') ? '#10b981, #14b8a6' :
+                        '#a855f7, #6366f1'
+                      })` 
+                    }}
+                    className="w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0"
+                  >
+                    {stat.icon}
+                  </div>
+
+                  {/* Contenu */}
+                  <div className="flex-1 min-w-0">
+                    {stat.value !== undefined ? (
+                      <p 
+                        style={{
+                          background: 'linear-gradient(to right, #23c367, #0a4d7c)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                          backgroundClip: 'text'
+                        }}
+                        className="text-2xl md:text-3xl lg:text-4xl font-bold"
+                      >
+                        <CountUp value={stat.value} suffix={stat.suffix} />
+                      </p>
+                    ) : (
+                      <p 
+                        style={{
+                          background: 'linear-gradient(to right, #23c367, #0a4d7c)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                          backgroundClip: 'text'
+                        }}
+                        className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight"
+                      >
+                        {stat.text}
+                      </p>
+                    )}
+                    <p className="text-xs md:text-sm lg:text-base text-[#7090a6] mt-1">
+                      {stat.label}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </div>
   );
