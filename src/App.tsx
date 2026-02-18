@@ -6,7 +6,7 @@ import Footer from './component/Footer'
 import About from './component/About'
 import Actu from './component/Actu'
 import Services from './component/Services'
-import IPCG from './component/IPCG'
+import {ChroniquesPage} from './component/ChroniquesPage'
 import Chroniques from './component/Chroniques'
 import Contact from './component/Contact'
 import VoirPlus from './component/VoirPlus'
@@ -43,12 +43,12 @@ function App() {
               <About />
               <Actu />
               <Services />
-              <IPCG />
+              {/* <IPCG /> */}
               <Chroniques />
               <Contact />
             </>
           }/>
-
+          <Route path="/chroniques-page" element={<ChroniquesPage />} />
           <Route path="/voir-plus" element={<VoirPlus />} />
         </Routes>
 

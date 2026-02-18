@@ -32,7 +32,7 @@ const navLinks = [
     ],
   },
   { label: "Services", id: "Services" },
-  { label: "IPCG", id: "IPCG" },
+  /*{ label: "IPCG", id: "IPCG" },*/
   { label: "Chroniques", id: "Chroniques" },
   { label: "Contact", id: "Contact" },
 ];
