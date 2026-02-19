@@ -11,9 +11,8 @@ export const ChroniquesPage = () => {
     return (
         <div
             className="min-h-screen w-full relative"
-            style={{ fontFamily: "'Sora', sans-serif", background: "linear-gradient(135deg, #e8faf3 0%, #ffffff 50%, #eef6ff 100%)" }}
+            style={{  background: "linear-gradient(135deg, #e8faf3 0%, #ffffff 50%, #eef6ff 100%)" }}
         >
-            <style>{`@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800;900&display=swap');`}</style>
 
             {/* Blobs décoratifs */}
             <div style={{ position: "fixed", top: "-8rem", right: "-8rem", width: "28rem", height: "28rem", background: "rgba(35,195,103,0.07)", borderRadius: "50%", filter: "blur(60px)", pointerEvents: "none" }} />
@@ -48,7 +47,6 @@ export const ChroniquesPage = () => {
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4"
                         style={{ background: "linear-gradient(to right, rgba(35,195,103,0.12), rgba(10,77,124,0.12))" }}
                     >
-                        <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: "#23c367" }} />
                         <span
                             className="text-sm font-michroma font-semibold uppercase tracking-widest"
                             style={{ background: "linear-gradient(to right, #23c367, #0a4d7c)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}

@@ -242,7 +242,7 @@ const Team = () => {
           ))}
         </motion.div>
 
-        {/*rejoindre l'équipe */}
+        {/* rejoindre l'équipe
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -266,7 +266,7 @@ const Team = () => {
               Voir les opportunités
             </motion.button>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </motion.section>
   );

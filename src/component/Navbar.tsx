@@ -162,7 +162,7 @@ const Navbar = () => {
   return (
     <header
       ref={navRef}
-      className={`sticky top-0 z-50 transition-all duration-300 border-b border-gray-200 bg-white ${scrolled ? "backdrop-blur-md bg-white/90 shadow-md" : "bg-transparent border-transparent"}`}
+      className={`sticky top-0 z-50 transition-all duration-300 border-b border-gray-200 bg-gradient-to-br from-[#e0f7f1] via-white to-[#f0f9ff] ${scrolled ? "backdrop-blur-md bg-gradient-to-br from-[#e0f7f1] via-white to-[#f0f9ff]" : "bg-transparent border-transparent"}`}
     >
       <div className="px-4 md:px-6 py-3">
         <div className="grid grid-cols-2 md:grid-cols-3 items-center gap-4">

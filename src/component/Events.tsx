@@ -77,7 +77,7 @@ const Events = () => {
   return (
     <motion.section
       id="events"
-      variants={fadeUp}     
+      variants={fadeUp}
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="w-full py-16 md:py-24 bg-linear-to-br from-[#0a4d7c] via-[#0c5d94] to-[#0a4d7c] relative overflow-hidden"
     >
@@ -151,11 +151,10 @@ const Events = () => {
                 {/* Badge statut */}
                 <div className="absolute top-4 left-4">
                   <span
-                    className={`px-3 py-1.5 backdrop-blur-sm rounded-full text-xs font-semibold shadow-lg ${
-                      event.status === "À venir"
+                    className={`px-3 py-1.5 backdrop-blur-sm rounded-full text-xs font-semibold shadow-lg ${event.status === "À venir"
                         ? "bg-[#23c367] text-white"
                         : "bg-white/90 text-gray-700"
-                    }`}
+                      }`}
                   >
                     {event.status}
                   </span>
@@ -217,7 +216,7 @@ const Events = () => {
                             date: event.date,
                           },
                         ],
-                        category: "Événements",
+                        category: "Evénements",
                       },
                     })
                   }
@@ -250,7 +249,21 @@ const Events = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white font-semibold rounded-xl hover:bg-white hover:text-[#0a4d7c] transition-all duration-300 inline-flex items-center gap-2"
+            className="group px-8 py-4  bg-linear-to-r from-[#23c367] to-[#1fa85a] text-white font-semibold rounded-xl hover:bg-white transition-all duration-300 inline-flex items-center gap-2"
+            onClick={() =>
+              navigate("/voir-plus", {
+                state: {
+                  data: eventsData.map((event) => ({
+                    media: event.image,
+                    type: "image",
+                    title: event.title,
+                    desc: event.description,
+                    date: event.date,
+                  })),
+                  category: "Événements",
+                },
+              })
+            }
           >
             Voir tous les événements
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

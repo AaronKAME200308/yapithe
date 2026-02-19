@@ -34,9 +34,8 @@ const VoirPlus = () => {
   return (
     <div
       className="min-h-screen w-full relative"
-      style={{ fontFamily: "'Sora', sans-serif", background: "linear-gradient(135deg, #e8faf3 0%, #ffffff 50%, #eef6ff 100%)" }}
+      style={{ background: "linear-gradient(135deg, #e8faf3 0%, #ffffff 50%, #eef6ff 100%)" }}
     >
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800;900&display=swap');`}</style>
 
       {/* Blobs décoratifs */}
       <div style={{ position: "fixed", top: "-8rem", right: "-8rem", width: "28rem", height: "28rem", background: "rgba(35,195,103,0.07)", borderRadius: "50%", filter: "blur(60px)", pointerEvents: "none" }} />
@@ -94,14 +93,6 @@ const VoirPlus = () => {
             </motion.div>
           )}
 
-          {/* Ligne séparatrice */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
-            className="mt-6 origin-left"
-            style={{ height: "1px", background: "linear-gradient(to right, #23c367, rgba(10,77,124,0.2), transparent)" }}
-          />
         </motion.div>
 
         {/* ── LISTE ── */}

@@ -12,9 +12,7 @@ const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -30,39 +28,28 @@ const Home = () => {
       value: 10,
       suffix: "+",
       label: "Années d'expérience",
-      color: "from-blue-500 to-cyan-500",
+      gradient: "from-blue-500 to-cyan-500",
     },
     {
       icon: <Globe className="w-8 h-8" />,
       text: "Afrique & Europe",
       label: "Présence internationale",
-      color: "from-emerald-500 to-teal-500",
+      gradient: "from-emerald-500 to-teal-500",
     },
     {
       icon: <Building2 className="w-8 h-8" />,
       value: 150,
       suffix: "+",
       label: "Organisations accompagnées",
-      color: "from-purple-500 to-indigo-500",
+      gradient: "from-purple-500 to-indigo-500",
     },
   ];
 
   return (
     <section
-  id="Accueil"
-  style={{ background: 'linear-gradient(to bottom right, #e0f7f1, white, #f0f9ff)' }}
-  className="
-    w-full max-w-full mx-auto
-    px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16
-    min-h-screen          /* prend toute la hauteur écran */
-    flex items-start      /* colle le contenu en haut */
-    overflow-hidden
-    pt-24 md:pt-28       /* espace pour navbar fixe (ajuste) */
-    pb-12 sm:pb-14 md:pb-16
-  "
->
-
-
+      id="Accueil"
+      className="w-full min-h-screen flex items-start overflow-hidden pt-2 md:pt-3 pb-12 sm:pb-14 md:pb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-br from-[#e0f7f1] via-white to-[#f0f9ff]"
+    >
       <div className="max-w-7xl mx-auto w-full relative z-10 space-y-12">
         {/* ================= TITRE CENTRÉ EN HAUT ================= */}
         <motion.div
@@ -92,13 +79,7 @@ const Home = () => {
               initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={isMobile ? {} : { delay: 0.2 }}
-              style={{
-                background: 'linear-gradient(to right, #23c367, #0a4d7c)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}
-              className="text-2xl md:text-3xl lg:text-4xl font-extrabold leading-tight"
+              className="text-2xl md:text-3xl lg:text-4xl font-extrabold leading-tight bg-gradient-to-r from-[#23c367] to-[#0a4d7c] bg-clip-text text-transparent"
             >
               Cabinet de conseil
               <br />
@@ -127,8 +108,7 @@ const Home = () => {
               <motion.button
                 whileHover={isMobile ? {} : { scale: 1.05 }}
                 whileTap={{ scale: 0.97 }}
-                style={{ background: 'linear-gradient(to right, #23c367, #1fa85a)' }}
-                className="group px-6 py-3 md:px-8 md:py-4 rounded-xl text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2 text-sm md:text-base"
+                className="group px-6 py-3 md:px-8 md:py-4 rounded-xl text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2 bg-gradient-to-r from-[#23c367] to-[#1fa85a] text-sm md:text-base"
                 onClick={() => scrollToSection("Contact")}
               >
                 Travaillons ensemble
@@ -155,20 +135,14 @@ const Home = () => {
           >
             <div className="relative group">
               {/* Container image */}
-              <div 
-                style={{ background: 'linear-gradient(to bottom right, #0a4d7c, #0c5d94)' }}
-                className="relative my-4 w-64 md:w-80 lg:w-96 h-72 md:h-96 lg:h-[450px] rounded-t-[180px] overflow-hidden shadow-2xl group-hover:shadow-[0_20px_60px_rgba(35,195,103,0.3)] transition-all duration-500"
-              >
+              <div className="relative my-4 w-64 md:w-80 lg:w-96 h-72 md:h-96 lg:h-[450px] rounded-t-[180px] overflow-hidden shadow-2xl group-hover:shadow-[0_20px_60px_rgba(35,195,103,0.3)] transition-all duration-500 bg-gradient-to-br from-[#0a4d7c] to-[#0c5d94]">
                 <img
                   src="/yapth.jpeg"
                   alt="Yapithe & Partners"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
 
-                <div 
-                  style={{ background: 'linear-gradient(to top, rgba(10, 77, 124, 0.5), transparent)' }}
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                ></div>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-t from-[#0a4d7c]/50 to-transparent"></div>
 
                 <motion.div
                   initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -202,54 +176,27 @@ const Home = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={isMobile ? {} : { delay: 0.5 + index * 0.1 }}
                 whileHover={isMobile ? {} : { scale: 1.05, x: 10 }}
-                className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group"
+                className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group flex items-start gap-3 md:gap-4"
               >
-                <div className="flex items-start gap-3 md:gap-4">
-                  {/* Icône */}
-                  <div
-                    style={{ 
-                      background: `linear-gradient(to bottom right, ${
-                        stat.color.includes('blue') ? '#3b82f6, #06b6d4' :
-                        stat.color.includes('emerald') ? '#10b981, #14b8a6' :
-                        '#a855f7, #6366f1'
-                      })` 
-                    }}
-                    className="w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0"
-                  >
-                    {stat.icon}
-                  </div>
+                {/* Icône */}
+                <div className={`w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0 bg-gradient-to-br ${stat.gradient}`}>
+                  {stat.icon}
+                </div>
 
-                  {/* Contenu */}
-                  <div className="flex-1 min-w-0">
-                    {stat.value !== undefined ? (
-                      <p 
-                        style={{
-                          background: 'linear-gradient(to right, #23c367, #0a4d7c)',
-                          WebkitBackgroundClip: 'text',
-                          WebkitTextFillColor: 'transparent',
-                          backgroundClip: 'text'
-                        }}
-                        className="text-2xl md:text-3xl lg:text-4xl font-bold"
-                      >
-                        <CountUp value={stat.value} suffix={stat.suffix} />
-                      </p>
-                    ) : (
-                      <p 
-                        style={{
-                          background: 'linear-gradient(to right, #23c367, #0a4d7c)',
-                          WebkitBackgroundClip: 'text',
-                          WebkitTextFillColor: 'transparent',
-                          backgroundClip: 'text'
-                        }}
-                        className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight"
-                      >
-                        {stat.text}
-                      </p>
-                    )}
-                    <p className="text-xs md:text-sm lg:text-base text-[#7090a6] mt-1">
-                      {stat.label}
+                {/* Contenu */}
+                <div className="flex-1 min-w-0">
+                  {stat.value !== undefined ? (
+                    <p className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-[#23c367] to-[#0a4d7c] bg-clip-text text-transparent">
+                      <CountUp value={stat.value} suffix={stat.suffix} />
                     </p>
-                  </div>
+                  ) : (
+                    <p className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight bg-gradient-to-r from-[#23c367] to-[#0a4d7c] bg-clip-text text-transparent">
+                      {stat.text}
+                    </p>
+                  )}
+                  <p className="text-xs md:text-sm lg:text-base text-[#7090a6] mt-1">
+                    {stat.label}
+                  </p>
                 </div>
               </motion.div>
             ))}

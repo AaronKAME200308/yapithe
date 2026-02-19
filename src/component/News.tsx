@@ -137,12 +137,13 @@ const News = () => {
               className="inline-block px-4 py-2 bg-linear-to-r from-[#23c367]/20 to-[#0a4d7c]/20 backdrop-blur-sm rounded-full mb-6"
             >
               <span className="bg-linear-to-r from-[#23c367] to-[#0a4d7c] text-transparent bg-clip-text font-semibold text-sm uppercase tracking-wider">
-                Dernières Nouvelles
+                {sectionContent.title}
+                
               </span>
             </motion.div>
 
             <h2 className="text-3xl md:text-5xl font-bold bg-linear-to-r from-[#23c367] to-[#0a4d7c] text-transparent bg-clip-text mb-6 leading-tight">
-              {sectionContent.title}
+              Dernières Nouvelles
             </h2>
 
             <p className="text-base md:text-lg text-[#7090a6] leading-relaxed mb-8">
@@ -150,7 +151,7 @@ const News = () => {
             </p>
 
             {/* Stats rapides */}
-            <div className="grid grid-cols-3 gap-4 mb-8">
+            {/* <div className="grid grid-cols-3 gap-4 mb-8">
               {sliderData.map((item, i) => (
                 <motion.div
                   key={i}
@@ -180,7 +181,7 @@ const News = () => {
                   </p>
                 </motion.div>
               ))}
-            </div>
+            </div> */}
 
             <motion.button
               onClick={() =>

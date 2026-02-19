@@ -104,7 +104,7 @@ export const Chroniques = () => {
           <div className="text-center mt-12">
             <button
               onClick={() => navigate("/chroniques-page")}
-              className="px-8 py-4 bg-white text-[#0a4d7c] font-semibold rounded-xl hover:scale-105 transition flex items-center gap-2 mx-auto"
+              className="px-8 py-4  bg-linear-to-r from-[#23c367] to-[#1fa85a] text-[#ffffff] font-semibold rounded-xl hover:scale-105 transition flex items-center gap-2 mx-auto"
             >
               Voir plus
               <ArrowRight className="w-5 h-5" />
