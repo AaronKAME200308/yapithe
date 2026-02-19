@@ -151,7 +151,7 @@ const Home = () => {
               {/* Container image */}
               <div 
                 style={{ background: 'linear-gradient(to bottom right, #0a4d7c, #0c5d94)' }}
-                className="relative w-64 md:w-80 lg:w-96 h-72 md:h-96 lg:h-[450px] rounded-t-[180px] overflow-hidden shadow-2xl group-hover:shadow-[0_20px_60px_rgba(35,195,103,0.3)] transition-all duration-500"
+                className="relative my-4 w-64 md:w-80 lg:w-96 h-72 md:h-96 lg:h-[450px] rounded-t-[180px] overflow-hidden shadow-2xl group-hover:shadow-[0_20px_60px_rgba(35,195,103,0.3)] transition-all duration-500"
               >
                 <img
                   src="/yapth.jpeg"

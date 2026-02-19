@@ -56,9 +56,6 @@ const Partners = () => {
     <motion.div
       id="partners"
       variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
       transition={isMobile ? {} : { duration: 0.8, ease: "easeOut" }}
       style={{ background: 'linear-gradient(to right, #e0f7f1, #ffffff)' }}
       className="max-w-7xl mx-auto px-6 py-20"

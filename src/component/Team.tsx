@@ -96,10 +96,7 @@ const Team = () => {
   return (
     <motion.div
       id="team"
-      variants={fadeUp}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }} // Réduit à 0.1 pour mobile
+      variants={fadeUp}    
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="w-full py-16 md:py-24 bg-linear-to-br from-[#0a4d7c] via-[#0c5d94] to-[#0a4d7c] relative overflow-hidden"
     >

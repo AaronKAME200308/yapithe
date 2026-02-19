@@ -112,10 +112,7 @@ const News = () => {
   return (
     <motion.section
       id="news"
-      variants={fadeUp}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      variants={fadeUp}     
       transition={{ duration: 0.8 }}
       className="w-full py-16 md:py-24 bg-linear-to-br from-[#e0f7f1] via-white to-[#f0f9ff] relative overflow-hidden"
     >

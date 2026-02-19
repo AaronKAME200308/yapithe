@@ -45,9 +45,6 @@ const Galerie = () => {
       <motion.section
         id="galerie"
         variants={container}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
         className="max-w-7xl mx-auto px-6 py-16 md:py-24 bg-linear-to-br from-[#e0f7f1] via-white to-[#f0f9ff] relative overflow-hidden"
       >
         {/* Éléments décoratifs */}

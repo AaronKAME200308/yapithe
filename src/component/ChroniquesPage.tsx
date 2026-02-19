@@ -1,94 +1,139 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
-import { Calendar, Clock, X } from "lucide-react";
+import { Calendar, Clock, X, Play } from "lucide-react";
 import { chroniquesData } from "./ChroniquesData";
 
 export const ChroniquesPage = () => {
-    const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
-    return (
-        <>
-            <section className="min-h-screen py-20 bg-linear-to-br from-[#0a4d7c] via-[#0c5d94] to-[#0a4d7c]">
-                <div className="max-w-5xl mx-auto px-6">
-                    {/* HEADER */}
-                    <div className="text-center mb-16">
-                        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                            Toutes les chroniques
-                        </h1>
-                        <p className="text-white/80">
-                            Retrouvez l’ensemble de nos chroniques vidéo.
-                        </p>
+  return (
+    <>
+      {/* SECTION PRINCIPALE */}
+      <section className="min-h-screen pt-32 pb-20 bg-gradient-to-br from-[#061a2b] via-[#0a4d7c] to-[#061a2b] relative overflow-hidden">
+        {/* Effet décoratif flou */}
+        <div className="absolute top-0 left-0 w-72 h-72 bg-[#00c6ff]/20 blur-[120px] rounded-full" />
+        <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#0072ff]/20 blur-[120px] rounded-full" />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          {/* HEADER */}
+          <div className="text-center mb-20">
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl md:text-6xl font-extrabold text-white mb-6"
+            >
+              Toutes les chroniques
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-white/80 max-w-2xl mx-auto text-lg"
+            >
+              Explorez l’ensemble de nos chroniques vidéo et plongez dans des
+              analyses captivantes, inspirantes et enrichissantes.
+            </motion.p>
+          </div>
+
+          {/* GRID */}
+          <div className="grid lg:grid-cols-2 gap-12">
+            {chroniquesData.map((chronique, index) => (
+              <motion.div
+                key={chronique.id}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="group bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl hover:shadow-[0_20px_80px_rgba(0,114,255,0.35)] transition-all duration-500"
+              >
+                {/* VIDEO THUMB */}
+                <div
+                  onClick={() => setSelectedVideo(chronique.videoUrl)}
+                  className="relative w-full aspect-video cursor-pointer overflow-hidden"
+                >
+                  <iframe
+                    src={chronique.videoUrl}
+                    className="w-full h-full pointer-events-none group-hover:scale-110 transition-transform duration-700"
+                    allowFullScreen
+                  />
+
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition" />
+
+                  {/* Play button */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="bg-white/90 group-hover:bg-white p-4 rounded-full shadow-xl scale-90 group-hover:scale-110 transition">
+                      <Play className="w-6 h-6 text-[#0a4d7c]" />
                     </div>
-
-                    {/* LISTE VERTICALE */}
-                    <div className="flex flex-col gap-10">
-                        {chroniquesData.map((chronique) => (
-                            <div
-                                key={chronique.id}
-                                className="bg-white rounded-3xl overflow-hidden shadow-xl"
-                            >
-                                {/* VIDEO */}
-                                <div className="w-full aspect-video">
-                                    <iframe
-                                        src={chronique.videoUrl}
-                                        className="w-full h-full"
-                                        allowFullScreen
-                                    />
-                                </div>
-
-                                {/* CONTENT */}
-                                <div className="p-8">
-                                    <h2 className="text-2xl font-bold text-[#0a4d7c] mb-4">
-                                        {chronique.title}
-                                    </h2>
-
-                                    <p className="text-gray-600 mb-6 leading-relaxed">
-                                        {chronique.description}
-                                    </p>
-
-                                    <div className="flex items-center gap-6 text-sm text-gray-500">
-                                        <span className="flex items-center gap-2">
-                                            <Calendar className="w-4 h-4" />
-                                            {chronique.date}
-                                        </span>
-
-                                        <span className="flex items-center gap-2">
-                                            <Clock className="w-4 h-4" />
-                                            {chronique.readTime}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                  </div>
                 </div>
-            </section>
 
-            {/* MODAL */}
-            <AnimatePresence>
-                {selectedVideo && (
-                    <motion.div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-                        <div className="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden">
-                            <button
-                                onClick={() => setSelectedVideo(null)}
-                                className="absolute top-4 right-4 bg-white p-2 rounded-full"
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
+                {/* CONTENT */}
+                <div className="p-8">
+                  <h2 className="text-2xl font-bold text-white mb-4 group-hover:text-[#00c6ff] transition">
+                    {chronique.title}
+                  </h2>
 
-                            <iframe
-                                src={selectedVideo}
-                                className="w-full h-full"
-                                title="YouTube video player"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerPolicy="strict-origin-when-cross-origin"
-                                allowFullScreen
-                            />
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </>
-    );
+                  <p className="text-white/70 mb-6 leading-relaxed line-clamp-3">
+                    {chronique.description}
+                  </p>
+
+                  {/* META */}
+                  <div className="flex items-center gap-6 text-sm text-white/60">
+                    <span className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      {chronique.date}
+                    </span>
+
+                    <span className="flex items-center gap-2">
+                      <Clock className="w-4 h-4" />
+                      {chronique.readTime}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* MODAL VIDEO */}
+      <AnimatePresence>
+        {selectedVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/90 backdrop-blur-lg z-50 flex items-center justify-center p-6"
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="relative w-200 max-w-6xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl"
+            >
+              {/* Close */}
+              <button
+                onClick={() => setSelectedVideo(null)}
+                className="absolute top-4 right-4 bg-white p-2 rounded-full shadow-lg hover:scale-110 transition"
+              >
+                <X className="w-5 h-5 text-black" />
+              </button>
+
+              <iframe
+                src={selectedVideo}
+                className="w-full h-full"
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
 };

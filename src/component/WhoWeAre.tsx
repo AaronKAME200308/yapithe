@@ -72,10 +72,7 @@ const WhoWeAre = () => {
   return (
     <motion.div
       id="about"
-      variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}      
       transition={isMobile ? {} : { duration: 0.8, ease: "easeOut" }}
       style={{ background: 'linear-gradient(to bottom right, #e0f7f1, white, #f0f9ff)' }}
       className="w-full py-16 md:py-24 relative overflow-hidden"
