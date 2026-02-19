@@ -391,17 +391,47 @@ const ActualitesPage = () => {
             {/* Header */}
             <header className="relative z-10 max-w-3xl mx-auto px-6 pt-10 pb-8">
                 <motion.button
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    onClick={() => navigate(-1)}
-                    className="mb-8 flex items-center gap-2 text-sm font-semibold group transition-colors"
-                    style={{ color: "#0a4d7c" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "#23c367")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "#0a4d7c")}
-                >
-                    <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                    Retour
-                </motion.button>
+  initial={{ opacity: 0, x: -16 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.4, ease: "easeOut" }}
+  onClick={() => navigate(-1)}
+  className="mb-8 flex items-center gap-2 group"
+  style={{
+    background: "none",
+    border: "none",
+    padding: 0,
+    cursor: "pointer",
+  }}
+>
+  {/* Icône dans un cercle animé */}
+  <span
+    className="flex items-center justify-center w-9 h-9 rounded-full transition-all duration-300 group-hover:scale-110"
+    style={{
+      background: "rgba(10,77,124,0.08)",
+      color: "#0a4d7c",
+    }}
+    onMouseEnter={(e) => {
+      e.currentTarget.style.background = "rgba(35,195,103,0.15)";
+      e.currentTarget.style.color = "#23c367";
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.background = "rgba(10,77,124,0.08)";
+      e.currentTarget.style.color = "#0a4d7c";
+    }}
+  >
+    <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
+  </span>
+
+  {/* Label */}
+  <span
+    className="text-sm font-semibold tracking-wide transition-colors duration-300"
+    style={{ color: "#0a4d7c" }}
+    onMouseEnter={(e) => (e.currentTarget.style.color = "#23c367")}
+    onMouseLeave={(e) => (e.currentTarget.style.color = "#0a4d7c")}
+  >
+    Retour
+  </span>
+</motion.button>
 
                 <motion.div
                     initial={{ scale: 0 }}
@@ -411,7 +441,7 @@ const ActualitesPage = () => {
                     style={{ background: "linear-gradient(to right, rgba(35,195,103,0.12), rgba(10,77,124,0.12))" }}
                 >
                     <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: "#23c367" }} />
-                    <span className="text-sm font-semibold uppercase tracking-widest" style={{ background: "linear-gradient(to right, #23c367, #0a4d7c)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                    <span className="text-sm font-michroma font-semibold uppercase tracking-widest" style={{ background: "linear-gradient(to right, #23c367, #0a4d7c)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                         Yapithe & Partners
                     </span>
                 </motion.div>
