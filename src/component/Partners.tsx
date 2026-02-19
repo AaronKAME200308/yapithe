@@ -53,12 +53,12 @@ const Partners = () => {
   }, [logos.length, visibleCount]);
 
   return (
-    <motion.div
+    <motion.section
       id="partners"
       variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}
       transition={isMobile ? {} : { duration: 0.8, ease: "easeOut" }}
       style={{ background: 'linear-gradient(to right, #e0f7f1, #ffffff)' }}
-      className="max-w-7xl mx-auto px-6 py-20"
+      className="w-full max-w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden"
     >
       <h2 
         style={{
@@ -208,7 +208,7 @@ const Partners = () => {
           ))}
         </div>
       </div>
-    </motion.div>
+    </motion.section>
   );
 };
 

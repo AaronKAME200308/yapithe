@@ -70,12 +70,12 @@ const WhoWeAre = () => {
   };
 
   return (
-    <motion.div
+    <motion.section
       id="about"
       variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}      
       transition={isMobile ? {} : { duration: 0.8, ease: "easeOut" }}
       style={{ background: 'linear-gradient(to bottom right, #e0f7f1, white, #f0f9ff)' }}
-      className="w-full py-16 md:py-24 relative overflow-hidden"
+      className="w-full max-w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-14 md:py-16 overflow-hidden"
     >
       {/* Éléments décoratifs */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#23c367]/5 rounded-full blur-3xl"></div>
@@ -309,7 +309,7 @@ const WhoWeAre = () => {
           </motion.div>
         </div>
       </div>
-    </motion.div>
+    </motion.section>
   );
 };
 

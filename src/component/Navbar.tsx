@@ -3,7 +3,6 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 /* ===================== CONSTANTS ===================== */
-const SCROLL_OFFSET = 100;
 const THROTTLE_DELAY = 100;
 const SCROLL_THRESHOLD = 20;
 const LOGO_PATH = "/logoorigin.png";
@@ -17,7 +16,6 @@ const navLinks = [
     id: "Apropos",
     children: [
       { label: "Qui sommes-nous ?", id: "about" },
-      { label: "Nos Références pratiques", id: "references" },
       { label: "Nos Partenaires", id: "partners" },
       { label: "Notre Équipe", id: "team" },
     ],
@@ -28,11 +26,10 @@ const navLinks = [
     children: [
       { label: "News", id: "news" },
       { label: "Événements", id: "events" },
-      { label: "Galerie", id: "galerie" },
+      // { label: "Galerie", id: "galerie" },
     ],
   },
   { label: "Services", id: "Services" },
-  /*{ label: "IPCG", id: "IPCG" },*/
   { label: "Chroniques", id: "Chroniques" },
   { label: "Contact", id: "Contact" },
 ];
@@ -42,10 +39,7 @@ const useIsMobile = (breakpoint = 1024) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < breakpoint);
-    };
-
+    const checkMobile = () => setIsMobile(window.innerWidth < breakpoint);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -114,61 +108,42 @@ const Navbar = () => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  /* ===================== OPTIMIZED SCROLL LISTENER ===================== */
+  /* ===================== SCROLL LISTENER ===================== */
   useEffect(() => {
     sectionsRef.current = document.querySelectorAll("section, div[id]");
 
     const onScroll = () => {
-      // Check scrolled state
-      const isScrolled = window.scrollY > SCROLL_THRESHOLD;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
-      }
+      setScrolled(window.scrollY > SCROLL_THRESHOLD);
 
-      // Check active section
       if (!sectionsRef.current) return;
-
       let current = "Accueil";
       sectionsRef.current.forEach((section) => {
         const rect = section.getBoundingClientRect();
-        if (rect.top <= 120 && rect.bottom > 0) {
-          current = section.id;
-        }
+        if (rect.top <= 120 && rect.bottom > 0) current = section.id;
       });
-
-      if (current !== active) {
-        setActive(current);
-      }
+      setActive(current);
     };
 
     const throttledScroll = throttle(onScroll, THROTTLE_DELAY);
-
     window.addEventListener("scroll", throttledScroll, { passive: true });
-    onScroll(); // Initial check
+    onScroll();
 
     return () => window.removeEventListener("scroll", throttledScroll as any);
-  }, [scrolled, active]);
+  }, []);
 
   /* ===================== SCROLL TO SECTION ===================== */
-  const scrollToSection = useCallback((id: string) => {
-    setActive(id);
-    setOpenDropdown(null);
-    setOpen(false);
+ const scrollToSection = useCallback((id: string) => {
+  setActive(id);
+  setOpenDropdown(null);
+  setOpen(false);
 
-    const element = document.getElementById(id);
-    if (!element) {
-      console.warn(`Section with id "${id}" not found`);
-      return;
-    }
+  const element = document.getElementById(id);
+  if (!element) return;
 
-    const elementPosition = element.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - SCROLL_OFFSET;
+  const top = element.getBoundingClientRect().top + window.scrollY - (navRef.current?.offsetHeight ?? 80);
 
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: "smooth",
-    });
-  }, []);
+  window.scrollTo({ top, behavior: "smooth" });
+}, []);
 
   /* ===================== LINK CLASS ===================== */
   const linkClass = (id: string, children?: any[], isMobileView = false) => {
@@ -177,43 +152,19 @@ const Navbar = () => {
 
     if (isMobileView) {
       return `w-full px-4 py-3 rounded-xl transition-colors duration-300 flex items-center justify-between font-medium
-        ${
-          isActive
-            ? "bg-[#23c367] text-white shadow-lg"
-            : "text-white hover:bg-white/10"
-        }`;
+        ${isActive ? "bg-[#23c367] text-white shadow-lg" : "text-white hover:bg-white/10"}`;
     }
 
     return `px-4 py-2 rounded-full transition-colors duration-300 flex items-center gap-1.5 font-medium text-sm whitespace-nowrap
-      ${
-        isActive
-          ? "bg-[#23c367] text-white shadow-lg"
-          : scrolled
-          ? "text-[#0a4d7c] hover:bg-[#23c367]/10"
-          : "text-[#0a4d7c] hover:bg-[#23c367]/10"
-      }`;
+      ${isActive ? "bg-[#23c367] text-white shadow-lg" : "text-[#ffffff] hover:bg-[#23c367]/80"}`;
   };
 
   return (
     <header
       ref={navRef}
-      style={{
-        background: scrolled && !isMobile 
-          ? 'transparent' 
-          : 'linear-gradient(to right, #e0f7f1, white, #f0f9ff)'
-      }}
-      className={`sticky top-0 z-50 transition-all duration-300
-        ${
-          scrolled
-            ? `border shadow-lg md:rounded-full md:mx-5 md:top-2 text-white ${
-                isMobile ? "" : "backdrop-blur-md"
-              }`
-            : ""
-        }`}
+      className={`sticky top-0 z-50 transition-all duration-300 border-b border-gray-200 bg-white ${scrolled ? "backdrop-blur-md bg-white/90 shadow-md" : "bg-transparent border-transparent"}`}
     >
-      {/* ===== CONTAINER ===== */}
       <div className="px-4 md:px-6 py-3">
-        {/* GRID 3 ZONES */}
         <div className="grid grid-cols-2 md:grid-cols-3 items-center gap-4">
           {/* ================= LOGO ================= */}
           <motion.div
@@ -233,14 +184,7 @@ const Navbar = () => {
 
           {/* ================= NAV CENTER ================= */}
           <nav className="hidden lg:flex justify-center" role="navigation" aria-label="Navigation principale">
-            <ul
-              className={`flex gap-2 items-center px-3 py-2 rounded-full transition-all duration-300
-                ${
-                  scrolled
-                    ? "bg-white border border-white/20"
-                    : "bg-white shadow-lg"
-                }`}
-            >
+            <ul className="flex gap-2 items-center px-3 py-2 rounded-full transition-all duration-300 bg-[#0a4d7c]">
               {navLinks.filter((l) => l.label !== "Contact").map((link) => (
                 <li
                   key={link.label}
@@ -289,16 +233,13 @@ const Navbar = () => {
                             <button
                               onClick={() => scrollToSection(child.id)}
                               style={{
-                                background: active === child.id 
-                                  ? 'linear-gradient(to right, #23c367, #1fa85a)' 
-                                  : 'transparent'
+                                background:
+                                  active === child.id
+                                    ? "linear-gradient(to right, #23c367, #1fa85a)"
+                                    : "transparent",
                               }}
                               className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-200
-                                ${
-                                  active === child.id
-                                    ? "text-white shadow-lg"
-                                    : "text-[#0a4d7c] hover:bg-[#23c367]/10"
-                                }`}
+                                ${active === child.id ? "text-white shadow-lg" : "text-[#0a4d7c] hover:bg-[#23c367]/10"}`}
                               aria-current={active === child.id ? "page" : undefined}
                             >
                               {child.label}
@@ -323,8 +264,8 @@ const Navbar = () => {
               aria-label="Aller à la section contact"
             >
               <span className="relative z-10">Contact</span>
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #23c367, #1fa85a)' }}></div>
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(to right, #1fa85a, #23c367)' }}></div>
+              <div className="absolute inset-0" style={{ background: "linear-gradient(to right, #23c367, #1fa85a)" }}></div>
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "linear-gradient(to right, #1fa85a, #23c367)" }}></div>
             </motion.button>
           </div>
 
@@ -339,11 +280,7 @@ const Navbar = () => {
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={open}
           >
-            {open ? (
-              <X className="w-6 h-6 text-white" />
-            ) : (
-              <Menu className="w-6 h-6 text-white" />
-            )}
+            {open ? <X className="w-6 h-6 text-white" /> : <Menu className="w-6 h-6 text-white" />}
           </motion.button>
         </div>
       </div>
@@ -370,9 +307,7 @@ const Navbar = () => {
                     whileTap={{ scale: 0.98 }}
                     onClick={() => {
                       if (link.children) {
-                        setOpenDropdown(
-                          openDropdown === link.label ? null : link.label
-                        );
+                        setOpenDropdown(openDropdown === link.label ? null : link.label);
                       } else {
                         scrollToSection(link.id);
                       }
@@ -385,9 +320,7 @@ const Navbar = () => {
                     <span>{link.label}</span>
                     {link.children && (
                       <motion.div
-                        animate={{
-                          rotate: openDropdown === link.label ? 180 : 0,
-                        }}
+                        animate={{ rotate: openDropdown === link.label ? 180 : 0 }}
                         transition={{ duration: 0.2 }}
                       >
                         <ChevronDown className="w-5 h-5" />
@@ -417,11 +350,7 @@ const Navbar = () => {
                             <button
                               onClick={() => scrollToSection(child.id)}
                               className={`w-full text-left px-4 py-2.5 rounded-lg transition-colors duration-200 font-medium text-sm
-                                ${
-                                  active === child.id
-                                    ? "bg-[#23c367] text-white shadow-lg"
-                                    : "text-white/90 hover:bg-white/10"
-                                }`}
+                                ${active === child.id ? "bg-[#23c367] text-white shadow-lg" : "text-white/90 hover:bg-white/10"}`}
                               aria-current={active === child.id ? "page" : undefined}
                             >
                               {child.label}

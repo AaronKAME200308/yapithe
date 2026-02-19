@@ -10,6 +10,7 @@ import {ChroniquesPage} from './component/ChroniquesPage'
 import Chroniques from './component/Chroniques'
 import Contact from './component/Contact'
 import VoirPlus from './component/VoirPlus'
+import ActualitesPage from "./component/ActuPages";
 
 // Composant pour gérer le scroll en haut à chaque changement de route
 function ScrollToTop() {
@@ -32,7 +33,7 @@ function App() {
       <ScrollToTop />
       <div 
         style={{ background: 'linear-gradient(to right, #e0f7f1, #ffffff)' }}
-        className="min-h-screen w-screen flex flex-col bg-portfolio-bg text-white"
+        className="min-h-screen w-full flex flex-col bg-portfolio-bg text-white"
       >
         <Navbar />
 
@@ -48,6 +49,7 @@ function App() {
               <Contact />
             </>
           }/>
+          <Route path="/actu-page" element={<ActualitesPage />} />
           <Route path="/chroniques-page" element={<ChroniquesPage />} />
           <Route path="/voir-plus" element={<VoirPlus />} />
         </Routes>

@@ -48,14 +48,20 @@ const Home = () => {
   ];
 
   return (
-    <div
-      id="Accueil"
-      style={{ background: 'linear-gradient(to bottom right, #e0f7f1, white, #f0f9ff)' }}
-      className="min-h-screen flex flex-col justify-center px-6 md:px-10 py-20 md:py-10 relative overflow-hidden"
-    >
-      {/* Éléments décoratifs réduits */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#23c367]/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl"></div>
+    <section
+  id="Accueil"
+  style={{ background: 'linear-gradient(to bottom right, #e0f7f1, white, #f0f9ff)' }}
+  className="
+    w-full max-w-full mx-auto
+    px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16
+    min-h-screen          /* prend toute la hauteur écran */
+    flex items-start      /* colle le contenu en haut */
+    overflow-hidden
+    pt-24 md:pt-28       /* espace pour navbar fixe (ajuste) */
+    pb-12 sm:pb-14 md:pb-16
+  "
+>
+
 
       <div className="max-w-7xl mx-auto w-full relative z-10 space-y-12">
         {/* ================= TITRE CENTRÉ EN HAUT ================= */}
@@ -250,7 +256,7 @@ const Home = () => {
           </motion.div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

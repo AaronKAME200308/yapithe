@@ -94,11 +94,11 @@ const Team = () => {
   };
 
   return (
-    <motion.div
+    <motion.section
       id="team"
       variants={fadeUp}    
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-full py-16 md:py-24 bg-linear-to-br from-[#0a4d7c] via-[#0c5d94] to-[#0a4d7c] relative overflow-hidden"
+      className="w-full max-w-full mx-auto py-12 sm:py-14 md:py-16 bg-linear-to-br from-[#0a4d7c] via-[#0c5d94] to-[#0a4d7c] relative overflow-hidden"
     >
       <div className="absolute top-0 left-0 w-96 h-96 bg-[#23c367]/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
@@ -268,7 +268,7 @@ const Team = () => {
           </div>
         </motion.div>
       </div>
-    </motion.div>
+    </motion.section>
   );
 };
 

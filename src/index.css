@@ -28,34 +28,6 @@ body {
 }
 
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  font-weight: 400;
-  font-family: inherit;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-
-li button {
-  transition:
-    background-color 300ms ease,
-    color 300ms ease,
-    box-shadow 300ms ease,
-    transform 200ms ease;
-}
-
-li button:hover {
-  transform: translateY(-1px);
-}
-
-section {
-  scroll-margin-top: 90px;
-}
-
 .slider-container {
   width: 100%;
   margin: 50px auto;

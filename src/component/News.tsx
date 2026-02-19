@@ -184,7 +184,7 @@ const News = () => {
 
             <motion.button
               onClick={() =>
-                navigate("/voir-plus", {
+                navigate("/actu-page", {
                   state: {
                     data: sliderData,
                     category: "Actualités",
