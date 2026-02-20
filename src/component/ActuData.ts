@@ -8,8 +8,23 @@ export const articles = [
         number: "3",
         title: "SEANCE DE DEDICACE DE L'OUVRAGE LE CONTRÔLE DE GESTION, HIER, AUJOURD'HUI ET DEMAIN",
         excerpt:
-            "Accompagnement de la Société Nationale des Hydrocarbures (SNH) dans la structuration de sa gouvernance et de son pilotage de la performance.",
-        full: `En 2025, Yapithe & Partners a eu le privilège d’accompagner la Société Nationale des Hydrocarbures (SNH) dans une mission stratégique visant à structurer sa gouvernance et son pilotage de la performance.`,
+            `Le contrôle de gestion hier, aujourd'hui et
+demain explore l'évolution d'une fonction
+devenue un véritable levier stratégique de
+performance et de pérennité des
+organisations.`,
+        full: `Le contrôle de gestion hier, aujourd'hui et
+demain explore l'évolution d'une fonction
+devenue un véritable levier stratégique de
+performance et de pérennité des
+organisations. À travers une analyse claire
+et structurée, Michel Eugène YAPITHE
+retrace les fondements du contrôle de gestion,
+décrypte ses mutations technologiques,
+organisationnelles et culturelles, et projette
+les enjeux du métier de contrôleur
+de gestion de demain dans un contexte
+de performance durable.`,
         media: [
             { type: "image", src: "/post4_0.jpeg" },
             { type: "video", src: "/post4_1.mp4" },
@@ -27,7 +42,7 @@ export const articles = [
         number: "7",
         title: "STRATÉGIE, VISION & IMPACT",
         excerpt:
-            "Co-animation de la retraite stratégique du Port Autonome de Kribi pour clarifier la vision, structurer les plans d’actions et aligner le pilotage de la performance.",
+            "Les 10 et 11 septembre 2025, Yapithe & Partners a eu l’honneur de co-animer, aux côtés du cabinet hashtag#Go Ahead Africa, la retraite stratégique du Port Autonome de Kribi.",
         full: `Les 10 et 11 septembre 2025, Yapithe & Partners a eu l’honneur de co-animer, aux côtés du cabinet hashtag#Go Ahead Africa, la retraite stratégique du Port Autonome de Kribi.
 Deux journées intenses de réflexion et de co-construction qui ont permis au Directoire du hashtag#PAK de :
  ✔️ Clarifier sa vision stratégique
@@ -58,7 +73,7 @@ Chez Yapithe & Partners, nous croyons fermement que la performance durable naît
         number: "12",
         title: "FAIRE DE LA COMPTABILITÉ ANALYTIQUE UN VÉRITABLE LEVIER DE DÉCISION",
         excerpt:
-            "Accompagnement des Aéroports du Cameroun dans l’implémentation opérationnelle de la comptabilité analytique.",
+            "Au cours des mois d’octobre et novembre 2025, Yapithe & Partners a accompagné les hashtag#Aéroports du Cameroun (ADC SA) dans le processus d’implémentation opérationnelle de la comptabilité analytique, en étroite collaboration avec la Direction du Contrôle de Gestion",
         full: `Au cours des mois d’octobre et novembre 2025, Yapithe & Partners a accompagné les hashtag#Aéroports du Cameroun (ADC SA) dans le processus d’implémentation opérationnelle de la comptabilité analytique, en étroite collaboration avec la Direction du Contrôle de Gestion.
 
 👉 Pour rappel, entre 2022 et 2023, Yapithe & Partners avait déjà conduit, dans le cadre d’un marché, la mise en place du système de comptabilité analytique au sein des hashtag#ADC SA.
@@ -91,7 +106,7 @@ Pour y parvenir, notre accompagnement a reposé sur :
         number: "5",
         title: "PILOTAGE DE LA PERFORMANCE & TRANSFORMATION",
         excerpt:
-            "Mission structurante chez SAFVIS pour mettre en place un système intégré de pilotage.",
+            "Nous lançons une mission structurante au sein de SAFVIS, acteur engagé dans la production de vins, spiritueux et jus, avec une ambition claire : faire du pilotage de la performance un véritable levier de création de valeur",
         full: `Nous lançons une mission structurante au sein de SAFVIS, acteur engagé dans la production de vins, spiritueux et jus, avec une ambition claire : faire du pilotage de la performance un véritable levier de création de valeur.
 
 Cette mission s’inscrit dans une vision long terme visant à doter l’entreprise d’un système intégré de comptabilité analytique, de tableaux de bord décisionnels transversaux, d’indicateurs de performance pertinents, de reportings stratégiques et d’un système budgétaire aligné sur les spécificités et les enjeux de l’activité.

@@ -28,7 +28,7 @@ const WhoWeAre = () => {
     {
       icon: <Award className="w-6 h-6" />,
       title: "Expertise",
-      desc: "15+ ans d'expérience terrain",
+      desc: "18+ ans d'expérience terrain",
       gradient: "from-green-500 to-emerald-500",
     },
     {
@@ -189,7 +189,7 @@ const WhoWeAre = () => {
 
                 {/* Badge flottant */}
                 <motion.div className="absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-2xl p-4 border-4 border-green-500 text-center">
-                  <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#23c367] to-[#1fa85a]">15+</p>
+                  <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#23c367] to-[#1fa85a]">18+</p>
                   <p className="text-xs font-semibold text-gray-600">Années d'expertise</p>
                 </motion.div>
               </div>
