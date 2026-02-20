@@ -12,16 +12,11 @@ import Contact from './component/Contact'
 import VoirPlus from './component/VoirPlus'
 import ActualitesPage from "./component/ActuPages";
 
-// Composant pour gérer le scroll en haut à chaque changement de route
 function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant" // ou "smooth" si tu veux une animation
-    });
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [pathname]);
 
   return null;
@@ -44,11 +39,16 @@ function App() {
               <About />
               <Actu />
               <Services />
-              {/* <IPCG /> */}
               <Chroniques />
               <Contact />
             </>
           }/>
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/actualites" element={<Actu />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/chroniques" element={<Chroniques />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/actu-page" element={<ActualitesPage />} />
           <Route path="/chroniques-page" element={<ChroniquesPage />} />
           <Route path="/voir-plus" element={<VoirPlus />} />
