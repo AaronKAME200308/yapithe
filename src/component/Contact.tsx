@@ -43,7 +43,7 @@ const Contact = () => {
       label: "TikTok",
       value: "@yapitheandpartners",
       link: "https://www.tiktok.com/@yapitheandpartners?_r=1&_t=ZS-93izWRlWv8n",
-      color: "from-pink-500 to-rose-600",
+      color: "from-[#000000] to-[#000000]",
     },
     {
       icon: <FaYoutube className="w-6 h-6" />,
