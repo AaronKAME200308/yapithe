@@ -316,7 +316,7 @@ const Navbar = () => {
                                 background:
                                   active === child.id
                                     ? "linear-gradient(to right, #23c367, #1fa85a)"
-                                    : "transparent",
+                                    : "transparent hover:bg-[#23c367]/80",
                               }}
                               className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-200
                                   ${active === child.id
