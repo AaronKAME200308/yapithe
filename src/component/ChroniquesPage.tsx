@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { Calendar, Clock, Play, ArrowLeft, X } from "lucide-react";
+import { Calendar, ArrowLeft, X } from "lucide-react";
 import { chroniquesData } from "./ChroniquesData";
 import { useNavigate } from "react-router-dom";
 
@@ -130,16 +130,7 @@ export const ChroniquesPage = () => {
                                     </div>
                                 </div> */}
 
-                                {/* Badge durée */}
-                                {chronique.readTime && (
-                                    <div
-                                        className="absolute bottom-3 right-3 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold"
-                                        style={{ background: "rgba(10,77,124,0.75)", color: "#fff", backdropFilter: "blur(4px)" }}
-                                    >
-                                        <Clock className="w-3 h-3" />
-                                        {chronique.readTime}
-                                    </div>
-                                )}
+                               
                             </div>
 
                             {/* Contenu */}

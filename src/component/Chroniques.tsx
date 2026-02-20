@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import type { Variants } from "framer-motion";
-import { Calendar, ArrowRight, Clock, X } from "lucide-react";
+import { Calendar, ArrowRight, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { chroniquesData } from "./ChroniquesData";
 
