@@ -206,26 +206,25 @@ const Navbar = () => {
 
   /* ===================== LINK CLASS ===================== */
   const linkClass = (id: string, children?: any[], isMobileView = false) => {
-  const isActive =
-    active === id || (children && children.some((c) => c.id === active));
+    const isActive =
+      active === id || (children && children.some((c) => c.id === active));
 
-  if (isMobileView) {
-    return `w-full px-4 py-3 rounded-xl transition-colors duration-300 flex items-center justify-between font-medium
+    if (isMobileView) {
+      return `w-full px-4 py-3 rounded-xl transition-colors duration-300 flex items-center justify-between font-medium
       ${isActive ? "bg-[#23c367] text-white shadow-lg" : "text-white hover:bg-white/10"}`;
-  }
+    }
 
-  return `px-4 py-2 rounded-full transition-colors duration-300 flex items-center gap-1.5 font-medium text-sm whitespace-nowrap
+    return `px-4 py-2 rounded-full transition-colors duration-300 flex items-center gap-1.5 font-medium text-sm whitespace-nowrap
     ${isActive ? "bg-[#23c367] text-white shadow-lg" : "text-white hover:bg-[#23c367]/80"}`;
-};
+  };
 
   return (
     <header
       ref={navRef}
-      className={`sticky top-0 z-50 transition-all duration-300 border-b border-gray-200 bg-gradient-to-br from-[#e0f7f1] via-white to-[#f0f9ff] ${
-        scrolled
+      className={`sticky top-0 z-50 transition-all duration-300 border-b border-gray-200 bg-gradient-to-br from-[#e0f7f1] via-white to-[#f0f9ff] ${scrolled
           ? "backdrop-blur-md bg-gradient-to-br from-[#e0f7f1] via-white to-[#f0f9ff]"
           : "bg-transparent border-transparent"
-      }`}
+        }`}
     >
       <div className="px-4 md:px-6 py-3">
         <div className="grid grid-cols-2 md:grid-cols-3 items-center gap-4">
@@ -251,91 +250,92 @@ const Navbar = () => {
             role="navigation"
             aria-label="Navigation principale"
           >
-            <ul className="flex gap-2 items-center px-3 py-2 rounded-full transition-all duration-300 bg-[#0a4d7c]">
-              {navLinks
-                .filter((l) => l.label !== "Contact")
-                .map((link) => (
-                  <li
-                    key={link.label}
-                    className="relative"
-                    onMouseEnter={() =>
-                      link.children && setOpenDropdown(link.label)
+            <ul
+              className="flex gap-2 items-center px-3 py-2 rounded-full transition-all duration-300"
+              style={{ backgroundColor: '#0a4d7c' }}
+            >              {navLinks
+              .filter((l) => l.label !== "Contact")
+              .map((link) => (
+                <li
+                  key={link.label}
+                  className="relative"
+                  onMouseEnter={() =>
+                    link.children && setOpenDropdown(link.label)
+                  }
+                  onMouseLeave={() => setOpenDropdown(null)}
+                >
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={linkClass(link.id, link.children)}
+                    onClick={() =>
+                      !link.children && scrollToSection(link.sectionId)
                     }
-                    onMouseLeave={() => setOpenDropdown(null)}
+                    aria-expanded={
+                      link.children
+                        ? openDropdown === link.label
+                        : undefined
+                    }
+                    aria-haspopup={link.children ? "true" : undefined}
+                    aria-current={active === link.id ? "page" : undefined}
                   >
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={linkClass(link.id, link.children)}
-                      onClick={() =>
-                        !link.children && scrollToSection(link.sectionId)
-                      }
-                      aria-expanded={
-                        link.children
-                          ? openDropdown === link.label
-                          : undefined
-                      }
-                      aria-haspopup={link.children ? "true" : undefined}
-                      aria-current={active === link.id ? "page" : undefined}
-                    >
-                      {link.label}
-                      {link.children && (
-                        <motion.div
-                          animate={{
-                            rotate: openDropdown === link.label ? 180 : 0,
-                          }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <ChevronDown className="w-4 h-4" />
-                        </motion.div>
-                      )}
-                    </motion.button>
+                    {link.label}
+                    {link.children && (
+                      <motion.div
+                        animate={{
+                          rotate: openDropdown === link.label ? 180 : 0,
+                        }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <ChevronDown className="w-4 h-4" />
+                      </motion.div>
+                    )}
+                  </motion.button>
 
-                    {/* DROPDOWN */}
-                    <AnimatePresence>
-                      {link.children && openDropdown === link.label && (
-                        <motion.ul
-                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                          transition={{ duration: 0.2 }}
-                          className="absolute top-full left-0 mt-2 w-60 bg-white rounded-2xl shadow-2xl p-2 border border-gray-100"
-                          role="menu"
-                        >
-                          {link.children.map((child) => (
-                            <motion.li
-                              key={child.id}
-                              whileHover={{ x: 4 }}
-                              transition={{ duration: 0.2 }}
-                              role="menuitem"
+                  {/* DROPDOWN */}
+                  <AnimatePresence>
+                    {link.children && openDropdown === link.label && (
+                      <motion.ul
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-full left-0 mt-2 w-60 bg-white rounded-2xl shadow-2xl p-2 border border-gray-100"
+                        role="menu"
+                      >
+                        {link.children.map((child) => (
+                          <motion.li
+                            key={child.id}
+                            whileHover={{ x: 4 }}
+                            transition={{ duration: 0.2 }}
+                            role="menuitem"
+                          >
+                            <button
+                              onClick={() => scrollToSection(child.sectionId)}
+                              style={{
+                                background:
+                                  active === child.id
+                                    ? "linear-gradient(to right, #23c367, #1fa85a)"
+                                    : "transparent",
+                              }}
+                              className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-200
+                                  ${active === child.id
+                                  ? "text-white shadow-lg"
+                                  : "text-[#0a4d7c] hover:bg-[#23c367]/10"
+                                }`}
+                              aria-current={
+                                active === child.id ? "page" : undefined
+                              }
                             >
-                              <button
-                                onClick={() => scrollToSection(child.sectionId)}
-                                style={{
-                                  background:
-                                    active === child.id
-                                      ? "linear-gradient(to right, #23c367, #1fa85a)"
-                                      : "transparent",
-                                }}
-                                className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-200
-                                  ${
-                                    active === child.id
-                                      ? "text-white shadow-lg"
-                                      : "text-[#0a4d7c] hover:bg-[#23c367]/10"
-                                  }`}
-                                aria-current={
-                                  active === child.id ? "page" : undefined
-                                }
-                              >
-                                {child.label}
-                              </button>
-                            </motion.li>
-                          ))}
-                        </motion.ul>
-                      )}
-                    </AnimatePresence>
-                  </li>
-                ))}
+                              {child.label}
+                            </button>
+                          </motion.li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                </li>
+              ))}
             </ul>
           </nav>
 
@@ -456,10 +456,9 @@ const Navbar = () => {
                             <button
                               onClick={() => scrollToSection(child.sectionId)}
                               className={`w-full text-left px-4 py-2.5 rounded-lg transition-colors duration-200 font-medium text-sm
-                                ${
-                                  active === child.id
-                                    ? "bg-[#23c367] text-white shadow-lg"
-                                    : "text-white/90 hover:bg-white/10"
+                                ${active === child.id
+                                  ? "bg-[#23c367] text-white shadow-lg"
+                                  : "text-white/90 hover:bg-white/10"
                                 }`}
                               aria-current={
                                 active === child.id ? "page" : undefined
