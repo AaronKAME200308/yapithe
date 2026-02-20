@@ -206,17 +206,17 @@ const Navbar = () => {
 
   /* ===================== LINK CLASS ===================== */
   const linkClass = (id: string, children?: any[], isMobileView = false) => {
-    const isActive =
-      active === id || (children && children.some((c) => c.id === active));
+  const isActive =
+    active === id || (children && children.some((c) => c.id === active));
 
-    if (isMobileView) {
-      return `w-full px-4 py-3 rounded-xl transition-colors duration-300 flex items-center justify-between font-medium
-        ${isActive ? "bg-[#23c367] text-white shadow-lg" : "text-white hover:bg-white/10"}`;
-    }
+  if (isMobileView) {
+    return `w-full px-4 py-3 rounded-xl transition-colors duration-300 flex items-center justify-between font-medium
+      ${isActive ? "bg-[#23c367] text-white shadow-lg" : "text-white hover:bg-white/10"}`;
+  }
 
-    return `px-4 py-2 rounded-full transition-colors duration-300 flex items-center gap-1.5 font-medium text-sm whitespace-nowrap
-      ${isActive ? "bg-[#23c367] text-white shadow-lg" : "text-[#ffffff] hover:bg-[#23c367]/80"}`;
-  };
+  return `px-4 py-2 rounded-full transition-colors duration-300 flex items-center gap-1.5 font-medium text-sm whitespace-nowrap
+    ${isActive ? "bg-[#23c367] text-white shadow-lg" : "text-white hover:bg-[#23c367]/80"}`;
+};
 
   return (
     <header
