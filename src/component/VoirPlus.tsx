@@ -263,12 +263,12 @@ const VoirPlus = () => {
                   </div>
 
                   {/* Bouton — style ActualitesPage */}
-                 <button
-  onClick={() => {
-    setSelected(item);
-    setOpen(true);
-  }}
-  className="
+                  <button
+                    onClick={() => {
+                      setSelected(item);
+                      setOpen(true);
+                    }}
+                    className="
     mt-5
     px-3 py-2
     rounded-full
@@ -286,11 +286,11 @@ const VoirPlus = () => {
     focus:ring-2
     focus:ring-[#23c367]/40
   "
->
-  <span className="transition-all duration-300 hover:tracking-wide">
-    Voir plus
-  </span>
-</button>
+                  >
+                    <span className="transition-all duration-300 hover:tracking-wide">
+                      Voir plus
+                    </span>
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -327,12 +327,14 @@ const VoirPlus = () => {
         title={selected?.title || "Titre inconnu"}
         date={selected?.date || "Date inconnue"}
         media={selected?.media || "/default.jpg"}
-        description={selected?.desc || "Description inconnue"}
         isVideo={selected?.type === "video"}
+        description={selected?.desc || "Description inconnue"}
         category={category}
       />
     </div>
   );
 };
+
+655455510
 
 export default VoirPlus;

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Linkedin, Mail, Phone } from "lucide-react";
+import { Linkedin, Mail } from "lucide-react";
 import type { Variants } from "framer-motion";
 
 const fadeUp = {
@@ -59,7 +59,7 @@ const Team = () => {
     },
     {
       name: "Atenga owona marie-viviane",
-      role: "Consultant en control de gestion et pilotage de la performance",
+      role: "Consultante en controle de gestion et pilotage de la performance",
       img: "/membre7.png",
       bio: "Redaction des cahiers de charge construction des tableaux de bord",
       linkedin: "#",
@@ -225,14 +225,14 @@ const Team = () => {
                     <Mail className="w-5 h-5" />
                   </motion.a>
 
-                  <motion.a
+                  {/* <motion.a
                     href="#"
                     whileHover={{ scale: 1.1, y: -3 }}
                     whileTap={{ scale: 0.95 }}
                     className="w-10 h-10 bg-linear-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     <Phone className="w-5 h-5" />
-                  </motion.a>
+                  </motion.a> */}
                 </div>
               </div>
 

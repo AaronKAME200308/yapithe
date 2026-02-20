@@ -20,8 +20,8 @@ const Contact = () => {
     {
       icon: <Phone className="w-6 h-6" />,
       label: "Téléphone",
-      value: "+237 123 456 789",
-      link: "tel:+237123456789",
+      value: "+237 699 948 421",
+      link: "tel:+237699948421",
       color: "from-emerald-500 to-teal-600",
     },
     {

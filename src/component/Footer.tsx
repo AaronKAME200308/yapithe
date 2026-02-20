@@ -34,7 +34,7 @@ const Footer = () => {
   const contactInfo = [
     {
       icon: <MapPin className="w-5 h-5" />,
-      text: "123 Business Street, Bastos, Yaoundé, Cameroun",
+      text: "4ème étage de l'immeuble BICEC face Neptune Oil, Carrefour Bastos, Yaoundé, Cameroun",
     },
     {
       icon: <Clock className="w-5 h-5" />,
@@ -46,7 +46,7 @@ const Footer = () => {
     },
     {
       icon: <Phone className="w-5 h-5" />,
-      text: "+237 123 456 789",
+      text: "+237 699 948 421",
     },
   ];
 

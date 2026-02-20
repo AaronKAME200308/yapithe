@@ -8,17 +8,23 @@ const articles = rawArticles as Article[];
 /* ─── TYPES ──────────────────────────────────────────────────── */
 type Category = "Expertise" | "Partenariats" | "Innovation" | "Publication" | "Événement";
 
+/* ─── TYPES ─────────────────────────────────────────────────── */
+
+interface MediaItem {
+    type: "image" | "video";
+    src: string;
+};
+
 interface Article {
-    id: number | string;
-    category: Category;
+    id: number;
+    category: "Expertise" | "Partenariats" | "Innovation";
     date: string;
+    number?: string;
     title: string;
     excerpt: string;
     full: string;
-    images: string[];
-    number?: string;
-}
-
+    media: MediaItem[];
+};
 interface CategoryStyleEntry {
     dot: string;
     bgLight: string;
@@ -35,7 +41,7 @@ const categoryStyle: Record<Category, CategoryStyleEntry> = {
     Événement: { dot: "#1fa85a", bgLight: "rgba(31,168,90,0.1)", text: "#1a9950", border: "rgba(31,168,90,0.3)" },
 };
 
-/* ─── IMAGE GRID (post preview) ─────────────────────────────── */
+//* ─── IMAGE GRID (post preview) ─────────────────────────────── */
 interface ImageGridProps {
     images: string[];
     onOpenModal: (index: number) => void;
@@ -43,14 +49,51 @@ interface ImageGridProps {
 }
 
 const ImageGrid = ({ images, onOpenModal, startIndex = 0 }: ImageGridProps) => {
+    const isVideo = (src: string) => /\.(mp4|webm|ogg)$/i.test(src);
+
+    const renderMedia = (src: string, _index: number) => {
+        if (isVideo(src)) {
+            return (
+                <>
+                    <video
+                        src={src}
+                        className="absolute inset-0 w-full h-full object-cover"
+                        muted
+                        preload="metadata"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                    {/* Icône play */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-full bg-black/50 flex items-center justify-center">
+                            <span className="text-white text-lg">▶</span>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+
+        return (
+            <>
+                <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105"
+                    style={{ backgroundImage: `url(${src})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+            </>
+        );
+    };
+
     const show = images.slice(0, 3);
     const remaining = images.length - 3;
 
     if (images.length === 1) {
         return (
-            <div className="relative w-full overflow-hidden cursor-pointer" style={{ height: 220 }} onClick={() => onOpenModal(startIndex)}>
-                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" style={{ backgroundImage: `url(${images[0]})` }} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+            <div
+                className="relative w-full overflow-hidden cursor-pointer"
+                style={{ height: 220 }}
+                onClick={() => onOpenModal(startIndex)}
+            >
+                {renderMedia(images[0], 0)}
             </div>
         );
     }
@@ -59,9 +102,12 @@ const ImageGrid = ({ images, onOpenModal, startIndex = 0 }: ImageGridProps) => {
         return (
             <div className="flex gap-0.5" style={{ height: 220 }}>
                 {images.map((img, i) => (
-                    <div key={i} className="flex-1 relative overflow-hidden cursor-pointer" onClick={() => onOpenModal(i)}>
-                        <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" style={{ backgroundImage: `url(${img})` }} />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                    <div
+                        key={i}
+                        className="flex-1 relative overflow-hidden cursor-pointer"
+                        onClick={() => onOpenModal(i)}
+                    >
+                        {renderMedia(img, i)}
                     </div>
                 ))}
             </div>
@@ -72,26 +118,42 @@ const ImageGrid = ({ images, onOpenModal, startIndex = 0 }: ImageGridProps) => {
     return (
         <div className="flex gap-0.5" style={{ height: 220 }}>
             {/* Large left */}
-            <div className="relative overflow-hidden cursor-pointer" style={{ flex: "0 0 60%" }} onClick={() => onOpenModal(0)}>
-                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" style={{ backgroundImage: `url(${show[0]})` }} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+            <div
+                className="relative overflow-hidden cursor-pointer"
+                style={{ flex: "0 0 60%" }}
+                onClick={() => onOpenModal(0)}
+            >
+                {renderMedia(show[0], 0)}
             </div>
 
             {/* Right column */}
             <div className="flex flex-col gap-0.5" style={{ flex: "0 0 40%" }}>
-                {/* Second image */}
-                <div className="relative overflow-hidden cursor-pointer flex-1" onClick={() => onOpenModal(1)}>
-                    <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" style={{ backgroundImage: `url(${show[1]})` }} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                {/* Second */}
+                <div
+                    className="relative overflow-hidden cursor-pointer flex-1"
+                    onClick={() => onOpenModal(1)}
+                >
+                    {renderMedia(show[1], 1)}
                 </div>
 
-                {/* Third image or overflow badge */}
-                <div className="relative overflow-hidden cursor-pointer flex-1" onClick={() => onOpenModal(2)}>
-                    <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" style={{ backgroundImage: `url(${show[2]})` }} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                {/* Third */}
+                <div
+                    className="relative overflow-hidden cursor-pointer flex-1"
+                    onClick={() => onOpenModal(2)}
+                >
+                    {renderMedia(show[2], 2)}
+
                     {remaining > 0 && (
-                        <div className="absolute inset-0 flex items-center justify-center" style={{ background: "rgba(10,77,124,0.75)", backdropFilter: "blur(2px)" }}>
-                            <span className="text-white text-2xl font-black">+{remaining}</span>
+                        <div
+                            className="absolute inset-0 flex items-center justify-center"
+                            style={{
+                                background: "rgba(10,77,124,0.75)",
+                                backdropFilter: "blur(2px)"
+                            }}
+                        >
+                            <span className="text-white text-2xl font-black">
+                                +{remaining}
+                            </span>
                         </div>
                     )}
                 </div>
@@ -109,9 +171,13 @@ interface ModalProps {
 
 const Modal = ({ article, initialPhoto, onClose }: ModalProps) => {
     const c = categoryStyle[article.category] ?? categoryStyle["Expertise"];
+
     const [photoIndex, setPhotoIndex] = useState<number>(initialPhoto ?? 0);
     const [dir, setDir] = useState<number>(0);
-    const total = article.images.length;
+    const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+
+    const mediaArray = article.media ?? article.media;
+    const total = mediaArray.length;
 
     const go = (newDir: number) => {
         setDir(newDir);
@@ -124,156 +190,235 @@ const Modal = ({ article, initialPhoto, onClose }: ModalProps) => {
         exit: (d: number) => ({ x: d < 0 ? "100%" : "-100%", opacity: 0 }),
     };
 
+    const currentItem =
+        article.media
+            ? article.media[photoIndex]
+            : { type: "image", src: article.media[photoIndex] };
+
     return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10"
-            onClick={onClose}
-        >
-            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-
+        <>
+            {/* ───────────── MODAL PRINCIPAL ───────────── */}
             <motion.div
-                initial={{ opacity: 0, y: 40, scale: 0.97 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 40, scale: 0.97 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-                onClick={(e) => e.stopPropagation()}
-                className="relative z-10 w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col"
-                style={{ maxHeight: "90vh" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10"
+                onClick={onClose}
             >
-                {/* ── Photo slider ── */}
-                <div className="relative shrink-0 overflow-hidden bg-black" style={{ height: 230 }}>
-                    <AnimatePresence initial={false} custom={dir}>
-                        <motion.div
-                            key={photoIndex}
-                            custom={dir}
-                            variants={slideVariants}
-                            initial="enter"
-                            animate="center"
-                            exit="exit"
-                            transition={{ duration: 0.35, ease: "easeInOut" }}
-                            className="absolute inset-0 bg-cover bg-center"
-                            style={{ backgroundImage: `url(${article.images[photoIndex]})` }}
-                        />
-                    </AnimatePresence>
+                <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
 
-                    {/* Gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
+                <motion.div
+                    initial={{ opacity: 0, y: 40, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 40, scale: 0.97 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    onClick={(e) => e.stopPropagation()}
+                    className="relative z-10 w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col"
+                    style={{ maxHeight: "90vh" }}
+                >
 
-                    {/* Close */}
-                    <button
-                        onClick={onClose}
-                        className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center rounded-full text-white transition-colors z-10"
-                        style={{ background: "rgba(255,255,255,0.2)", backdropFilter: "blur(6px)" }}
-                        onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.35)")}
-                        onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.2)")}
+                    {/* ── MEDIA SLIDER ── */}
+                    <div
+                        className="relative shrink-0 overflow-hidden bg-black flex items-center justify-center"
+                        style={{ height: 230 }}
                     >
-                        <X className="w-4 h-4" />
-                    </button>
-
-                    {/* Nav arrows (only if multiple photos) */}
-                    {total > 1 && (
-                        <>
-                            <button
-                                onClick={() => go(-1)}
-                                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full text-white z-10 transition-colors"
-                                style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(4px)" }}
-                                onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(35,195,103,0.8)")}
-                                onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(0,0,0,0.35)")}
+                        <AnimatePresence initial={false} custom={dir}>
+                            <motion.div
+                                key={photoIndex}
+                                custom={dir}
+                                variants={slideVariants}
+                                initial="enter"
+                                animate="center"
+                                exit="exit"
+                                transition={{ duration: 0.35, ease: "easeInOut" }}
+                                className="absolute inset-0 flex items-center justify-center cursor-zoom-in"
+                                onClick={() => setIsFullscreen(true)}
                             >
-                                <ChevronLeft className="w-5 h-5" />
-                            </button>
-                            <button
-                                onClick={() => go(1)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full text-white z-10 transition-colors"
-                                style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(4px)" }}
-                                onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(35,195,103,0.8)")}
-                                onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(0,0,0,0.35)")}
-                            >
-                                <ChevronRight className="w-5 h-5" />
-                            </button>
-                        </>
-                    )}
+                                {currentItem.type === "video" ? (
+                                    <video
+                                        src={currentItem.src}
+                                        className="w-full h-full object-cover"
+                                        controls
+                                    />
+                                ) : (
+                                    <img
+                                        src={currentItem.src}
+                                        className="w-full h-full object-cover"
+                                        alt=""
+                                    />
+                                )}
+                            </motion.div>
+                        </AnimatePresence>
 
-                    {/* Counter */}
-                    {total > 1 && (
-                        <div className="absolute bottom-4 right-4 px-3 py-1 rounded-full text-white text-xs font-semibold z-10" style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(4px)" }}>
-                            {photoIndex + 1} / {total}
-                        </div>
-                    )}
+                        {/* Gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
 
-                    {/* Dots */}
-                    {total > 1 && (
-                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-                            {article.images.map((_, i) => (
+                        {/* Close */}
+                        <button
+                            onClick={onClose}
+                            className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center rounded-full text-white transition-colors z-10"
+                            style={{ background: "rgba(255,255,255,0.2)", backdropFilter: "blur(6px)" }}
+                        >
+                            <X className="w-4 h-4" />
+                        </button>
+
+                        {/* Nav arrows */}
+                        {total > 1 && (
+                            <>
                                 <button
-                                    key={i}
-                                    onClick={() => { setDir(i > photoIndex ? 1 : -1); setPhotoIndex(i); }}
-                                    className="rounded-full transition-all duration-300"
-                                    style={{
-                                        width: i === photoIndex ? 20 : 6,
-                                        height: 6,
-                                        background: i === photoIndex ? "#23c367" : "rgba(255,255,255,0.5)",
-                                    }}
-                                />
-                            ))}
+                                    onClick={() => go(-1)}
+                                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full text-white z-10 transition-colors"
+                                    style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(4px)" }}
+                                >
+                                    <ChevronLeft className="w-5 h-5" />
+                                </button>
+                                <button
+                                    onClick={() => go(1)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full text-white z-10 transition-colors"
+                                    style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(4px)" }}
+                                >
+                                    <ChevronRight className="w-5 h-5" />
+                                </button>
+                            </>
+                        )}
+
+                        {/* Counter */}
+                        {total > 1 && (
+                            <div
+                                className="absolute bottom-4 right-4 px-3 py-1 rounded-full text-white text-xs font-semibold z-10"
+                                style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(4px)" }}
+                            >
+                                {photoIndex + 1} / {total}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Thumbnail strip */}
+                    {total > 1 && (
+                        <div
+                            className="flex gap-2 px-4 py-3 border-b border-gray-100 overflow-x-auto shrink-0"
+                            style={{ scrollbarWidth: "none" }}
+                        >
+                            {mediaArray.map((item: any, i: number) => {
+                                const src = article.media ? item.src : item;
+                                const isVideo = /\.(mp4|webm|ogg)$/i.test(src);
+
+                                return (
+                                    <button
+                                        key={i}
+                                        onClick={() => {
+                                            setDir(i > photoIndex ? 1 : -1);
+                                            setPhotoIndex(i);
+                                        }}
+                                        className="shrink-0 rounded-lg overflow-hidden transition-all duration-200 relative"
+                                        style={{
+                                            width: 48,
+                                            height: 36,
+                                            outline: i === photoIndex ? "2px solid #23c367" : "2px solid transparent",
+                                            outlineOffset: 1,
+                                            opacity: i === photoIndex ? 1 : 0.55,
+                                        }}
+                                    >
+                                        {isVideo ? (
+                                            <>
+                                                <div
+                                                    className="w-full h-full bg-cover bg-center"
+                                                    style={{
+                                                        backgroundImage: `url(${src}#t=5)`,
+                                                    }}
+                                                />
+                                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                                    <div className="w-4 h-4 bg-black/50 rounded-full flex items-center justify-center">
+                                                        <span className="text-white text-xs font-bold">▶</span>
+                                                    </div>
+                                                </div>
+                                            </>
+                                        ) : (
+                                            <div
+                                                className="w-full h-full bg-cover bg-center"
+                                                style={{ backgroundImage: `url(${src})` }}
+                                            />
+                                        )}
+                                    </button>
+                                );
+                            })}
                         </div>
                     )}
 
-                    {/* Title overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
-                        {article.number && (
-                            <p className="text-5xl font-black leading-none mb-1" style={{ color: "#23c367" }}>{article.number}</p>
-                        )}
-                        <h2 className="text-xl md:text-2xl font-bold text-white leading-snug">{article.title}</h2>
-                    </div>
-                </div>
-
-                {/* Thumbnail strip */}
-                {total > 1 && (
-                    <div className="flex gap-2 px-4 py-3 border-b border-gray-100 overflow-x-auto shrink-0" style={{ scrollbarWidth: "none" }}>
-                        {article.images.map((img, i) => (
-                            <button
-                                key={i}
-                                onClick={() => { setDir(i > photoIndex ? 1 : -1); setPhotoIndex(i); }}
-                                className="shrink-0 rounded-lg overflow-hidden transition-all duration-200"
+                    {/* Text content */}
+                    <div className="flex-1 overflow-y-auto p-6 md:p-8">
+                        <div className="flex items-center gap-3 mb-5">
+                            <span
+                                className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border"
                                 style={{
-                                    width: 48, height: 36,
-                                    outline: i === photoIndex ? "2px solid #23c367" : "2px solid transparent",
-                                    outlineOffset: 1,
-                                    opacity: i === photoIndex ? 1 : 0.55,
+                                    backgroundColor: c.bgLight,
+                                    color: c.text,
+                                    borderColor: c.border,
                                 }}
                             >
-                                <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${img})` }} />
-                            </button>
-                        ))}
-                    </div>
-                )}
+                                <span
+                                    className="w-1.5 h-1.5 rounded-full"
+                                    style={{ backgroundColor: c.dot }}
+                                />
+                                {article.category}
+                            </span>
+                            <span
+                                className="flex items-center gap-1.5 text-xs"
+                                style={{ color: "#7090a6" }}
+                            >
+                                <Calendar className="w-3.5 h-3.5" />
+                                {article.date}
+                            </span>
+                        </div>
 
-                {/* Text content */}
-                <div className="flex-1 overflow-y-auto p-6 md:p-8">
-                    <div className="flex items-center gap-3 mb-5">
-                        <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border" style={{ backgroundColor: c.bgLight, color: c.text, borderColor: c.border }}>
-                            <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: c.dot }} />
-                            {article.category}
-                        </span>
-                        <span className="flex items-center gap-1.5 text-xs" style={{ color: "#7090a6" }}>
-                            <Calendar className="w-3.5 h-3.5" />
-                            {article.date}
-                        </span>
+                        <div className="space-y-4">
+                            {article.full.split("\n\n").map((para, i) => (
+                                <p
+                                    key={i}
+                                    className="text-sm md:text-base leading-relaxed"
+                                    style={{ color: "#3d5a6e" }}
+                                >
+                                    {para}
+                                </p>
+                            ))}
+                        </div>
                     </div>
-                    <div className="space-y-4">
-                        {article.full.split("\n\n").map((para, i) => (
-                            <p key={i} className="text-sm md:text-base leading-relaxed" style={{ color: "#3d5a6e" }}>{para}</p>
-                        ))}
-                    </div>
-                </div>
 
-                <div className="h-1 shrink-0" style={{ background: "linear-gradient(to right, #23c367, #0a4d7c)" }} />
+                    <div
+                        className="h-1 shrink-0"
+                        style={{ background: "linear-gradient(to right, #23c367, #0a4d7c)" }}
+                    />
+                </motion.div>
             </motion.div>
-        </motion.div>
+
+            {/* ───────────── FULLSCREEN VIEW ───────────── */}
+            <AnimatePresence>
+                {isFullscreen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[60] bg-black flex items-center justify-center p-6"
+                        onClick={() => setIsFullscreen(false)}
+                    >
+                        {currentItem.type === "video" ? (
+                            <video
+                                src={currentItem.src}
+                                className="max-w-full max-h-full"
+                                controls
+                                autoPlay
+                            />
+                        ) : (
+                            <img
+                                src={currentItem.src}
+                                className="max-w-full max-h-full object-contain"
+                                alt=""
+                            />
+                        )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </>
     );
 };
 
@@ -307,7 +452,7 @@ const PostRow = ({ article, index, onOpen }: PostRowProps) => {
                     {/* Image grid */}
                     <div className="w-full md:w-72 lg:w-80 shrink-0 overflow-hidden">
                         <ImageGrid
-                            images={article.images}
+                            images={article.media.map((m) => m.src)}
                             onOpenModal={(photoIdx) => onOpen(article, photoIdx)}
                         />
                     </div>
@@ -324,10 +469,10 @@ const PostRow = ({ article, index, onOpen }: PostRowProps) => {
                                     <Calendar className="w-3 h-3" />
                                     {article.date}
                                 </span>
-                                {article.images.length > 1 && (
+                                {article.media.length > 1 && (
                                     <span className="flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full"
                                         style={{ background: "rgba(10,77,124,0.07)", color: "#0a4d7c" }}>
-                                        {article.images.length} photos
+                                        {article.media.length} photos
                                     </span>
                                 )}
                             </div>
@@ -471,7 +616,7 @@ const ActualitesPage = () => {
 
                 <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }}
                     className="text-sm md:text-base max-w-xl" style={{ color: "#7090a6" }}>
-                    Retrouvez toutes les dernières actualités de Yapithe & Partners — projets, interventions et publications récentes.
+                    Retrouvez toutes les dernières actualités de Yapithe & Partners : projets, interventions et publications récentes.
                 </motion.p>
             </header>
 

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Calendar, MapPin, Users, ArrowRight, Clock } from "lucide-react";
 import type { Variants } from "framer-motion";
+import {eventsData} from "./EventData"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -11,44 +12,7 @@ const fadeUp = {
 const Events = () => {
   const navigate = useNavigate();
 
-  const eventsData = [
-    {
-      id: 1,
-      title: "Conférence Annuelle 2026",
-      description: "Découvrez les tendances en gestion d'entreprise et stratégies de croissance pour l'année à venir.",
-      date: "15 Mars 2026",
-      time: "14:00 - 18:00",
-      location: "Hôtel Hilton, Yaoundé",
-      participants: "120+ participants",
-      image: "/event1.jpg",
-      category: "Conférence",
-      status: "À venir",
-    },
-    {
-      id: 2,
-      title: "Atelier Performance & KPI",
-      description: "Formation pratique sur le pilotage de la performance et l'utilisation des indicateurs clés.",
-      date: "05 Février 2026",
-      time: "09:00 - 17:00",
-      location: "Centre de formation, Douala",
-      participants: "45 participants",
-      image: "/event2.jpg",
-      category: "Atelier",
-      status: "Terminé",
-    },
-    {
-      id: 3,
-      title: "Networking Business Leaders",
-      description: "Rencontre exclusive entre dirigeants d'entreprises pour échanger sur les meilleures pratiques.",
-      date: "28 Janvier 2026",
-      time: "18:30 - 21:00",
-      location: "Restaurant Le Beau Rivage",
-      participants: "30 participants",
-      image: "/event3.jpg",
-      category: "Networking",
-      status: "Terminé",
-    },
-  ];
+  
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },

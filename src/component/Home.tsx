@@ -25,7 +25,7 @@ const Home = () => {
   const stats = [
     {
       icon: <Award className="w-8 h-8" />,
-      value: 10,
+      value: 15,
       suffix: "+",
       label: "Années d'expérience",
       gradient: "from-blue-500 to-cyan-500",
