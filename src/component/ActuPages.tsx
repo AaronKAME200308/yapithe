@@ -144,7 +144,7 @@ const Modal = ({ article, initialPhoto, onClose }: ModalProps) => {
                 style={{ maxHeight: "90vh" }}
             >
                 {/* ── Photo slider ── */}
-                <div className="relative flex-shrink-0 overflow-hidden bg-black" style={{ height: 230 }}>
+                <div className="relative shrink-0 overflow-hidden bg-black" style={{ height: 230 }}>
                     <AnimatePresence initial={false} custom={dir}>
                         <motion.div
                             key={photoIndex}
@@ -233,12 +233,12 @@ const Modal = ({ article, initialPhoto, onClose }: ModalProps) => {
 
                 {/* Thumbnail strip */}
                 {total > 1 && (
-                    <div className="flex gap-2 px-4 py-3 border-b border-gray-100 overflow-x-auto flex-shrink-0" style={{ scrollbarWidth: "none" }}>
+                    <div className="flex gap-2 px-4 py-3 border-b border-gray-100 overflow-x-auto shrink-0" style={{ scrollbarWidth: "none" }}>
                         {article.images.map((img, i) => (
                             <button
                                 key={i}
                                 onClick={() => { setDir(i > photoIndex ? 1 : -1); setPhotoIndex(i); }}
-                                className="flex-shrink-0 rounded-lg overflow-hidden transition-all duration-200"
+                                className="shrink-0 rounded-lg overflow-hidden transition-all duration-200"
                                 style={{
                                     width: 48, height: 36,
                                     outline: i === photoIndex ? "2px solid #23c367" : "2px solid transparent",
@@ -271,7 +271,7 @@ const Modal = ({ article, initialPhoto, onClose }: ModalProps) => {
                     </div>
                 </div>
 
-                <div className="h-1 flex-shrink-0" style={{ background: "linear-gradient(to right, #23c367, #0a4d7c)" }} />
+                <div className="h-1 shrink-0" style={{ background: "linear-gradient(to right, #23c367, #0a4d7c)" }} />
             </motion.div>
         </motion.div>
     );
@@ -305,7 +305,7 @@ const PostRow = ({ article, index, onOpen }: PostRowProps) => {
                 <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"}`}>
 
                     {/* Image grid */}
-                    <div className="w-full md:w-72 lg:w-80 flex-shrink-0 overflow-hidden">
+                    <div className="w-full md:w-72 lg:w-80 shrink-0 overflow-hidden">
                         <ImageGrid
                             images={article.images}
                             onOpenModal={(photoIdx) => onOpen(article, photoIdx)}
@@ -318,7 +318,6 @@ const PostRow = ({ article, index, onOpen }: PostRowProps) => {
                             <div className="flex flex-wrap items-center gap-3 mb-4">
                                 <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border"
                                     style={{ backgroundColor: c.bgLight, color: c.text, borderColor: c.border }}>
-                                    <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: c.dot }} />
                                     {article.category}
                                 </span>
                                 <span className="flex items-center gap-1.5 text-xs" style={{ color: "#7090a6" }}>
@@ -328,7 +327,7 @@ const PostRow = ({ article, index, onOpen }: PostRowProps) => {
                                 {article.images.length > 1 && (
                                     <span className="flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full"
                                         style={{ background: "rgba(10,77,124,0.07)", color: "#0a4d7c" }}>
-                                        📷 {article.images.length} photos
+                                        {article.images.length} photos
                                     </span>
                                 )}
                             </div>
@@ -353,13 +352,30 @@ const PostRow = ({ article, index, onOpen }: PostRowProps) => {
 
                         <button
                             onClick={() => onOpen(article, 0)}
-                            className="mt-5 self-start flex items-center gap-2 text-sm font-semibold transition-colors"
-                            style={{ color: "#23c367" }}
-                            onMouseEnter={(e) => (e.currentTarget.style.color = "#1a9950")}
-                            onMouseLeave={(e) => (e.currentTarget.style.color = "#23c367")}
+                            className="
+                            mt-5
+                            px-5 py-3
+                            rounded-full
+                            bg-gradient-to-r from-[#23c367] to-[#1fa85a]
+                            text-white
+                            text-sm font-semibold
+                            shadow-md
+                            transition-all duration-300 ease-out
+                            hover:shadow-xl
+                            hover:-translate-y-1
+                            hover:scale-[1.03]
+                            active:scale-95
+                            active:translate-y-0
+                            focus:outline-none
+                            focus:ring-2
+                            focus:ring-[#23c367]/50
+                            group
+                        "
                         >
-                            <span>Lire la suite</span>
-                            <span className="w-5 h-5 rounded-full border flex items-center justify-center text-xs" style={{ borderColor: "#23c367" }}>→</span>
+                            <span className="transition-all duration-300 group-hover:tracking-wide">
+                                Lire la suite
+                            </span>
+
                         </button>
                     </div>
                 </div>
@@ -384,9 +400,6 @@ const ActualitesPage = () => {
     return (
         <div className="min-h-screen relative" style={{ background: "linear-gradient(135deg, #e8faf3 0%, #ffffff 50%, #eef6ff 100%)" }}>
 
-            {/* Blobs */}
-            <div style={{ position: "fixed", top: "-8rem", right: "-8rem", width: "28rem", height: "28rem", background: "rgba(35,195,103,0.07)", borderRadius: "50%", filter: "blur(60px)", pointerEvents: "none" }} />
-            <div style={{ position: "fixed", bottom: "-6rem", left: "-6rem", width: "24rem", height: "24rem", background: "rgba(10,77,124,0.05)", borderRadius: "50%", filter: "blur(60px)", pointerEvents: "none" }} />
 
             {/* Header */}
             <header className="relative z-10 max-w-3xl mx-auto px-6 pt-10 pb-8">
@@ -403,34 +416,35 @@ const ActualitesPage = () => {
                         cursor: "pointer",
                     }}
                 >
-                    {/* Icône dans un cercle animé */}
-                    <span
-                        className="flex items-center justify-center w-9 h-9 rounded-full transition-all duration-300 group-hover:scale-110"
-                        style={{
-                            background: "rgba(10,77,124,0.08)",
-                            color: "#0a4d7c",
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.background = "rgba(35,195,103,0.15)";
-                            e.currentTarget.style.color = "#23c367";
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.background = "rgba(10,77,124,0.08)";
-                            e.currentTarget.style.color = "#0a4d7c";
-                        }}
-                    >
-                        <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
-                    </span>
 
-                    {/* Label */}
-                    <span
-                        className="text-sm font-semibold tracking-wide transition-colors duration-300"
-                        style={{ color: "#0a4d7c" }}
-                        onMouseEnter={(e) => (e.currentTarget.style.color = "#23c367")}
-                        onMouseLeave={(e) => (e.currentTarget.style.color = "#0a4d7c")}
+                    {/* Bouton retour */}
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="
+                            px-4 py-2
+                            rounded-xl
+                            bg-gradient-to-r from-[#23c367] to-[#1fa85a]
+                            text-white
+                            text-sm font-semibold
+                            flex items-center gap-2
+                            shadow-lg
+                            transition-all duration-300 ease-out
+                            hover:shadow-xl
+                            hover:-translate-y-1
+                            hover:scale-[1.03]
+                            active:scale-95
+                            active:translate-y-0
+                            focus:outline-none
+                            focus:ring-2
+                            focus:ring-[#23c367]/50
+                            group
+                        "
                     >
-                        Retour
-                    </span>
+                        <ArrowLeft className="w-4 h-4 transition-all duration-300 group-hover:-translate-x-2 group-hover:scale-110" />
+                        <span className="transition-all duration-300 group-hover:tracking-wide">
+                            Retour
+                        </span>
+                    </button>
                 </motion.button>
 
                 <motion.div
@@ -459,13 +473,6 @@ const ActualitesPage = () => {
                     className="text-sm md:text-base max-w-xl" style={{ color: "#7090a6" }}>
                     Retrouvez toutes les dernières actualités de Yapithe & Partners — projets, interventions et publications récentes.
                 </motion.p>
-
-                <motion.div
-                    initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
-                    transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
-                    className="mt-6 origin-left"
-                    style={{ height: "1px", background: "linear-gradient(to right, #23c367, rgba(10,77,124,0.2), transparent)" }}
-                />
             </header>
 
             {/* Feed */}
@@ -478,19 +485,8 @@ const ActualitesPage = () => {
                         <PostRow key={a.id} article={a} index={i} onOpen={openModal} />
                     ))}
                 </div>
-                <div className="relative mt-8 ml-12 md:ml-16 flex items-center gap-3">
-                    <div className="absolute -left-9 md:-left-11 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full"
-                        style={{ background: "linear-gradient(to br, #23c367, #0a4d7c)" }} />
-                    <p className="text-xs" style={{ color: "#b0c4d0" }}>Fin des publications récentes</p>
-                </div>
-            </main>
 
-            {/* Footer */}
-            <div className="relative z-10 max-w-3xl mx-auto px-6 pb-10 flex items-center gap-4">
-                <div className="h-px flex-1" style={{ background: "linear-gradient(to right, rgba(35,195,103,0.3), transparent)" }} />
-                <span className="text-xs font-medium" style={{ color: "#b0c4d0" }}>Yapithe & Partners © 2026</span>
-                <div className="h-px flex-1" style={{ background: "linear-gradient(to left, rgba(10,77,124,0.2), transparent)" }} />
-            </div>
+            </main>
 
             {/* Modal */}
             <AnimatePresence>

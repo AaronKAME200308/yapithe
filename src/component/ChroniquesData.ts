@@ -2,8 +2,7 @@ interface Chronique {
   id: number;
   title: string;
   description: string;
-  date: string;
-  readTime: string;
+  date: string;  
   category: string;
   thumbnail: string;
   videoUrl: string; // URL de la vidéo YouTube
@@ -15,8 +14,7 @@ export const chroniquesData : Chronique[] = [
       title: "La définition du contrôle de gestion",
       description:
         "Edition 1 – Chroniques du contrôle de gestion",
-      date: "15 Jan 2025",
-      readTime: "5 min",
+      date: "24 mai 2020",      
       category: "Gestion",
       thumbnail: "/chronique1.jpg",
       videoUrl: "https://www.youtube.com/embed/bxjdVW3mY-Q?si=fqW9TIizDeQ50vFJ",
@@ -26,8 +24,7 @@ export const chroniquesData : Chronique[] = [
       title: "La notion de performance",
       description:
         "Edition 03 – Chroniques du contrôle de gestion",
-      date: "08 Jan 2025",
-      readTime: "7 min",
+      date: "31 mai 2020",      
       category: "Stratégie",
       thumbnail: "/chronique2.jpg",
       videoUrl: "https://www.youtube.com/embed/lKopHzIrTqo?si=BjAo9fDE6EoWQB1n",
@@ -37,8 +34,7 @@ export const chroniquesData : Chronique[] = [
       title: "Les outils du Contrôle de Gestion",
       description:
         "Edition 03 – Chroniques du contrôle de gestion",
-      date: "22 Déc 2024",
-      readTime: "6 min",
+      date: "7 juin 2020",      
       category: "Innovation",
       thumbnail: "/chronique3.jpg",
       videoUrl: "https://www.youtube.com/embed/UgHFr9ciC9k?si=zyu3QHr6GWT1_UUb",
@@ -48,8 +44,7 @@ export const chroniquesData : Chronique[] = [
       title: "Le rôle du Contrôleur de Gestion",
       description:
         "Edition 04 – Chroniques du contrôle de gestion",
-      date: "22 Déc 2024",
-      readTime: "6 min",
+      date: "15 juin 2020",      
       category: "Innovation",
       thumbnail: "/chronique3.jpg",
       videoUrl: "https://www.youtube.com/embed/o91A6qHmQ2g?si=EqFZqQoVuWc3eI3L",
@@ -59,8 +54,7 @@ export const chroniquesData : Chronique[] = [
       title: "La stratégie d'entreprise",
       description:
         "Edition 05 – Chroniques du contrôle de gestion",
-      date: "22 Déc 2024",
-      readTime: "6 min",
+      date: " 21 juin 2020",      
       category: "Innovation",
       thumbnail: "/chronique3.jpg",
       videoUrl: "https://www.youtube.com/embed/a9cXcL2_1hE?si=kWigt3Sq8SsKBXBd",
@@ -70,8 +64,7 @@ export const chroniquesData : Chronique[] = [
       title: "Le Reporting ",
       description:
         "Edition 06 – Chroniques du contrôle de gestion",
-      date: "22 Déc 2024",
-      readTime: "6 min",
+      date: "28 juin 2020",      
       category: "Innovation",
       thumbnail: "/chronique3.jpg",
       videoUrl: "https://www.youtube.com/embed/7W06_orzs5w?si=X9mvmwfyvAQoWdus",
@@ -81,8 +74,7 @@ export const chroniquesData : Chronique[] = [
       title: "Les tableaux de bords",
       description:
         "Edition 07 – Chroniques du contrôle de gestion",
-      date: "22 Déc 2024",
-      readTime: "6 min",
+      date: "5 juillet 2020",      
       category: "Innovation",
       thumbnail: "/chronique3.jpg",
       videoUrl: "https://www.youtube.com/embed/vsyAB8yjWow?si=e3KjRbfy9gCyOS41",
@@ -92,8 +84,7 @@ export const chroniquesData : Chronique[] = [
       title: "Notion d'indicateur de performance",
       description:
         "Edition 08 – Chroniques du contrôle de gestion",
-      date: "22 Déc 2024",
-      readTime: "6 min",
+      date: "12 juillet 2020",      
       category: "Innovation",
       thumbnail: "/chronique3.jpg",
       videoUrl: "https://www.youtube.com/embed/ixXcYLW4c1M?si=L1deiO9N0FC_Orf3",
@@ -103,8 +94,7 @@ export const chroniquesData : Chronique[] = [
       title: "Le système Budgétaire",
       description:
         "Edition 09 – Chroniques du contrôle de gestion",
-      date: "22 Déc 2024",
-      readTime: "6 min",
+      date: "20 juil. 2020",      
       category: "Innovation",
       thumbnail: "/chronique3.jpg",
       videoUrl: "https://www.youtube.com/embed/_KcUISd3A-o?si=87a5Pq_sbfU6dxA1",
@@ -114,8 +104,7 @@ export const chroniquesData : Chronique[] = [
       title: "Comptabilité analytique",
       description:
         "Edition 10 – Chroniques du contrôle de gestion",
-      date: "22 Déc 2024",
-      readTime: "6 min",
+      date: "27 juil. 2020",      
       category: "Innovation",
       thumbnail: "/chronique3.jpg",
       videoUrl: "https://www.youtube.com/embed/Ed8Gwz57nN4?si=XAFaB2wOkySU5DOB",
@@ -125,8 +114,7 @@ export const chroniquesData : Chronique[] = [
       title: "Contrôle interne",
       description:
         "Edition 11 – Chroniques du contrôle de gestion",
-      date: "22 Déc 2024",
-      readTime: "6 min",
+      date: "3 août 2020",      
       category: "Innovation",
       thumbnail: "/chronique3.jpg",
       videoUrl: "https://www.youtube.com/embed/BafF55kAvRE?si=eUXp2XgAIQ3YThD5",
@@ -136,8 +124,7 @@ export const chroniquesData : Chronique[] = [
       title: "Qualités du Contrôleur de gestion",
       description:
         "Edition 12 – Chroniques du contrôle de gestion",
-      date: "22 Déc 2024",
-      readTime: "6 min",
+      date: "10 août 2020",      
       category: "Innovation",
       thumbnail: "/chronique3.jpg",
       videoUrl: "https://www.youtube.com/embed/KJsumsKwn9Q?si=Kpz_zYvuIdHa9XBi",
@@ -147,8 +134,7 @@ export const chroniquesData : Chronique[] = [
       title: "Le Contrôle de Gestion industriel",
       description:
         "Edition 13 – Chroniques du contrôle de gestion",
-      date: "22 Déc 2024",
-      readTime: "6 min",
+      date: " 26 août 2020",      
       category: "Innovation",
       thumbnail: "/chronique3.jpg",
       videoUrl: "https://www.youtube.com/embed/3OQWFEmw7z0?si=YIIAVyCCzOhQ5-BV",
@@ -158,8 +144,7 @@ export const chroniquesData : Chronique[] = [
       title: "Notion des Coûts préétablis",
       description:
         "Edition 14 – Chroniques du contrôle de gestion",
-      date: "22 Déc 2024",
-      readTime: "6 min",
+      date: "31 août 2020",      
       category: "Innovation",
       thumbnail: "/chronique3.jpg",
       videoUrl: "https://www.youtube.com/embed/mO-kyJ-ADv4?si=90SJ1wft28-fCFBF",

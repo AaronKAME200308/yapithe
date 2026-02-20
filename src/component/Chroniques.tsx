@@ -89,11 +89,7 @@ export const Chroniques = () => {
                     <span className="flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
                       {chronique.date}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      {chronique.readTime}
-                    </span>
+                    </span>                   
                   </div>
                 </div>
               </motion.div>

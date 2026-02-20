@@ -34,15 +34,40 @@ const VoirPlus = () => {
   return (
     <div
       className="min-h-screen w-full relative"
-      style={{ background: "linear-gradient(135deg, #e8faf3 0%, #ffffff 50%, #eef6ff 100%)" }}
+      style={{
+        background:
+          "linear-gradient(135deg, #e8faf3 0%, #ffffff 50%, #eef6ff 100%)",
+      }}
     >
-
       {/* Blobs décoratifs */}
-      <div style={{ position: "fixed", top: "-8rem", right: "-8rem", width: "28rem", height: "28rem", background: "rgba(35,195,103,0.07)", borderRadius: "50%", filter: "blur(60px)", pointerEvents: "none" }} />
-      <div style={{ position: "fixed", bottom: "-6rem", left: "-6rem", width: "24rem", height: "24rem", background: "rgba(10,77,124,0.05)", borderRadius: "50%", filter: "blur(60px)", pointerEvents: "none" }} />
+      <div
+        style={{
+          position: "fixed",
+          top: "-8rem",
+          right: "-8rem",
+          width: "28rem",
+          height: "28rem",
+          background: "rgba(35,195,103,0.07)",
+          borderRadius: "50%",
+          filter: "blur(60px)",
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        style={{
+          position: "fixed",
+          bottom: "-6rem",
+          left: "-6rem",
+          width: "24rem",
+          height: "24rem",
+          background: "rgba(10,77,124,0.05)",
+          borderRadius: "50%",
+          filter: "blur(60px)",
+          pointerEvents: "none",
+        }}
+      />
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 py-10">
-
         {/* ── HEADER ── */}
         <motion.div
           initial={{ opacity: 0, x: -16 }}
@@ -50,16 +75,34 @@ const VoirPlus = () => {
           transition={{ duration: 0.4 }}
           className="mb-10"
         >
-          {/* Bouton retour — style ActualitesPage */}
+          {/* Bouton retour */}
           <button
             onClick={() => navigate(-1)}
-            className="mb-8 flex items-center gap-2 text-sm font-semibold group transition-colors"
-            style={{ color: "#0a4d7c" }}
-            onMouseEnter={e => (e.currentTarget.style.color = "#23c367")}
-            onMouseLeave={e => (e.currentTarget.style.color = "#0a4d7c")}
+            className="
+              mb-2
+              px-4 py-2
+              rounded-xl
+              bg-gradient-to-r from-[#23c367] to-[#1fa85a]
+              text-white
+              text-sm font-semibold
+              flex items-center gap-2
+              shadow-lg
+              transition-all duration-300 ease-out
+              hover:shadow-xl
+              hover:-translate-y-1
+              hover:scale-[1.03]
+              active:scale-95
+              active:translate-y-0
+              focus:outline-none
+              focus:ring-2
+              focus:ring-[#23c367]/50
+              group
+            "
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Retour
+            <ArrowLeft className="w-4 h-4 transition-all duration-300 group-hover:-translate-x-2 group-hover:scale-110" />
+            <span className="transition-all duration-300 group-hover:tracking-wide">
+              Retour
+            </span>
           </button>
 
           {/* Badge + Titre — style ActualitesPage */}
@@ -68,31 +111,47 @@ const VoirPlus = () => {
             animate={{ scale: 1 }}
             transition={{ delay: 0.1, type: "spring" }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4"
-            style={{ background: "linear-gradient(to right, rgba(35,195,103,0.12), rgba(10,77,124,0.12))" }}
+            style={{
+              background:
+                "linear-gradient(to right, rgba(35,195,103,0.12), rgba(10,77,124,0.12))",
+            }}
           >
-            <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: "#23c367" }} />
             <span
               className="text-sm font-michroma font-semibold uppercase tracking-widest"
-              style={{ background: "linear-gradient(to right, #23c367, #0a4d7c)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
+              style={{
+                background: "linear-gradient(to right, #23c367, #0a4d7c)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
             >
               Yapithe & Partners
             </span>
           </motion.div>
 
           {category && (
-            <motion.div initial={{ y: 16, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.15 }}>
+            <motion.div
+              initial={{ y: 16, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.15 }}
+            >
               <h1
                 className="text-4xl md:text-5xl font-black leading-none mb-3"
-                style={{ background: "linear-gradient(to right, #23c367, #0a4d7c)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
+                style={{
+                  background: "linear-gradient(to right, #23c367, #0a4d7c)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
               >
                 {category}
               </h1>
               <p className="text-sm md:text-base" style={{ color: "#7090a6" }}>
-                {data?.length || 0} {data?.length > 1 ? "éléments disponibles" : "élément disponible"}
+                {data?.length || 0}{" "}
+                {data?.length > 1
+                  ? "évènements disponibles"
+                  : "évènement disponible"}
               </p>
             </motion.div>
           )}
-
         </motion.div>
 
         {/* ── LISTE ── */}
@@ -108,10 +167,14 @@ const VoirPlus = () => {
               variants={itemVariants}
               className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden group"
             >
-              <div className={`flex flex-col ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
-
+              <div
+                className={`flex flex-col ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
+              >
                 {/* ── MEDIA ── */}
-                <div className="relative w-full md:w-72 lg:w-80 flex-shrink-0 overflow-hidden" style={{ height: 220 }}>
+                <div
+                  className="relative w-full md:w-72 lg:w-80 flex-shrink-0 overflow-hidden"
+                  style={{ height: 220 }}
+                >
                   {item.type === "video" ? (
                     <>
                       <video
@@ -120,7 +183,11 @@ const VoirPlus = () => {
                       />
                       <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
-                          <Play className="w-6 h-6 ml-1" fill="#0a4d7c" style={{ color: "#0a4d7c" }} />
+                          <Play
+                            className="w-6 h-6 ml-1"
+                            fill="#0a4d7c"
+                            style={{ color: "#0a4d7c" }}
+                          />
                         </div>
                       </div>
                     </>
@@ -135,12 +202,21 @@ const VoirPlus = () => {
                   {/* Badge type media */}
                   <div
                     className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold"
-                    style={{ background: "rgba(255,255,255,0.92)", color: "#0a4d7c", backdropFilter: "blur(6px)" }}
+                    style={{
+                      background: "rgba(255,255,255,0.92)",
+                      color: "#0a4d7c",
+                      backdropFilter: "blur(6px)",
+                    }}
                   >
-                    {item.type === "video"
-                      ? <><Play className="w-3 h-3" fill="currentColor" /> Vidéo</>
-                      : <><ImageIcon className="w-3 h-3" /> Image</>
-                    }
+                    {item.type === "video" ? (
+                      <>
+                        <Play className="w-3 h-3" fill="currentColor" /> Vidéo
+                      </>
+                    ) : (
+                      <>
+                        <ImageIcon className="w-3 h-3" /> Image
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -149,7 +225,10 @@ const VoirPlus = () => {
                   <div>
                     {/* Date badge */}
                     {item.date && (
-                      <div className="flex items-center gap-1.5 mb-4 text-xs" style={{ color: "#7090a6" }}>
+                      <div
+                        className="flex items-center gap-1.5 mb-4 text-xs"
+                        style={{ color: "#7090a6" }}
+                      >
                         <Calendar className="w-3.5 h-3.5" />
                         {item.date}
                       </div>
@@ -159,8 +238,12 @@ const VoirPlus = () => {
                     <h2
                       className="text-lg md:text-xl font-bold leading-snug mb-3 transition-colors duration-300"
                       style={{ color: "#0a4d7c" }}
-                      onMouseEnter={e => (e.currentTarget.style.color = "#23c367")}
-                      onMouseLeave={e => (e.currentTarget.style.color = "#0a4d7c")}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.color = "#23c367")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.color = "#0a4d7c")
+                      }
                     >
                       {item.title}
                     </h2>
@@ -180,21 +263,34 @@ const VoirPlus = () => {
                   </div>
 
                   {/* Bouton — style ActualitesPage */}
-                  <button
-                    onClick={() => { setSelected(item); setOpen(true); }}
-                    className="mt-5 self-start flex items-center gap-2 text-sm font-semibold transition-colors"
-                    style={{ color: "#23c367" }}
-                    onMouseEnter={e => (e.currentTarget.style.color = "#1a9950")}
-                    onMouseLeave={e => (e.currentTarget.style.color = "#23c367")}
-                  >
-                    <span>Voir plus</span>
-                    <span
-                      className="w-5 h-5 rounded-full border flex items-center justify-center text-xs transition-all"
-                      style={{ borderColor: "#23c367" }}
-                    >
-                      →
-                    </span>
-                  </button>
+                 <button
+  onClick={() => {
+    setSelected(item);
+    setOpen(true);
+  }}
+  className="
+    mt-5
+    px-3 py-2
+    rounded-full
+    bg-gradient-to-r from-[#23c367] to-[#1fa85a]
+    text-white
+    text-sm font-semibold
+    self-start
+    shadow-sm
+    transition-all duration-300 ease-out
+    hover:shadow-md
+    hover:-translate-y-0.5
+    hover:scale-[1.02]
+    active:scale-95
+    focus:outline-none
+    focus:ring-2
+    focus:ring-[#23c367]/40
+  "
+>
+  <span className="transition-all duration-300 hover:tracking-wide">
+    Voir plus
+  </span>
+</button>
                 </div>
               </div>
             </motion.div>
@@ -208,21 +304,19 @@ const VoirPlus = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="mt-16 flex flex-col items-center text-center"
           >
-            <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: "rgba(35,195,103,0.1)" }}>
+            <div
+              className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
+              style={{ background: "rgba(35,195,103,0.1)" }}
+            >
               <ImageIcon className="w-8 h-8" style={{ color: "#23c367" }} />
             </div>
-            <h3 className="text-xl font-bold mb-2" style={{ color: "#0a4d7c" }}>Aucun contenu disponible</h3>
-            <p className="text-sm" style={{ color: "#7090a6" }}>Il n'y a pas encore de contenu à afficher dans cette section.</p>
+            <h3 className="text-xl font-bold mb-2" style={{ color: "#0a4d7c" }}>
+              Aucun contenu disponible
+            </h3>
+            <p className="text-sm" style={{ color: "#7090a6" }}>
+              Il n'y a pas encore de contenu à afficher dans cette section.
+            </p>
           </motion.div>
-        )}
-
-        {/* Fin de liste */}
-        {data?.length > 0 && (
-          <div className="mt-10 flex items-center gap-4">
-            <div className="h-px flex-1" style={{ background: "linear-gradient(to right, rgba(35,195,103,0.3), transparent)" }} />
-            <span className="text-xs font-medium" style={{ color: "#b0c4d0" }}>Fin des résultats</span>
-            <div className="h-px flex-1" style={{ background: "linear-gradient(to left, rgba(10,77,124,0.2), transparent)" }} />
-          </div>
         )}
       </div>
 

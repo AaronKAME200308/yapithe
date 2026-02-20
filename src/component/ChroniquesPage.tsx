@@ -11,12 +11,9 @@ export const ChroniquesPage = () => {
     return (
         <div
             className="min-h-screen w-full relative"
-            style={{  background: "linear-gradient(135deg, #e8faf3 0%, #ffffff 50%, #eef6ff 100%)" }}
+            style={{ background: "linear-gradient(135deg, #e8faf3 0%, #ffffff 50%, #eef6ff 100%)" }}
         >
 
-            {/* Blobs décoratifs */}
-            <div style={{ position: "fixed", top: "-8rem", right: "-8rem", width: "28rem", height: "28rem", background: "rgba(35,195,103,0.07)", borderRadius: "50%", filter: "blur(60px)", pointerEvents: "none" }} />
-            <div style={{ position: "fixed", bottom: "-6rem", left: "-6rem", width: "24rem", height: "24rem", background: "rgba(10,77,124,0.05)", borderRadius: "50%", filter: "blur(60px)", pointerEvents: "none" }} />
 
             <div className="relative z-10 max-w-6xl mx-auto px-6 py-10">
 
@@ -30,13 +27,31 @@ export const ChroniquesPage = () => {
                     {/* Bouton retour */}
                     <button
                         onClick={() => navigate(-1)}
-                        className="mb-8 flex items-center gap-2 text-sm font-semibold group transition-colors"
-                        style={{ color: "#0a4d7c" }}
-                        onMouseEnter={e => (e.currentTarget.style.color = "#23c367")}
-                        onMouseLeave={e => (e.currentTarget.style.color = "#0a4d7c")}
+                        className="
+                            mb-2
+                            px-4 py-2
+                            rounded-xl
+                            bg-gradient-to-r from-[#23c367] to-[#1fa85a]
+                            text-white
+                            text-sm font-semibold
+                            flex items-center gap-2
+                            shadow-lg
+                            transition-all duration-300 ease-out
+                            hover:shadow-xl
+                            hover:-translate-y-1
+                            hover:scale-[1.03]
+                            active:scale-95
+                            active:translate-y-0
+                            focus:outline-none
+                            focus:ring-2
+                            focus:ring-[#23c367]/50
+                            group
+                        "
                     >
-                        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                        Retour
+                        <ArrowLeft className="w-4 h-4 transition-all duration-300 group-hover:-translate-x-2 group-hover:scale-110" />
+                        <span className="transition-all duration-300 group-hover:tracking-wide">
+                            Retour
+                        </span>
                     </button>
 
                     {/* Badge */}
@@ -75,15 +90,6 @@ export const ChroniquesPage = () => {
                     >
                         Explorez l'ensemble de nos chroniques vidéo et plongez dans des analyses captivantes, inspirantes et enrichissantes.
                     </motion.p>
-
-                    {/* Séparateur */}
-                    <motion.div
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: 1 }}
-                        transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
-                        className="mt-6 origin-left"
-                        style={{ height: "1px", background: "linear-gradient(to right, #23c367, rgba(10,77,124,0.2), transparent)" }}
-                    />
                 </motion.div>
 
                 {/* ── GRID ── */}
@@ -115,14 +121,14 @@ export const ChroniquesPage = () => {
                                 />
 
                                 {/* Bouton play */}
-                                <div className="absolute inset-0 flex items-center justify-center">
+                                {/* <div className="absolute inset-0 flex items-center justify-center">
                                     <div
                                         className="w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110"
                                         style={{ background: "rgba(255,255,255,0.92)" }}
                                     >
                                         <Play className="w-6 h-6 ml-0.5" fill="#23c367" style={{ color: "#23c367" }} />
                                     </div>
-                                </div>
+                                </div> */}
 
                                 {/* Badge durée */}
                                 {chronique.readTime && (
@@ -170,25 +176,29 @@ export const ChroniquesPage = () => {
                                 {/* Bouton regarder */}
                                 <button
                                     onClick={() => setSelectedVideo(chronique.videoUrl)}
-                                    className="mt-2 self-start flex items-center gap-2 text-sm font-semibold transition-colors"
-                                    style={{ color: "#23c367" }}
-                                    onMouseEnter={e => (e.currentTarget.style.color = "#1a9950")}
-                                    onMouseLeave={e => (e.currentTarget.style.color = "#23c367")}
+                                    className="
+                                        mt-2
+                                        px-5 py-2
+                                        rounded-full
+                                        bg-gradient-to-r from-[#23c367] to-[#1fa85a]
+                                        text-white
+                                        text-sm font-semibold
+                                        self-start
+                                        shadow-sm
+                                        transition-all duration-300 ease-out
+                                        hover:shadow-md
+                                        hover:-translate-y-0.5
+                                        hover:scale-[1.02]
+                                        active:scale-95
+                                        focus:outline-none
+                                        focus:ring-2
+                                        focus:ring-[#23c367]/40
+                                    "
                                 >
-                                    <span>Regarder</span>
-                                    <span
-                                        className="w-5 h-5 rounded-full border flex items-center justify-center text-xs"
-                                        style={{ borderColor: "#23c367" }}
-                                    >
-                                        →
+                                    <span className="transition-all duration-300 hover:tracking-wide">
+                                        Regarder
                                     </span>
                                 </button>
-
-                                {/* Accent line */}
-                                <div
-                                    className="h-0.5 w-10 rounded-full mt-1 transition-all duration-500 group-hover:w-full"
-                                    style={{ background: "linear-gradient(to right, #23c367, #1fa85a)" }}
-                                />
                             </div>
                         </motion.div>
                     ))}
@@ -210,24 +220,47 @@ export const ChroniquesPage = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={() => setSelectedVideo(null)}
-                        className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10"
-                        style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)" }}
+                        className="
+                            fixed inset-0 z-50
+                            flex items-center justify-center
+                            p-4 md:p-8
+                            bg-black/75
+                            backdrop-blur-md
+                        "
                     >
                         <motion.div
-                            initial={{ scale: 0.92, opacity: 0 }}
+                            initial={{ scale: 0.94, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.92, opacity: 0 }}
-                            transition={{ duration: 0.3, ease: "easeOut" }}
-                            onClick={e => e.stopPropagation()}
-                            className="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl"
+                            exit={{ scale: 0.94, opacity: 0 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="
+                                relative
+                                w-full
+                                max-w-3xl
+                                aspect-video
+                                bg-black
+                                rounded-xl
+                                overflow-hidden
+                                shadow-2xl
+                            "
                         >
                             {/* Bouton fermer */}
                             <button
                                 onClick={() => setSelectedVideo(null)}
-                                className="absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center rounded-full text-white transition-colors"
-                                style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(6px)" }}
-                                onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.3)")}
-                                onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.15)")}
+                                className="
+                                    absolute top-3 right-3 z-10
+                                    w-8 h-8
+                                    flex items-center justify-center
+                                    rounded-full
+                                    bg-white/20
+                                    backdrop-blur-sm
+                                    text-white
+                                    transition-all duration-300
+                                    hover:bg-white/40
+                                    hover:scale-110
+                                    active:scale-95
+                                "
                             >
                                 <X className="w-4 h-4" />
                             </button>
@@ -243,8 +276,12 @@ export const ChroniquesPage = () => {
 
                         {/* Barre accent bas modal */}
                         <div
-                            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-1 rounded-full"
-                            style={{ background: "linear-gradient(to right, #23c367, #0a4d7c)" }}
+                            className="
+                                absolute bottom-6 left-1/2 -translate-x-1/2
+                                w-32 h-1
+                                rounded-full
+                                bg-gradient-to-r from-[#23c367] to-[#0a4d7c]
+                            "
                         />
                     </motion.div>
                 )}
