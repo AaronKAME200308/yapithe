@@ -37,7 +37,6 @@ const navLinks = [
 ];
 
 /* ===================== Pages séparées (pas sur la home) ===================== */
-const SEPARATE_ROUTES = ["/actu-page", "/chroniques-page", "/voir-plus"];
 
 /* ===================== CUSTOM HOOK - useIsMobile ===================== */
 const useIsMobile = (breakpoint = 1024) => {
@@ -85,7 +84,6 @@ const Navbar = () => {
   const navRef = useRef<HTMLDivElement>(null);
 
   const isOnHomePage = location.pathname === "/";
-  const isOnSeparatePage = SEPARATE_ROUTES.includes(location.pathname);
 
   /* ===================== PRELOAD LOGO ===================== */
   useEffect(() => {
