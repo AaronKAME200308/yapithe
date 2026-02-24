@@ -359,10 +359,15 @@ const Services = () => {
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
                   </motion.button>
                 </div>
+                <div>
+                  <span>Nos Précédentes Formations</span>
+                </div>
 
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-linear-to-b from-white/10 to-transparent blur-2xl" />
                 </div>
+
+                
               </motion.div>
             ))}
           </motion.div>
