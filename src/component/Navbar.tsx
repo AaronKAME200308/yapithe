@@ -23,7 +23,7 @@ const navLinks = [
     ],
   },
   {
-    label: "Actualité",
+    label: "Actualités",
     id: "Actualite",
     sectionId: "Actualite",
     children: [
@@ -31,7 +31,16 @@ const navLinks = [
       { label: "Événements", id: "events", sectionId: "events" },
     ],
   },
-  { label: "Services", id: "Services", sectionId: "Services" },
+  { label: "Services",
+    id: "Services", 
+    sectionId: "Services",
+    children: [
+      { label: "Pilotage de performance", id: "Pilotage", sectionId: "Services" },
+      { label: "Comptabilité analytique", id: "Comptabilité", sectionId: "Services" },
+      { label: "Outils d'élaboration & Suivi du Budget", id: "OESB", sectionId: "Services" },
+      { label: "Formation et coaching", id: "Formation", sectionId: "Services" },
+    ]
+  },
   { label: "Chroniques", id: "Chroniques", sectionId: "Chroniques" },
   { label: "Contact", id: "Contact", sectionId: "Contact" },
 ];

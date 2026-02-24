@@ -14,7 +14,7 @@ const Team = () => {
       role: "Directeur Général",
       img: "/yapth2.png",
       bio: "Expert en Contrôle de gestion & pilotage de la performance",
-      linkedin: "#",
+      linkedin: "https://cm.linkedin.com/company/yapithe-partners",
       email: "michel.yapithe@yapithepartners.com",
     },
     {

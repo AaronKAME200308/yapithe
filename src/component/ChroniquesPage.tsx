@@ -78,7 +78,7 @@ export const ChroniquesPage = () => {
                         className="text-4xl md:text-5xl font-black leading-none mb-3"
                         style={{ background: "linear-gradient(to right, #23c367, #0a4d7c)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
                     >
-                        Toutes les chroniques
+                        Toutes les Chroniques du Contrôle de Gestion
                     </motion.h1>
 
                     <motion.p

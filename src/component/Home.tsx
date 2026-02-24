@@ -48,9 +48,21 @@ const Home = () => {
   return (
     <section
       id="Accueil"
-      className="w-full min-h-screen flex items-start overflow-hidden pt-2 md:pt-3 pb-12 sm:pb-14 md:pb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-br from-[#e0f7f1] via-white to-[#f0f9ff]"
+      className="w-full min-h-screen flex items-center overflow-hidden pt-2 md:pt-3 pb-12 sm:pb-14 md:pb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative bg-gradient-to-br from-[#e0f7f1] via-white to-[#f0f9ff]"
     >
-      <div className="max-w-7xl mx-auto w-full relative z-10 space-y-12">
+      {/* Image de fond flottée — centrée, taille naturelle */}
+      <div
+        className="absolute inset-0 bg-center bg-no-repeat pointer-events-none"
+        style={{
+          backgroundImage: "url('/logoorigin.png')",
+          backgroundSize: " auto min(420px, 70vw)",
+        }}
+      />
+      {/* Dégradé par-dessus pour préserver la couleur de fond */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#e0f7f1]/85 via-white/50 to-[#f0f9ff]/85 pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto w-full relative z-10 space-y-12 md:space-y-16">
+
         {/* ================= TITRE CENTRÉ EN HAUT ================= */}
         <motion.div
           initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
@@ -63,16 +75,16 @@ const Home = () => {
           </h1>
         </motion.div>
 
-        {/* ================= GRID 3 COLONNES ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 items-start gap-8 lg:gap-12">
-          
+        {/* ================= GRID 2 COLONNES : texte gauche | stats droite ================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-20">
+
           {/* ================= LEFT CONTENT ================= */}
           <motion.div
             variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}
             initial="hidden"
             animate="visible"
             transition={isMobile ? {} : { duration: 0.8, ease: "easeOut" }}
-            className="space-y-6"
+            className="space-y-8"
           >
             {/* Tagline principal */}
             <motion.p
@@ -92,11 +104,24 @@ const Home = () => {
               initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={isMobile ? {} : { delay: 0.3 }}
-              className="text-base md:text-lg text-[#7090a6] leading-relaxed"
+              className="text-base md:text-lg text-[#0a4d7c] leading-relaxed max-w-lg"
             >
               Nous accompagnons les organisations dans leur transformation et leur
               quête d'excellence opérationnelle.
             </motion.p>
+
+            {/* Badge expertise */}
+            <motion.div
+              initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={isMobile ? {} : { delay: 0.35 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-[#0a4d7c]/10 shadow-sm"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#23c367] animate-pulse" />
+              <span className="text-xs font-semibold text-[#0a4d7c] uppercase tracking-wider">
+                Expertise reconnue en Afrique & en Europe
+              </span>
+            </motion.div>
 
             {/* Boutons CTA */}
             <motion.div
@@ -126,48 +151,13 @@ const Home = () => {
             </motion.div>
           </motion.div>
 
-          {/* ================= CENTER IMAGE ================= */}
-          <motion.div
-            initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={isMobile ? {} : { duration: 0.9, ease: "easeOut", delay: 0.2 }}
-            className="flex justify-center"
-          >
-            <div className="relative group">
-              {/* Container image */}
-              <div className="relative my-4 w-64 md:w-80 lg:w-96 h-72 md:h-96 lg:h-[450px] rounded-t-[180px] overflow-hidden shadow-2xl group-hover:shadow-[0_20px_60px_rgba(35,195,103,0.3)] transition-all duration-500 bg-gradient-to-br from-[#0a4d7c] to-[#0c5d94]">
-                <img
-                  src="/yapth.jpeg"
-                  alt="Yapithe & Partners"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-t from-[#0a4d7c]/50 to-transparent"></div>
-
-                <motion.div
-                  initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={isMobile ? {} : { delay: 1 }}
-                  className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-3 md:p-4 shadow-xl"
-                >
-                  <p className="text-xs md:text-sm font-semibold text-[#0a4d7c]">
-                    Expertise reconnue
-                  </p>
-                  <p className="text-[10px] md:text-xs text-gray-600">
-                    En Afrique et en Europe
-                  </p>
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
-
           {/* ================= RIGHT STATS ================= */}
           <motion.div
             variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}
             initial="hidden"
             animate="visible"
             transition={isMobile ? {} : { duration: 0.8, delay: 0.4 }}
-            className="space-y-4 lg:space-y-6"
+            className="space-y-4 lg:space-y-5"
           >
             {stats.map((stat, index) => (
               <motion.div
@@ -175,8 +165,8 @@ const Home = () => {
                 initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={isMobile ? {} : { delay: 0.5 + index * 0.1 }}
-                whileHover={isMobile ? {} : { scale: 1.05, x: 10 }}
-                className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group flex items-start gap-3 md:gap-4"
+                whileHover={isMobile ? {} : { scale: 1.04, x: 10 }}
+                className=" backdrop-blur-sm rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group flex items-start gap-3 md:gap-4"
               >
                 {/* Icône */}
                 <div className={`w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0 bg-gradient-to-br ${stat.gradient}`}>
@@ -194,13 +184,14 @@ const Home = () => {
                       {stat.text}
                     </p>
                   )}
-                  <p className="text-xs md:text-sm lg:text-base text-[#7090a6] mt-1">
+                  <p className="text-xs md:text-sm lg:text-base text-[#0a4d7c] mt-1">
                     {stat.label}
                   </p>
                 </div>
               </motion.div>
             ))}
           </motion.div>
+
         </div>
       </div>
     </section>

@@ -1,7 +1,10 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Phone, MapPin, Send, ExternalLink } from "lucide-react";
 import { FaYoutube, FaLinkedinIn, FaFacebook, FaTiktok } from "react-icons/fa";
 import type { Variants } from "framer-motion";
+import { useRef } from "react";
+import emailjs from "@emailjs/browser";
+import { useState } from "react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -9,6 +12,42 @@ const fadeUp = {
 };
 
 const Contact = () => {
+  const [isSending, setIsSending] = useState(false);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const form = useRef<HTMLFormElement>(null);
+
+  const sendEmail = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  setIsSending(true);
+  setStatus("idle");
+
+  try {
+    await emailjs.sendForm(
+      "service_tnlbc8o",
+      "template_8myq3da",
+      form.current!,
+      "WoriY4fjTF66t0bTR"
+    );
+
+    setStatus("success");
+    form.current?.reset();
+
+    setTimeout(() => {
+      setStatus("idle");
+    }, 3000);
+  } catch (error) {
+    setStatus("error");
+
+    setTimeout(() => {
+      setStatus("idle");
+    }, 3000);
+  } finally {
+    setIsSending(false);
+  }
+};
+
+
   const contactInfo = [
     {
       icon: <FaFacebook className="w-6 h-6" />,
@@ -27,8 +66,8 @@ const Contact = () => {
     {
       icon: <Mail className="w-6 h-6" />,
       label: "Email",
-      value: "michel.yapithe@yapithepartners.com",
-      link: "mailto:michel.yapithe@yapithepartners.com",
+      value: "contact@yapithepartners.com",
+      link: "mailto:contact@yapithepartners.com",
       color: "from-purple-500 to-indigo-600",
     },
     {
@@ -124,6 +163,8 @@ const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-12">
           {/* ================= CONTACT FORM ================= */}
           <motion.form
+            ref={form}
+            onSubmit={sendEmail}
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -140,6 +181,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="text"
+                  name="name"
                   placeholder="Vous"
                   className="w-full p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#23c367] focus:border-transparent transition-all duration-300"
                 />
@@ -151,6 +193,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="email"
+                  name="email"
                   placeholder="votre@email.com"
                   className="w-full p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#23c367] focus:border-transparent transition-all duration-300"
                 />
@@ -162,6 +205,7 @@ const Contact = () => {
                 </label>
                 <textarea
                   placeholder="Comment pouvons-nous vous aider ?"
+                  name="message"
                   className="w-full p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#23c367] focus:border-transparent transition-all duration-300 resize-none"
                   rows={5}
                 />
@@ -169,14 +213,61 @@ const Contact = () => {
 
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full px-6 py-4 rounded-xl bg-linear-to-r from-[#23c367] to-[#1fa85a] text-white font-semibold relative overflow-hidden group/btn shadow-lg hover:shadow-xl transition-all duration-300"
+                disabled={isSending}
+                whileHover={{ scale: isSending ? 1 : 1.02 }}
+                whileTap={{ scale: isSending ? 1 : 0.98 }}
+                className="w-full px-6 py-4 rounded-xl bg-linear-to-r from-[#23c367] to-[#1fa85a] text-white font-semibold relative overflow-hidden group/btn shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-80 disabled:cursor-not-allowed"
               >
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  Envoyer le message
-                  <Send className="w-5 h-5 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform duration-300" />
-                </span>
+                <AnimatePresence mode="wait">
+                  {isSending ? (
+                    <motion.div
+                      key="loading"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center justify-center gap-3"
+                    >
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                        className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                      />
+                      Envoi en cours...
+                    </motion.div>
+                  ) : status === "success" ? (
+                    <motion.div
+                      key="success"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      className="flex items-center justify-center gap-2 text-white"
+                    >
+                      ✅ Message envoyé !
+                    </motion.div>
+                  ) : status === "error" ? (
+                    <motion.div
+                      key="error"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      className="flex items-center justify-center gap-2 text-white"
+                    >
+                      ❌ Erreur d'envoi
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="default"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="relative z-10 flex items-center justify-center gap-2"
+                    >
+                      Envoyer le message
+                      <Send className="w-5 h-5 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform duration-300" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
                 <div className="absolute inset-0 bg-linear-to-r from-[#1fa85a] to-[#23c367] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
               </motion.button>
             </div>

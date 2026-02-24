@@ -40,7 +40,7 @@ export const Chroniques = () => {
           <div className="text-center mb-16">
             <div className="inline-block px-4 py-2 bg-[#23c367]/20 rounded-full mb-4">
               <span className="text-[#23c367] font-semibold text-sm uppercase">
-                Nos Chroniques
+                Les Chroniques du Contrôle de Gestion
               </span>
             </div>
 
