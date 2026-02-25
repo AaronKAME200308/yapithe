@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import type { Variants } from "framer-motion";
-import { Calendar, ArrowRight, X,ChevronRight, Play } from "lucide-react";
+import { Calendar, X,ChevronRight, Play } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { chroniquesData } from "./ChroniquesData";
 
@@ -95,7 +95,7 @@ export const Chroniques = () => {
               </motion.div>
             ))}
           </div>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
