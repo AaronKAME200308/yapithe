@@ -6,12 +6,13 @@ import {
   BarChart2,
   ArrowRight,
   BookCheck,
-  X,
-  Download,
-  ExternalLink,
-  FileText,
+  Play,
+  ChevronRight,
 } from "lucide-react";
 import type { Variants } from "framer-motion";
+import FormationsPage from "./Formation";
+import { useNavigate } from "react-router-dom";
+import {PdfModal} from "./PdfModal";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -27,173 +28,17 @@ interface Service {
   pdf: string;
 }
 
-const PdfModal = ({
-  pdf,
-  title,
-  onClose,
-}: {
-  pdf: string;
-  title: string;
-  onClose: () => void;
-}) => {
-  const [pdfError, setPdfError] = useState(false);
-  const absoluteUrl =
-    pdf.startsWith("/") ? `${window.location.origin}${pdf}` : pdf;
-
-  return (
-    <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.25 }}
-    >
-      {/* Backdrop */}
-      <motion.div
-        className="absolute inset-0 bg-black/85 backdrop-blur-lg"
-        onClick={onClose}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      />
-
-      {/* Modal */}
-      <motion.div
-        className="relative w-full max-w-5xl h-[90vh] flex flex-col rounded-2xl overflow-hidden shadow-[0_0_80px_rgba(35,195,103,0.2)] border border-white/10"
-        initial={{ scale: 0.85, opacity: 0, y: 30 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.85, opacity: 0, y: 30 }}
-        transition={{ type: "spring", damping: 20, stiffness: 200 }}
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 bg-[#0a4d7c] border-b border-white/10 flex-shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#23c367]/20 flex items-center justify-center">
-              <FileText className="w-5 h-5 text-[#23c367]" />
-            </div>
-            <div>
-              <p className="text-white/50 text-xs uppercase tracking-widest font-medium">
-                Document
-              </p>
-              <h3 className="text-white font-bold text-base leading-tight">
-                {title}
-              </h3>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            {/* Télécharger */}
-            <a
-              href={absoluteUrl}
-              download
-              className="flex items-center gap-2 px-4 py-2 bg-[#23c367]/20 hover:bg-[#23c367]/30 text-[#23c367] rounded-xl text-sm font-semibold transition-all duration-200 border border-[#23c367]/30"
-            >
-              <Download className="w-4 h-4" />
-              <span className="hidden sm:inline">Télécharger</span>
-            </a>
-
-            {/* Ouvrir dans un nouvel onglet */}
-            <a
-              href={absoluteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl text-sm font-semibold transition-all duration-200 border border-white/20"
-            >
-              <ExternalLink className="w-4 h-4" />
-              <span className="hidden sm:inline">Ouvrir</span>
-            </a>
-
-            {/* Fermer */}
-            <button
-              onClick={onClose}
-              className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-red-500/30 text-white/70 hover:text-white rounded-xl transition-all duration-200 border border-white/20 hover:border-red-500/40"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-
-        {/* PDF Viewer */}
-        <div className="flex-1 bg-[#1a1a2e] overflow-hidden relative">
-          {!pdfError ? (
-            <>
-              {/* Tentative avec object (meilleur support que iframe pour les PDFs locaux) */}
-              <object
-                data={`${absoluteUrl}#toolbar=1&navpanes=1&scrollbar=1&view=FitH`}
-                type="application/pdf"
-                className="w-full h-full"
-                onError={() => setPdfError(true)}
-              >
-                {/* Fallback si object ne fonctionne pas */}
-                <embed
-                  src={`${absoluteUrl}#toolbar=1`}
-                  type="application/pdf"
-                  className="w-full h-full"
-                  onError={() => setPdfError(true)}
-                />
-              </object>
-            </>
-          ) : null}
-
-          {/* Fallback UI si le PDF ne peut pas être affiché */}
-          {pdfError && (
-            <div className="flex flex-col items-center justify-center h-full gap-6 p-8">
-              <div className="w-24 h-24 rounded-3xl bg-[#23c367]/10 border border-[#23c367]/30 flex items-center justify-center">
-                <FileText className="w-12 h-12 text-[#23c367]" />
-              </div>
-              <div className="text-center max-w-md">
-                <h4 className="text-white text-xl font-bold mb-3">
-                  Aperçu non disponible
-                </h4>
-                <p className="text-white/60 text-sm leading-relaxed">
-                  L'aperçu du PDF n'est pas disponible dans le navigateur.
-                  Téléchargez le document ou ouvrez-le dans un nouvel onglet.
-                </p>
-              </div>
-              <div className="flex gap-3">
-                <a
-                  href={absoluteUrl}
-                  download
-                  className="flex items-center gap-2 px-6 py-3 bg-[#23c367] hover:bg-[#1fa85a] text-white rounded-xl font-semibold transition-all duration-200 shadow-lg shadow-[#23c367]/30"
-                >
-                  <Download className="w-5 h-5" />
-                  Télécharger le PDF
-                </a>
-                <a
-                  href={absoluteUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl font-semibold transition-all duration-200 border border-white/20"
-                >
-                  <ExternalLink className="w-5 h-5" />
-                  Ouvrir dans un onglet
-                </a>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Footer */}
-        <div className="px-6 py-3 bg-[#0a4d7c]/80 border-t border-white/10 flex items-center justify-between flex-shrink-0">
-          <p className="text-white/40 text-xs">
-            Cliquez en dehors du document pour fermer
-          </p>
-          <p className="text-white/40 text-xs">{pdf.split("/").pop()}</p>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-};
-
+// ─── Main Services Component ──────────────────────────────────────────────────
 const Services = () => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [showFormations, setShowFormations] = useState(false);
+  const navigate = useNavigate();
 
   const services: Service[] = [
     {
       id: 1,
       title: "Pilotage de performance",
-      description:
-        "Analyse des processus, mise en place d'outils de contrôle de gestion, tableaux de bord et systèmes de pilotage.",
+      description: "Analyse des processus, mise en place d'outils de contrôle de gestion, tableaux de bord et systèmes de pilotage.",
       icon: <Briefcase className="w-10 h-10" />,
       color: "from-blue-500 to-cyan-500",
       pdf: "/PilotagePerf.pdf",
@@ -201,8 +46,7 @@ const Services = () => {
     {
       id: 2,
       title: "Performance & Pilotage",
-      description:
-        "Suivi des indicateurs clés (KPI), optimisation des coûts, amélioration de la rentabilité et sécurisation de la croissance.",
+      description: "Suivi des indicateurs clés (KPI), optimisation des coûts, amélioration de la rentabilité et sécurisation de la croissance.",
       icon: <Truck className="w-10 h-10" />,
       color: "from-emerald-500 to-teal-500",
       pdf: "/comptabilite_analytique.pdf",
@@ -210,8 +54,7 @@ const Services = () => {
     {
       id: 3,
       title: "Accompagnement stratégique",
-      description:
-        "Conseil aux dirigeants, aide à la décision, structuration financière et accompagnement dans les phases de transformation.",
+      description: "Conseil aux dirigeants, aide à la décision, structuration financière et accompagnement dans les phases de transformation.",
       icon: <BarChart2 className="w-10 h-10" />,
       color: "from-purple-500 to-indigo-500",
       pdf: "/OutilsElaboration.pdf",
@@ -219,8 +62,7 @@ const Services = () => {
     {
       id: 4,
       title: "Formation & Coaching",
-      description:
-        "Formation personnalisée et coaching pour les équipes et les dirigeants.",
+      description: "Formation personnalisée et coaching pour les équipes et les dirigeants.",
       icon: <BookCheck className="w-10 h-10" />,
       color: "from-amber-500 to-orange-500",
       pdf: "/formation.pdf",
@@ -229,20 +71,12 @@ const Services = () => {
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2 },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
   };
 
   const cardVariants: Variants = {
     hidden: { opacity: 0, y: 50, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { type: "spring", damping: 15, stiffness: 100 },
-    },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", damping: 15, stiffness: 100 } },
   };
 
   return (
@@ -274,22 +108,15 @@ const Services = () => {
               transition={{ delay: 0.2, type: "spring" }}
               className="inline-block px-4 py-2 bg-[#23c367]/20 backdrop-blur-sm rounded-full mb-4"
             >
-              <span className="text-[#23c367] font-semibold text-sm uppercase tracking-wider">
-                Nos Services
-              </span>
+              <span className="text-[#23c367] font-semibold text-sm uppercase tracking-wider">Nos Services</span>
             </motion.div>
 
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
               Des solutions adaptées à{" "}
-              <span className="bg-linear-to-r from-[#23c367] to-[#1fa85a] text-transparent bg-clip-text">
-                vos besoins
-              </span>
+              <span className="bg-linear-to-r from-[#23c367] to-[#1fa85a] text-transparent bg-clip-text">vos besoins</span>
             </h2>
-
             <p className="text-base md:text-lg text-white/80 leading-relaxed max-w-3xl mx-auto">
-              Yapithe & Partners offre une vaste gamme de services
-              professionnels conçus pour aider les organisations à réussir dans
-              leurs domaines respectifs.
+              Yapithe & Partners offre une vaste gamme de services professionnels conçus pour aider les organisations à réussir dans leurs domaines respectifs.
             </p>
           </motion.div>
 
@@ -310,20 +137,14 @@ const Services = () => {
                 <div className="absolute inset-0 overflow-hidden">
                   <motion.div
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{
-                      backgroundImage: `url("/service${service.id}.jpeg")`,
-                    }}
+                    style={{ backgroundImage: `url("/service${service.id}.jpeg")` }}
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.6 }}
                   />
                 </div>
-
                 <div className="absolute inset-0 bg-linear-to-br from-black/70 via-black/50 to-black/70 group-hover:from-black/60 group-hover:via-black/40 group-hover:to-black/60 transition-all duration-500" />
-
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div
-                    className={`absolute inset-0 bg-linear-to-br ${service.color} opacity-20 blur-xl`}
-                  />
+                  <div className={`absolute inset-0 bg-linear-to-br ${service.color} opacity-20 blur-xl`} />
                 </div>
 
                 <div className="relative p-8 flex flex-col h-full min-h-[320px]">
@@ -335,17 +156,11 @@ const Services = () => {
                     <div className="text-white">{service.icon}</div>
                   </motion.div>
 
-                  <div className="absolute top-6 right-6 text-white/20 font-bold text-5xl">
-                    0{service.id}
-                  </div>
+                  <div className="absolute top-6 right-6 text-white/20 font-bold text-5xl">0{service.id}</div>
 
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
-                      {service.title}
-                    </h3>
-                    <p className="text-white/90 text-sm md:text-base leading-relaxed">
-                      {service.description}
-                    </p>
+                    <h3 className="text-2xl font-bold text-white mb-4 leading-tight">{service.title}</h3>
+                    <p className="text-white/90 text-sm md:text-base leading-relaxed">{service.description}</p>
                   </div>
 
                   <motion.button
@@ -359,29 +174,71 @@ const Services = () => {
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
                   </motion.button>
                 </div>
-                <div>
-                  <span>Nos Précédentes Formations</span>
-                </div>
 
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/4 bg-linear-to-b from-white/10 to-transparent blur-2xl" />
                 </div>
-
-                
               </motion.div>
             ))}
+          </motion.div>
+
+          {/* ── Bouton "Nos Précédentes Formations" ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="mt-16 flex justify-center"
+          >
+            <motion.button
+              onClick={() => navigate("/formations")}
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="group relative flex items-center gap-4 cursor-pointer"
+            >
+              {/* Glow behind button */}
+              <span className="absolute inset-0 rounded-2xl bg-[#23c367]/20 blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+              <span className="relative flex items-center gap-4 px-8 py-4 rounded-2xl bg-gradient-to-r from-[#0a4d7c] to-[#0c5d94] border border-white/20 group-hover:border-[#23c367]/50 shadow-xl shadow-black/30 group-hover:shadow-[#23c367]/20 transition-all duration-400 overflow-hidden">
+                {/* Shimmer sweep */}
+                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
+
+                {/* Icon container */}
+                <span className="relative w-11 h-11 rounded-xl bg-gradient-to-br from-[#23c367] to-[#0a9d4f] flex items-center justify-center shadow-lg shadow-[#23c367]/40 group-hover:shadow-[#23c367]/60 transition-shadow duration-300 flex-shrink-0">
+                  <Play className="w-5 h-5 text-white fill-white ml-0.5" />
+                </span>
+
+                {/* Text */}
+                <span className="flex flex-col items-start">
+                  <span className="text-[#23c367] text-xs font-semibold uppercase tracking-widest leading-none mb-0.5">
+                    Vidéothèque
+                  </span>
+                  <span className="text-white font-bold text-base leading-tight">
+                    Nos Précédentes Formations
+                  </span>
+                </span>
+
+                {/* Arrow */}
+                <span className="relative ml-2 w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-[#23c367]/20 group-hover:border-[#23c367]/40 transition-all duration-300 flex-shrink-0">
+                  <ChevronRight className="w-4 h-4 text-white/60 group-hover:text-[#23c367] group-hover:translate-x-0.5 transition-all duration-300" />
+                </span>
+              </span>
+            </motion.button>
           </motion.div>
         </div>
       </motion.section>
 
-      {/* Modal PDF en dehors de la section pour éviter les problèmes de z-index et overflow */}
+      {/* PDF Modal */}
       <AnimatePresence>
         {selectedService && (
-          <PdfModal
-            pdf={selectedService.pdf}
-            title={selectedService.title}
-            onClose={() => setSelectedService(null)}
-          />
+          <PdfModal pdf={selectedService.pdf} title={selectedService.title} onClose={() => setSelectedService(null)} />
+        )}
+      </AnimatePresence>
+
+      {/* Formations Page Modal */}
+      <AnimatePresence>
+        {showFormations && (
+          <FormationsPage onClose={() => setShowFormations(false)} />
         )}
       </AnimatePresence>
     </>

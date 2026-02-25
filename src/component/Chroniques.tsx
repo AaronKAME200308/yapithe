@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import type { Variants } from "framer-motion";
-import { Calendar, ArrowRight, X } from "lucide-react";
+import { Calendar, ArrowRight, X,ChevronRight, Play } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { chroniquesData } from "./ChroniquesData";
 
@@ -95,17 +95,49 @@ export const Chroniques = () => {
               </motion.div>
             ))}
           </div>
-
-          {/* BOUTON VOIR PLUS */}
-          <div className="text-center mt-12">
-            <button
+          
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="mt-16 flex justify-center"
+          >
+            <motion.button
               onClick={() => navigate("/chroniques-page")}
-              className="px-8 py-4  bg-linear-to-r from-[#23c367] to-[#1fa85a] text-[#ffffff] font-semibold rounded-xl hover:scale-105 transition flex items-center gap-2 mx-auto"
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="group relative flex items-center gap-4 cursor-pointer"
             >
-              Voir plus
-              <ArrowRight className="w-5 h-5" />
-            </button>
-          </div>
+              {/* Glow behind button */}
+              <span className="absolute inset-0 rounded-2xl bg-[#23c367]/20 blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+              <span className="relative flex items-center gap-4 px-8 py-4 rounded-2xl bg-gradient-to-r from-[#0a4d7c] to-[#0c5d94] border border-white/20 group-hover:border-[#23c367]/50 shadow-xl shadow-black/30 group-hover:shadow-[#23c367]/20 transition-all duration-400 overflow-hidden">
+                {/* Shimmer sweep */}
+                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
+
+                {/* Icon container */}
+                <span className="relative w-11 h-11 rounded-xl bg-gradient-to-br from-[#23c367] to-[#0a9d4f] flex items-center justify-center shadow-lg shadow-[#23c367]/40 group-hover:shadow-[#23c367]/60 transition-shadow duration-300 flex-shrink-0">
+                  <Play className="w-5 h-5 text-white fill-white ml-0.5" />
+                </span>
+
+                {/* Text */}
+                <span className="flex flex-col items-start">
+                  <span className="text-[#23c367] text-xs font-semibold uppercase tracking-widest leading-none mb-0.5">
+                    Vidéothèque
+                  </span>
+                  <span className="text-white font-bold text-base leading-tight">
+                    Toutes nos Chroniques
+                  </span>
+                </span>
+
+                {/* Arrow */}
+                <span className="relative ml-2 w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-[#23c367]/20 group-hover:border-[#23c367]/40 transition-all duration-300 flex-shrink-0">
+                  <ChevronRight className="w-4 h-4 text-white/60 group-hover:text-[#23c367] group-hover:translate-x-0.5 transition-all duration-300" />
+                </span>
+              </span>
+            </motion.button>
+          </motion.div>
         </div>
       </section>
 

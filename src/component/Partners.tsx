@@ -107,13 +107,6 @@ const Partners = () => {
                   </div>
                 </motion.div>
 
-                {/* Numéro décoratif */}
-                <motion.div
-                  animate={{ opacity: isHovered ? 0.12 : 0.04 }}
-                  className="absolute -bottom-4 -right-2 text-[80px] font-black text-[#0a4d7c] leading-none pointer-events-none select-none"
-                >
-                  0{i + 1}
-                </motion.div>
               </motion.div>
             );
           })}
@@ -128,7 +121,7 @@ const Partners = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="relative bg-white rounded-2xl border border-black/6 shadow-sm overflow-hidden"
+              className="relative bg-[#e6e6e6] rounded-2xl border border-black/6 shadow-sm overflow-hidden"
             >
               {/* Ligne du haut décorative */}
               <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#23c367] to-[#0a4d7c]" />
@@ -140,9 +133,6 @@ const Partners = () => {
                 />
                 <span className="text-sm font-semibold text-[#0a4d7c]/70 uppercase tracking-wider">
                   {logo.name}
-                </span>
-                <span className="ml-auto text-4xl font-black text-[#0a4d7c]/8 select-none">
-                  0{i + 1}
                 </span>
               </div>
             </motion.div>

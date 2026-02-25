@@ -11,6 +11,7 @@ import Chroniques from './component/Chroniques'
 import Contact from './component/Contact'
 import VoirPlus from './component/VoirPlus'
 import ActualitesPage from "./component/ActuPages";
+import FormationsPage from "./component/FormationPage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -52,6 +53,7 @@ function App() {
           <Route path="/actu-page" element={<ActualitesPage />} />
           <Route path="/chroniques-page" element={<ChroniquesPage />} />
           <Route path="/voir-plus" element={<VoirPlus />} />
+          <Route path="/formations" element={<FormationsPage />} />
         </Routes>
 
         <Footer />
