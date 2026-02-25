@@ -29,7 +29,7 @@ const Team = () => {
     },
     {
       name: "Williams BAMATABINA",
-      role: "",
+      role: "Consultant",
       img: "/membre3.png",
       bio: "",
       linkedin: "#",

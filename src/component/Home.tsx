@@ -1,12 +1,7 @@
 import { motion } from "framer-motion";
 import CountUp from "./Count";
-import { ArrowRight, Award, Globe, Building2 } from "lucide-react";
+import { ArrowRight, MoveDownRight } from "lucide-react";
 import { useState, useEffect } from "react";
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0 },
-};
 
 const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -22,178 +17,176 @@ const Home = () => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const stats = [
-    {
-      icon: <Award className="w-8 h-8" />,
-      value: 18,
-      suffix: "+",
-      label: "Années d'expérience",
-      gradient: "from-blue-500 to-cyan-500",
-    },
-    {
-      icon: <Globe className="w-8 h-8" />,
-      text: "Afrique & Europe",
-      label: "Présence internationale",
-      gradient: "from-emerald-500 to-teal-500",
-    },
-    {
-      icon: <Building2 className="w-8 h-8" />,
-      value: 150,
-      suffix: "+",
-      label: "Organisations accompagnées",
-      gradient: "from-purple-500 to-indigo-500",
-    },
-  ];
-
   return (
     <section
       id="Accueil"
-      className="w-full min-h-screen flex items-center overflow-hidden pt-2 md:pt-3 pb-12 sm:pb-14 md:pb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative bg-gradient-to-br from-[#e0f7f1] via-white to-[#f0f9ff]"
+      className="relative w-full min-h-screen flex flex-col justify-between overflow-hidden"
+      style={{ background: "linear-gradient(135deg, #0b2035 0%, #0f3358 50%, #0b3d25 100%)" }}
     >
-      {/* Image de fond flottée — centrée, taille naturelle */}
+
+      {/* ── Grain texture overlay ── */}
       <div
-        className="absolute inset-0 bg-center bg-no-repeat pointer-events-none"
+        className="absolute inset-0 pointer-events-none opacity-[0.035]"
         style={{
-          backgroundImage: "url('/logoorigin.png')",
-          backgroundSize: " auto min(420px, 70vw)",
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          backgroundSize: "128px",
         }}
       />
-      {/* Dégradé par-dessus pour préserver la couleur de fond */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#e0f7f1]/85 via-white/50 to-[#f0f9ff]/85 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto w-full relative z-10 space-y-12 md:space-y-16">
-
-        {/* ================= TITRE CENTRÉ EN HAUT ================= */}
-        <motion.div
-          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={isMobile ? {} : { duration: 0.6 }}
-          className="text-center"
-        >
-          <h1 className="font-michroma text-4xl md:text-5xl lg:text-6xl text-[#0a4d7c] leading-tight">
-            Yapithe & Partners
-          </h1>
-        </motion.div>
-
-        {/* ================= GRID 2 COLONNES : texte gauche | stats droite ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-20">
-
-          {/* ================= LEFT CONTENT ================= */}
-          <motion.div
-            variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}
-            initial="hidden"
-            animate="visible"
-            transition={isMobile ? {} : { duration: 0.8, ease: "easeOut" }}
-            className="space-y-8"
-          >
-            {/* Tagline principal */}
-            <motion.p
-              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={isMobile ? {} : { delay: 0.2 }}
-              className="text-2xl md:text-3xl lg:text-4xl font-extrabold leading-tight bg-gradient-to-r from-[#23c367] to-[#0a4d7c] bg-clip-text text-transparent"
-            >
-              Cabinet de conseil
-              <br />
-              en contrôle de gestion
-              <br />& pilotage de la performance
-            </motion.p>
-
-            {/* Description courte */}
-            <motion.p
-              initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={isMobile ? {} : { delay: 0.3 }}
-              className="text-base md:text-lg text-[#0a4d7c] leading-relaxed max-w-lg"
-            >
-              Nous accompagnons les organisations dans leur transformation et leur
-              quête d'excellence opérationnelle.
-            </motion.p>
-
-            {/* Badge expertise */}
-            <motion.div
-              initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={isMobile ? {} : { delay: 0.35 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-[#0a4d7c]/10 shadow-sm"
-            >
-              <span className="w-2 h-2 rounded-full bg-[#23c367] animate-pulse" />
-              <span className="text-xs font-semibold text-[#0a4d7c] uppercase tracking-wider">
-                Expertise reconnue en Afrique & en Europe
-              </span>
-            </motion.div>
-
-            {/* Boutons CTA */}
-            <motion.div
-              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={isMobile ? {} : { delay: 0.4 }}
-              className="flex flex-wrap gap-4"
-            >
-              <motion.button
-                whileHover={isMobile ? {} : { scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-                className="group px-6 py-3 md:px-8 md:py-4 rounded-xl text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2 bg-gradient-to-r from-[#23c367] to-[#1fa85a] text-sm md:text-base"
-                onClick={() => scrollToSection("Contact")}
-              >
-                Travaillons ensemble
-                <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
-              </motion.button>
-
-              <motion.button
-                whileHover={isMobile ? {} : { scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-                className="px-6 py-3 md:px-8 md:py-4 rounded-xl bg-white/80 backdrop-blur-sm border-2 border-[#0a4d7c]/20 text-[#0a4d7c] font-semibold hover:bg-white hover:border-[#0a4d7c]/40 transition-all duration-300 text-sm md:text-base"
-                onClick={() => scrollToSection("Services")}
-              >
-                Nos services
-              </motion.button>
-            </motion.div>
-          </motion.div>
-
-          {/* ================= RIGHT STATS ================= */}
-          <motion.div
-            variants={isMobile ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : fadeUp}
-            initial="hidden"
-            animate="visible"
-            transition={isMobile ? {} : { duration: 0.8, delay: 0.4 }}
-            className="space-y-4 lg:space-y-5"
-          >
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={isMobile ? {} : { delay: 0.5 + index * 0.1 }}
-                whileHover={isMobile ? {} : { scale: 1.04, x: 10 }}
-                className=" backdrop-blur-sm rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group flex items-start gap-3 md:gap-4"
-              >
-                {/* Icône */}
-                <div className={`w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0 bg-gradient-to-br ${stat.gradient}`}>
-                  {stat.icon}
-                </div>
-
-                {/* Contenu */}
-                <div className="flex-1 min-w-0">
-                  {stat.value !== undefined ? (
-                    <p className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-[#23c367] to-[#0a4d7c] bg-clip-text text-transparent">
-                      <CountUp value={stat.value} suffix={stat.suffix} />
-                    </p>
-                  ) : (
-                    <p className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight bg-gradient-to-r from-[#23c367] to-[#0a4d7c] bg-clip-text text-transparent">
-                      {stat.text}
-                    </p>
-                  )}
-                  <p className="text-xs md:text-sm lg:text-base text-[#0a4d7c] mt-1">
-                    {stat.label}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-        </div>
+      {/* ── Ambient glow ── */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-30"
+          style={{ background: "radial-gradient(circle, #23c367 0%, transparent 70%)" }}
+        />
+        <div
+          className="absolute top-1/4 right-1/4 w-[400px] h-[400px] rounded-full opacity-20"
+          style={{ background: "radial-gradient(circle, #0a4d7c 0%, transparent 70%)" }}
+        />
       </div>
+
+
+
+      {/* ── TOP BAR ── */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.8 }}
+        className="relative z-10 flex items-center justify-between px-8 md:px-16 pt-10"
+      >
+        <div className="flex items-center gap-3">
+          <span className="block w-6 h-px bg-[#23c367]" />
+          <span className="text-[10px] uppercase tracking-[0.35em] font-medium text-white/40">
+            Cabinet de conseil
+          </span>
+        </div>
+        <div className="hidden md:flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#23c367] animate-pulse" />
+          <span className="text-[10px] uppercase tracking-[0.3em] font-medium text-[#23c367]/80">
+            Afrique · Europe
+          </span>
+        </div>
+      </motion.div>
+
+      {/* ── MAIN CONTENT — bottom anchored ── */}
+      <div className="relative z-10 flex flex-col md:flex-row items-end justify-between gap-10 px-8 md:px-16 pb-14 mt-auto">
+
+        {/* LEFT — Titre + tagline + CTA */}
+        <div className="space-y-4 max-w-sm">
+          <motion.h1
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="font-michroma text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight"
+          >
+            <span className="text-white">Yapithe</span>
+            <br />
+            <span
+              className="bg-clip-text text-transparent"
+              style={{ backgroundImage: "linear-gradient(90deg, #23c367, #1af0aa)" }}
+            >
+              & Partners
+            </span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.7, duration: 0.7 }}
+            className="text-white/40 text-sm leading-relaxed max-w-[260px]"
+          >
+            Contrôle de gestion & pilotage de la performance.
+          </motion.p>
+
+          <motion.button
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.85, duration: 0.6 }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => scrollToSection("Contact")}
+            className="group mt-2 flex items-center gap-3 px-7 py-3.5 rounded-full text-sm font-semibold text-[#071e38] transition-all duration-300"
+            style={{ background: "linear-gradient(90deg, #23c367, #1af0aa)" }}
+          >
+            Travaillons ensemble
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </motion.button>
+        </div>
+
+        {/* RIGHT — Logo + Stats + lien services */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.6, duration: 0.9 }}
+          className="flex flex-col items-start md:items-end gap-6"
+        >
+
+          {/* Logo */}
+          <motion.img
+            src="/logoorigin.png"
+            alt="Yapithe & Partners"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="w-[180px] md:w-[240px] lg:w-[280px]"
+            style={{ filter: "drop-shadow(0 0 40px rgba(35,195,103,0.3)) drop-shadow(0 0 80px rgba(10,77,124,0.25))" }}
+          />
+
+          {/* Séparateur */}
+          <div className="w-full h-px bg-white/10" />
+
+          {/* Stats */}
+          <div className="flex gap-10">
+            <div className="flex flex-col items-start md:items-end">
+              <span
+                className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent"
+                style={{ backgroundImage: "linear-gradient(90deg, #23c367, #1af0aa)" }}
+              >
+                <CountUp value={18} suffix="+" />
+              </span>
+              <span className="text-[11px] text-white/30 uppercase tracking-[0.25em] mt-1">
+                Années
+              </span>
+            </div>
+
+            <div className="w-px self-stretch bg-white/10" />
+
+            <div className="flex flex-col items-start md:items-end">
+              <span
+                className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent"
+                style={{ backgroundImage: "linear-gradient(90deg, #23c367, #1af0aa)" }}
+              >
+                <CountUp value={150} suffix="+" />
+              </span>
+              <span className="text-[11px] text-white/30 uppercase tracking-[0.25em] mt-1">
+                Organisations
+              </span>
+            </div>
+          </div>
+
+          {/* Lien services */}
+          <button
+            onClick={() => scrollToSection("Services")}
+            className="group flex items-center gap-2 text-sm text-white/40 hover:text-white/80 transition-colors duration-300"
+          >
+            <span className="border-b border-white/20 group-hover:border-white/60 transition-colors pb-0.5">
+              Découvrir nos services
+            </span>
+            <MoveDownRight className="w-3.5 h-3.5 group-hover:translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+          </button>
+
+        </motion.div>
+      </div>
+
+      {/* ── Ligne décorative bas ── */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ delay: 1.1, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute bottom-0 left-0 right-0 h-px origin-left"
+        style={{ background: "linear-gradient(90deg, #23c367 0%, transparent 60%)" }}
+      />
+
     </section>
   );
 };
