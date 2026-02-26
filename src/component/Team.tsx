@@ -91,12 +91,12 @@ const Team = () => {
       featured: false,
     },
     {
-      name: "Lizzy Nsouana",
+      name: "Yenga Nsouana Lizzy Ericka ",
       role: "Consultante",
       img: "/membre11.png",
       bio: "",
       linkedin: "https://www.linkedin.com/in/lizzy-nsouana-939487299/?originalSubdomain=cm",
-      email: "",
+      email: "ericka.yenga@yapithepartners.com",
       featured: false,
     },
     {

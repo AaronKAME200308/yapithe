@@ -1,22 +1,5 @@
-// ─── Installation requise ───────────────────────────────────────────────────
-// npm install react-pdf
-// Puis dans votre vite.config.ts (ou webpack), copiez le worker pdfjs :
-//
-// import { defineConfig } from "vite";
-// export default defineConfig({
-//   optimizeDeps: { include: ["react-pdf"] },
-//   assetsInclude: ["**/*.worker.min.js"],
-// });
-//
-// Et dans le fichier qui initialise votre app (ex: main.tsx) :
-// import { pdfjs } from "react-pdf";
-// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-//   "pdfjs-dist/build/pdf.worker.min.mjs",
-//   import.meta.url
-// ).toString();
-// ────────────────────────────────────────────────────────────────────────────
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Document, Page } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
@@ -46,6 +29,28 @@ export const PdfModal = ({ pdf, title, onClose }: PdfModalProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
 
+  // Ref sur le conteneur scrollable pour mesurer la largeur disponible
+  const viewerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState<number | null>(null);
+
+  // Détecte si on est sur mobile (largeur < 768px)
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
+  useEffect(() => {
+    const measure = () => {
+      if (viewerRef.current) {
+        // padding horizontal 2×16px = 32px
+        setContainerWidth(viewerRef.current.clientWidth - 32);
+      }
+    };
+
+    measure();
+
+    const ro = new ResizeObserver(measure);
+    if (viewerRef.current) ro.observe(viewerRef.current);
+    return () => ro.disconnect();
+  }, []);
+
   const absoluteUrl = pdf.startsWith("/")
     ? `${window.location.origin}${pdf}`
     : pdf;
@@ -66,8 +71,16 @@ export const PdfModal = ({ pdf, title, onClose }: PdfModalProps) => {
 
   const prevPage = () => setPageNumber((p) => Math.max(1, p - 1));
   const nextPage = () => setPageNumber((p) => Math.min(numPages, p + 1));
-  const zoomIn = () => setScale((s) => Math.min(2.5, parseFloat((s + 0.2).toFixed(1))));
-  const zoomOut = () => setScale((s) => Math.max(0.5, parseFloat((s - 0.2).toFixed(1))));
+  const zoomIn = () =>
+    setScale((s) => Math.min(2.5, parseFloat((s + 0.2).toFixed(1))));
+  const zoomOut = () =>
+    setScale((s) => Math.max(0.5, parseFloat((s - 0.2).toFixed(1))));
+
+  // Sur mobile, on pilote par width (fit-to-container).
+  // Sur desktop, on pilote par scale (zoom manuel).
+  const pageProps = isMobile
+    ? { width: containerWidth ?? undefined }
+    : { scale };
 
   return (
     <motion.div
@@ -88,7 +101,7 @@ export const PdfModal = ({ pdf, title, onClose }: PdfModalProps) => {
 
       {/* Modal */}
       <motion.div
-        className="relative w-full max-w-5xl h-[90vh] flex flex-col rounded-2xl overflow-hidden shadow-[0_0_80px_rgba(35,195,103,0.2)] border border-white/10"
+        className="relative w-full h-[90vh] flex flex-col rounded-2xl overflow-hidden shadow-[0_0_80px_rgba(35,195,103,0.2)] border border-white/10"
         initial={{ scale: 0.85, opacity: 0, y: 30 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.85, opacity: 0, y: 30 }}
@@ -138,7 +151,7 @@ export const PdfModal = ({ pdf, title, onClose }: PdfModalProps) => {
           </div>
         </div>
 
-        {/* ── Toolbar pagination + zoom ── */}
+        {/* ── Toolbar pagination + zoom (zoom masqué sur mobile) ── */}
         {!error && !loading && numPages > 0 && (
           <div className="flex items-center justify-between px-6 py-2.5 bg-[#0a4d7c]/60 border-b border-white/10 flex-shrink-0">
             {/* Pagination */}
@@ -164,31 +177,36 @@ export const PdfModal = ({ pdf, title, onClose }: PdfModalProps) => {
               </button>
             </div>
 
-            {/* Zoom */}
-            <div className="flex items-center gap-2">
-              <button
-                onClick={zoomOut}
-                disabled={scale <= 0.5}
-                className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/10 hover:bg-white/20 text-white/70 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 border border-white/10"
-              >
-                <ZoomOut className="w-4 h-4" />
-              </button>
-              <span className="text-white/70 text-xs font-medium min-w-[44px] text-center">
-                {Math.round(scale * 100)}%
-              </span>
-              <button
-                onClick={zoomIn}
-                disabled={scale >= 2.5}
-                className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/10 hover:bg-white/20 text-white/70 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 border border-white/10"
-              >
-                <ZoomIn className="w-4 h-4" />
-              </button>
-            </div>
+            {/* Zoom — masqué sur mobile (le PDF s'adapte automatiquement) */}
+            {!isMobile && (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={zoomOut}
+                  disabled={scale <= 0.5}
+                  className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/10 hover:bg-white/20 text-white/70 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 border border-white/10"
+                >
+                  <ZoomOut className="w-4 h-4" />
+                </button>
+                <span className="text-white/70 text-xs font-medium min-w-[44px] text-center">
+                  {Math.round(scale * 100)}%
+                </span>
+                <button
+                  onClick={zoomIn}
+                  disabled={scale >= 2.5}
+                  className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/10 hover:bg-white/20 text-white/70 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 border border-white/10"
+                >
+                  <ZoomIn className="w-4 h-4" />
+                </button>
+              </div>
+            )}
           </div>
         )}
 
         {/* ── Viewer ── */}
-        <div className="flex-1 bg-[#1a1a2e] overflow-auto relative flex justify-center">
+        <div
+          ref={viewerRef}
+          className="flex-1 bg-[#1a1a2e] overflow-auto relative flex justify-center"
+        >
           {/* Loading */}
           <AnimatePresence>
             {loading && (
@@ -212,8 +230,7 @@ export const PdfModal = ({ pdf, title, onClose }: PdfModalProps) => {
               </div>
               <div className="text-center max-w-md">
                 <h4 className="text-white text-xl font-bold mb-3">
-                Téléchargez ou ouvrez-le dans un onglet.
-                  
+                  Téléchargez ou ouvrez-le dans un onglet.
                 </h4>
                 <p className="text-white/60 text-sm leading-relaxed">
                   <code className="text-[#23c367]"></code>Aperçu non disponible
@@ -243,7 +260,7 @@ export const PdfModal = ({ pdf, title, onClose }: PdfModalProps) => {
 
           {/* PDF Document */}
           {!error && (
-            <div className="py-6 px-4">
+            <div className="py-6 px-4 w-full flex justify-center">
               <Document
                 file={absoluteUrl}
                 onLoadSuccess={onDocumentLoadSuccess}
@@ -253,7 +270,7 @@ export const PdfModal = ({ pdf, title, onClose }: PdfModalProps) => {
               >
                 <Page
                   pageNumber={pageNumber}
-                  scale={scale}
+                  {...pageProps}
                   loading={null}
                   className="shadow-2xl rounded-lg overflow-hidden"
                   renderAnnotationLayer
