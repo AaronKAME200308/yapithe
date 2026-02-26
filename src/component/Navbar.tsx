@@ -243,7 +243,7 @@ const Navbar = () => {
           <motion.div
             whileHover={isMobile ? {} : { scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
-            className="flex items-center cursor-pointer"
+            className="w-20 flex items-center cursor-pointer"
             onClick={() => scrollToSection("Accueil")}
           >
             <img
