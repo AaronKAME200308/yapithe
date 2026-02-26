@@ -4,7 +4,7 @@ import { useState } from "react";
 const logos = [
   { src: "/forvis-mazars-logo.svg", name: "Forvis Mazars" },
   { src: "/deloitte.png", name: "Deloitte" },
-  { src: "/logo-isnov-white-114.png", name: "Isnov" },
+  { src: "/isnov.png", name: "Isnov" },
 ];
 
 const Partners = () => {
@@ -121,7 +121,7 @@ const Partners = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="relative bg-[#e6e6e6] rounded-2xl border border-black/6 shadow-sm overflow-hidden"
+              className="relative bg-[#ffffff] rounded-2xl border border-black/6 shadow-sm overflow-hidden"
             >
               {/* Ligne du haut décorative */}
               <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#23c367] to-[#0a4d7c]" />

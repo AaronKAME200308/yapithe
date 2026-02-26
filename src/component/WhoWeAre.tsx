@@ -101,7 +101,7 @@ const WhoWeAre = () => {
             {/* Paragraphes */}
             <div className="space-y-4">
               <p className="text-base md:text-lg text-[#7090a6] leading-relaxed">
-                <span className="font-semibold text-[#0a4d7c]">Yapithe & Partners</span> est un cabinet spécialisé dans le conseil et l'accompagnement stratégique des entreprises. Nous fournissons des solutions innovantes et efficaces pour aider nos clients à se développer durablement.
+                <span className="font-semibold text-[#0a4d7c]">Yapithe & Partners</span> est un cabinet spécialisé dans le contrôle de gestion et le pilotage de la performance. Nous accompagnons dirigeants et directeurs financiers dans la structuration de leur fonction finance et la mise en place d'outils de décision efficaces.
               </p>
               <p className="text-base md:text-lg text-[#7090a6] leading-relaxed">
                 Notre expertise couvre <span className="font-semibold text-[#23c367]">Diagnostic & Structuration, Performance & Pilotage, Accompagnement stratégique</span>. Nous mettons notre savoir-faire au service de votre réussite.
