@@ -90,6 +90,16 @@ const Team = () => {
       email: "jeanpascal.olinga@yapithepartners.com",
       featured: false,
     },
+    {
+      name: "Lizy",
+      role: "Consultante",
+      img: "/membre11.png",
+      bio: "",
+      linkedin: "#",
+      email: "jeanpascal.olinga@yapithepartners.com",
+      featured: false,
+    },
+
   ];
 
   const containerVariants = {

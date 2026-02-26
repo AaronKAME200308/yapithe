@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import CountUp from "./Count";
-import { ArrowRight, MoveDownRight } from "lucide-react";
+import { ArrowRight, ChevronDown, Globe2 } from "lucide-react";
 
 const Home = () => {
   const scrollToSection = (id: string) => {
@@ -11,181 +11,186 @@ const Home = () => {
     <section
       id="Accueil"
       className="relative w-full min-h-screen flex flex-col overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #0f2d48 0%, #1a4a6e 45%, #0f3d22 100%)" }}
     >
-      {/* ── Grain ── */}
+      {/* ── Photo de fond ── */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.04]"
+        className="absolute inset-0 bg-center bg-cover bg-no-repeat"
+        style={{ backgroundImage: "url('/event1.jpg')" }}
+      />
+
+      {/* ── Overlays ── */}
+      <div
+        className="absolute inset-0"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-          backgroundSize: "128px",
+          background:
+            "linear-gradient(to bottom, rgba(5,30,15,0.4) 0%, rgba(5,30,15,0.3) 35%, rgba(5,30,15,0.72) 75%, rgba(5,30,15,0.90) 100%)",
+        }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(5,30,15,0.55) 0%, transparent 60%)",
         }}
       />
 
-      {/* ── Glow ambiants ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full opacity-25"
-          style={{ background: "radial-gradient(circle, #23c367 0%, transparent 70%)" }}
-        />
-        <div
-          className="absolute top-1/4 right-1/4 w-[350px] h-[350px] rounded-full opacity-20"
-          style={{ background: "radial-gradient(circle, #1a7abf 0%, transparent 70%)" }}
-        />
-      </div>
-
-      {/* ══════════════════════════════
-          TOP BAR
-      ══════════════════════════════ */}
+      {/* ══ HEADER ══ */}
       <motion.header
-        initial={{ opacity: 0, y: -16 }}
+        initial={{ opacity: 0, y: -14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.15, duration: 0.7 }}
-        className="relative z-10 flex items-center justify-between px-6 sm:px-10 md:px-16 py-5"
-      >
-        <div className="flex items-center gap-2.5">
-          <span className="block w-5 h-px bg-[#23c367]" />
-          <span className="text-[10px] uppercase tracking-[0.32em] font-medium text-white/35">
-            Cabinet de conseil
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#23c367] animate-pulse" />
-          <span className="text-[10px] uppercase tracking-[0.28em] font-medium text-[#23c367]/75">
-            Afrique · Europe
+        transition={{ duration: 0.8 }}
+        className="relative z-10 flex items-center justify-end px-5 sm:px-14 md:px-20 py-5 sm:py-7"
+      >       
+
+        <div className="flex items-center gap-1.5">
+          <Globe2 className="w-4 h-4 animate-pulse" color="#ffffff" />
+          <span className="text-[10px] sm:text-xs tracking-[0.2em] uppercase text-white">
+            Afrique & Europe
           </span>
         </div>
       </motion.header>
 
-      {/* ══════════════════════════════
-          CONTENU PRINCIPAL
-          Mobile  : colonne centrée
-          Desktop : 2 colonnes, centré verticalement
-      ══════════════════════════════ */}
-      <div className="relative z-10 flex-1 flex items-center px-6 sm:px-10 md:px-16 py-10 md:py-0">
-        <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-end justify-between gap-12 md:gap-16">
+      {/* ══ CONTENU PRINCIPAL ══ */}
+      <div className="relative z-10 flex-1 flex flex-col justify-end px-5 sm:px-14 md:px-20 pb-10 sm:pb-20">
 
-          {/* ── GAUCHE : Titre + description + CTAs ── */}
-          <div className="flex flex-col items-center md:items-start gap-5 w-full md:max-w-[420px] text-center md:text-left">
+        {/* Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, x: -16 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4, duration: 0.7 }}
+          className="flex items-center gap-3 mb-4 sm:mb-5"
+        >
+          <div className="w-6 sm:w-8 h-px bg-[#22c55e]" />
+          <span className="text-[10px] sm:text-xs tracking-[0.22em] uppercase text-white">
+            Cabinet de conseil
+          </span>
+        </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className="font-michroma text-[2.6rem] sm:text-5xl md:text-6xl lg:text-7xl leading-[0.92] tracking-tight"
+        {/* Titre */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-5 sm:mb-7"
+        >
+          <h1 className="font-michroma text-[clamp(2.4rem,10vw,6.5rem)] leading-[1.05] tracking-tight text-white">
+            Yapithe
+          </h1>
+          <h1
+            className="font-michroma text-[clamp(2.4rem,10vw,6.5rem)] leading-[1.05] tracking-tight"
+            style={{ color: "#22c55e" }}
+          >
+            & Partners
+          </h1>
+        </motion.div>
+
+        {/* Séparateur */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ delay: 0.75, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="origin-left mb-5 sm:mb-7 h-px w-28 sm:w-40"
+          style={{ background: "#ffffff" }}
+        />
+
+        {/* Description */}
+        <motion.p
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+          className="text-sm sm:text-xl text-white/80 leading-relaxed tracking-wide max-w-[240px] sm:max-w-[300px] mb-5 sm:mb-6"
+        >
+          Contrôle de gestion & pilotage<br />de la performance.
+        </motion.p>
+
+        {/* Stats — mobile : ligne horizontale compacte */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.88, duration: 0.8 }}
+          className="flex gap-6 items-center mb-6 sm:hidden"
+        >
+          <div>
+            <p className="text-2xl leading-none text-white font-semibold">
+              <CountUp value={18} suffix="+" />
+            </p>
+            <p className="text-[9px] uppercase tracking-[0.2em] text-white/60 mt-0.5">Années</p>
+          </div>
+          <div className="w-px h-8 bg-white/20" />
+          <div>
+            <p className="text-2xl leading-none text-white font-semibold">
+              <CountUp value={150} suffix="+" />
+            </p>
+            <p className="text-[9px] uppercase tracking-[0.2em] text-white/60 mt-0.5">Organisations</p>
+          </div>
+        </motion.div>
+
+        {/* CTAs — mobile : pleine largeur, desktop : inline */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.95, duration: 0.8 }}
+          className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-8"
+        >
+          {/* Boutons */}
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.96 }}
+              onClick={() => scrollToSection("Contact")}
+              className="flex items-center justify-center gap-2 px-6 py-3.5 sm:py-3 rounded-full text-sm tracking-[0.1em] text-white transition-all duration-300 w-full sm:w-auto"
+              style={{ background: "#16a34a" }}
             >
-              <span className="text-white block">Yapithe</span>
-              <span
-                className="bg-clip-text text-transparent block"
-                style={{ backgroundImage: "linear-gradient(90deg, #23c367, #1af0aa)" }}
-              >
-                & Partners
-              </span>
-            </motion.h1>
+              Travaillons ensemble
+              <ArrowRight className="w-3.5 h-3.5" />
+            </motion.button>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.7 }}
-              className="text-white/38 text-sm sm:text-base leading-relaxed max-w-[280px]"
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.96 }}
+              onClick={() => scrollToSection("Services")}
+              className="flex items-center justify-center gap-2 px-6 py-3.5 sm:py-3 rounded-full text-sm tracking-[0.1em] text-white transition-all duration-300 w-full sm:w-auto"
+              style={{
+                background: "rgba(255,255,255,0.08)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(255,255,255,0.18)",
+              }}
             >
-              Contrôle de gestion & pilotage<br className="hidden sm:block" /> de la performance.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.75, duration: 0.6 }}
-              className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-center"
-            >
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.96 }}
-                onClick={() => scrollToSection("Contact")}
-                className="group flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full text-sm font-semibold text-[#071e38] w-full sm:w-auto transition-all duration-300"
-                style={{ background: "linear-gradient(90deg, #23c367, #1af0aa)" }}
-              >
-                Travaillons ensemble
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </motion.button>
-
-              <button
-                onClick={() => scrollToSection("Services")}
-                className="group flex items-center justify-center gap-1.5 text-sm text-white/38 hover:text-white/70 transition-colors duration-300"
-              >
-                <span className="border-b border-white/18 group-hover:border-white/50 pb-px transition-colors">
-                  Nos services
-                </span>
-                <MoveDownRight className="w-3.5 h-3.5 group-hover:translate-y-px group-hover:translate-x-px transition-transform" />
-              </button>
-            </motion.div>
+              Nos services
+            </motion.button>
           </div>
 
-          {/* ── DROITE : Logo + séparateur + stats ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.55, duration: 0.9 }}
-            className="flex flex-col items-center md:items-end gap-5 w-full md:w-auto"
-          >
-            {/* Logo */}
-            <motion.img
-              src="/logoorigin.png"
-              alt="Yapithe & Partners"
-              initial={{ opacity: 0, scale: 0.88 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3, duration: 1.3, ease: [0.16, 1, 0.3, 1] }}
-              className="w-[160px] sm:w-[200px] md:w-[250px] lg:w-[300px]"
-              style={{
-                filter:
-                  "drop-shadow(0 0 36px rgba(35,195,103,0.32)) drop-shadow(0 0 72px rgba(10,77,124,0.22))",
-              }}
-            />
-
-            {/* Séparateur */}
-            <div className="w-full h-px bg-white/10" />
-
-            {/* Stats */}
-            <div className="flex gap-8 sm:gap-12">
-              <div className="flex flex-col items-center md:items-end">
-                <span
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent"
-                  style={{ backgroundImage: "linear-gradient(90deg, #23c367, #1af0aa)" }}
-                >
-                  <CountUp value={18} suffix="+" />
-                </span>
-                <span className="text-[10px] sm:text-[11px] text-white/28 uppercase tracking-[0.22em] mt-1">
-                  Années
-                </span>
-              </div>
-
-              <div className="w-px self-stretch bg-white/10" />
-
-              <div className="flex flex-col items-center md:items-end">
-                <span
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent"
-                  style={{ backgroundImage: "linear-gradient(90deg, #23c367, #1af0aa)" }}
-                >
-                  <CountUp value={150} suffix="+" />
-                </span>
-                <span className="text-[10px] sm:text-[11px] text-white/28 uppercase tracking-[0.22em] mt-1">
-                  Organisations
-                </span>
-              </div>
+          {/* Stats — desktop uniquement */}
+          <div className="hidden sm:flex gap-8 items-end">
+            <div className="text-right">
+              <p className="text-[clamp(2rem,4vw,3.2rem)] leading-none text-white">
+                <CountUp value={18} suffix="+" />
+              </p>
+              <p className="text-[9px] uppercase tracking-[0.22em] text-white mt-1">Années</p>
             </div>
-          </motion.div>
-
-        </div>
+            <div className="w-px h-10 bg-white/15" />
+            <div className="text-right">
+              <p className="text-[clamp(2rem,4vw,3.2rem)] leading-none text-white">
+                <CountUp value={150} suffix="+" />
+              </p>
+              <p className="text-[9px] uppercase tracking-[0.22em] text-white mt-1">Organisations</p>
+            </div>
+          </div>
+        </motion.div>
       </div>
 
-      {/* ── Ligne décorative bas ── */}
+      {/* ── Scroll indicator ── */}
       <motion.div
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ delay: 1.0, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute bottom-0 left-0 right-0 h-px origin-left"
-        style={{ background: "linear-gradient(90deg, #23c367 0%, transparent 55%)" }}
-      />
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.3, duration: 0.6 }}
+        className="relative z-10 flex justify-center pb-5 sm:pb-7 cursor-pointer"
+        onClick={() => scrollToSection("Services")}
+      >
+        <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}>
+          <ChevronDown className="w-5 h-5 text-white/20" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
