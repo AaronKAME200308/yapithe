@@ -18,6 +18,15 @@ const Team = () => {
       email: "michel.yapithe@yapithepartners.com",
       featured: true,
     },
+     {
+      name: "Ngayap Serges Alain",
+      role: "Directeur Général",
+      img: "/membre14.png",
+      bio: "Expert en Contrôle de gestion & pilotage de la performance",
+      linkedin: "https://www.linkedin.com/in/serges-alain-ngayap-9a330717b/",
+      email: "serges.ngayap@yapithepartners.com",
+      featured: true,
+    },
     {
       name: "Mouhammadou Yakouba",
       role: "Directeur Général Adjoint",
