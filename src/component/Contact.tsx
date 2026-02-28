@@ -336,14 +336,14 @@ const Contact = () => {
                 </span>
               </div>
 
-              <iframe
+              {/* <iframe
                 title="Yapithe & Partners Location"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15919.352400850994!2d9.683488107195263!3d4.053420890452825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1061139ab951eb81%3A0x171e0e7bf30982cf!2sYapithe%20Partner!5e0!3m2!1sfr!2scm!4v1770311306192!5m2!1sfr!2scm"
                 width="100%"
                 height="350"
                 className="border-0 group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
-              ></iframe>
+              ></iframe> */}
             </motion.div>
           </div>
         </div>

@@ -1,4 +1,16 @@
 export const eventsData = [
+  {
+      id: 0,
+      title: "Séance de Dédicace",
+      description: "L'expert en controle de gestion M. Michel Yapithe lance officiellement les ventes de son ouvrage",
+      date: "12 Mars 2026",
+      time: "18:00 - 21:00",
+      location: "Starland Hotel",
+      participants: "120+ participants",
+      image: "/event0.jpeg",
+      category: "Dédicace",
+      status: "À venir",
+    },
     {
       id: 1,
       title: "Séance de Dédicace",
@@ -22,17 +34,5 @@ export const eventsData = [
       image: "/event2.jpg",
       category: "Atelier",
       status: "Terminé",
-    },
-    {
-      id: 3,
-      title: "Networking Business Leaders",
-      description: "Rencontre exclusive entre dirigeants d'entreprises pour échanger sur les meilleures pratiques.",
-      date: "28 Janvier 2026",
-      time: "18:30 - 21:00",
-      location: "Restaurant Le Beau Rivage",
-      participants: "30 participants",
-      image: "/event3.jpg",
-      category: "Networking",
-      status: "Terminé",
-    },
+    },    
   ];

@@ -20,7 +20,7 @@ const Team = () => {
     },
      {
       name: "Ngayap Serges Alain",
-      role: "Directeur Général",
+      role: "Directeur Général Adjoint",
       img: "/membre14.png",
       bio: "Expert en Contrôle de gestion & pilotage de la performance",
       linkedin: "https://www.linkedin.com/in/serges-alain-ngayap-9a330717b/",
@@ -29,7 +29,7 @@ const Team = () => {
     },
     {
       name: "Mouhammadou Yakouba",
-      role: "Directeur Général Adjoint",
+      role: "Manager",
       img: "/membre2.png",
       bio:"Contrôle de gestion & pilotage de la performance",
       linkedin: "https://www.linkedin.com/in/mouhammadou-yakouba-a8234a264/",
