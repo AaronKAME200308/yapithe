@@ -196,10 +196,10 @@ const Services = () => {
 
                   {/* Bottom: title + desc + CTA */}
                   <div className="space-y-2">
-                    <h3 className="text-sm font-bold text-white leading-tight line-clamp-2">
+                    <h3 className="text-xl font-bold text-white leading-tight line-clamp-2">
                       {service.title}
                     </h3>
-                    <p className="text-white/90 text-xs leading-relaxed">
+                    <p className="text-white/90 text-base leading-relaxed">
                       {service.description}
                     </p>
                     <motion.button

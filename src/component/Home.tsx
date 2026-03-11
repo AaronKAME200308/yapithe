@@ -12,10 +12,16 @@ const Home = () => {
       id="Accueil"
       className="relative w-full min-h-screen flex flex-col overflow-hidden"
     >
-      {/* ── Photo de fond ── */}
+      {/* ── Photo de fond desktop (sm et +) ── */}
       <div
-        className="absolute inset-0 bg-center bg-cover bg-no-repeat"
-        style={{ backgroundImage: "url('/event1.jpg')" }}
+        className="absolute inset-0 bg-center bg-cover bg-no-repeat hidden sm:block"
+        style={{ backgroundImage: "url('/fdp.png')" }}
+      />
+
+      {/* ── Photo de fond mobile (< sm) ── */}
+      <div
+        className="absolute inset-0 bg-center bg-cover bg-no-repeat block sm:hidden"
+        style={{ backgroundImage: "url('/fdpsm.png')" }}
       />
 
       {/* ── Overlays ── */}
@@ -40,8 +46,7 @@ const Home = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="relative z-10 flex items-center justify-end px-5 sm:px-14 md:px-20 py-5 sm:py-7"
-      >       
-
+      >
         <div className="flex items-center gap-1.5">
           <Globe2 className="w-4 h-4 animate-pulse" color="#ffffff" />
           <span className="text-[10px] sm:text-xs tracking-[0.2em] uppercase text-white">
