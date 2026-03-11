@@ -39,8 +39,8 @@ const navLinks = [
       { label: "Comptabilité analytique", id: "Comptabilité", sectionId: "Services" },
       { label: "Outils d'élaboration & Suivi du Budget", id: "OESB", sectionId: "Services" },
       { label: "Formation", id: "Formation", sectionId: "Services" },
+      { label: "Accompagnement et Recrutement", id: "Accompagnement", sectionId: "Services" },
       { label: "Nos précédentes formations", id: "FormationEnLigne", sectionId: "Services" },
-
     ]
   },
   { label: "Chroniques", id: "Chroniques", sectionId: "Chroniques" },
