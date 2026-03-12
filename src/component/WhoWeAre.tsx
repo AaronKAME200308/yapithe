@@ -270,7 +270,7 @@ Suivi post-mission, ajustements et montée en puissance pour pérenniser la tran
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="grid grid-cols-2 gap-4 pt-6"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6"
             >
               {highlights.map((highlight, index) => (
                 <motion.div
