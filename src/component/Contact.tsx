@@ -329,7 +329,7 @@ const Contact = () => {
               className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white group"
             >
               {/* Badge localisation */}
-              <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
+              <div className="absolute top-4 right-4 z-10 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-[#23c367]" />
                 <span className="text-sm font-semibold text-[#0a4d7c]">
                   Notre bureau
