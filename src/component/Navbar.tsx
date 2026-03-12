@@ -31,35 +31,32 @@ const navLinks = [
       { label: "Événements", id: "events", sectionId: "events" },
     ],
   },
-  { label: "Services",
-    id: "Services", 
+  {
+    label: "Services",
+    id: "Services",
     sectionId: "Services",
     children: [
-      { label: "Pilotage de performance", id: "Pilotage", sectionId: "Services" },
-      { label: "Comptabilité analytique", id: "Comptabilité", sectionId: "Services" },
-      { label: "Outils d'élaboration & Suivi du Budget", id: "OESB", sectionId: "Services" },
-      { label: "Formation", id: "Formation", sectionId: "Services" },
-      { label: "Accompagnement et Recrutement", id: "Accompagnement", sectionId: "Services" },
-      { label: "Nos précédentes formations", id: "FormationEnLigne", sectionId: "Services" },
-    ]
+      { label: "Pilotage de performance",                   id: "Pilotage",        sectionId: "Services", serviceId: 1 },
+      { label: "Comptabilité analytique",                   id: "Comptabilité",    sectionId: "Services", serviceId: 2 },
+      { label: "Outils d'élaboration & Suivi du Budget",   id: "OESB",            sectionId: "Services", serviceId: 3 },
+      { label: "Formation",                                 id: "Formation",       sectionId: "Services", serviceId: 4 },
+      { label: "Accompagnement et Recrutement",             id: "Accompagnement",  sectionId: "Services", serviceId: 5 },
+      { label: "Nos précédentes formations",                id: "FormationEnLigne",sectionId: "Services", serviceId: null },
+    ],
   },
   { label: "Chroniques", id: "Chroniques", sectionId: "Chroniques" },
-  { label: "Contact", id: "Contact", sectionId: "Contact" },
+  { label: "Contact",    id: "Contact",    sectionId: "Contact" },
 ];
-
-/* ===================== Pages séparées (pas sur la home) ===================== */
 
 /* ===================== CUSTOM HOOK - useIsMobile ===================== */
 const useIsMobile = (breakpoint = 1024) => {
   const [isMobile, setIsMobile] = useState(false);
-
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < breakpoint);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, [breakpoint]);
-
   return isMobile;
 };
 
@@ -90,11 +87,51 @@ const Navbar = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [imageError, setImageError] = useState(false);
   const [pendingScroll, setPendingScroll] = useState<string | null>(null);
+  const [pendingServiceId, setPendingServiceId] = useState<number | null>(null);
 
   const sectionsRef = useRef<NodeListOf<Element> | null>(null);
   const navRef = useRef<HTMLDivElement>(null);
 
   const isOnHomePage = location.pathname === "/";
+
+  /* ── Dispatch custom event to open PDF modal in Services ── */
+  const openServiceModal = useCallback((serviceId: number) => {
+    window.dispatchEvent(
+      new CustomEvent("open-service-modal", { detail: { serviceId } })
+    );
+  }, []);
+
+  /* ── Handle service child click: scroll + open modal ── */
+  const handleServiceChild = useCallback(
+    (sectionId: string, serviceId: number | null) => {
+      setOpenDropdown(null);
+      setOpen(false);
+
+      // "Nos précédentes formations" → navigate to /formations, no modal
+      if (serviceId === null) {
+        navigate("/formations");
+        return;
+      }
+
+      if (isOnHomePage) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const top =
+            element.getBoundingClientRect().top +
+            window.scrollY -
+            (navRef.current?.offsetHeight ?? 80);
+          window.scrollTo({ top, behavior: "smooth" });
+        }
+        // Small delay so the scroll settles before opening modal
+        setTimeout(() => openServiceModal(serviceId), 400);
+      } else {
+        setPendingScroll(sectionId);
+        setPendingServiceId(serviceId);
+        navigate("/");
+      }
+    },
+    [isOnHomePage, navigate, openServiceModal]
+  );
 
   /* ===================== PRELOAD LOGO ===================== */
   useEffect(() => {
@@ -102,10 +139,9 @@ const Navbar = () => {
     img.src = LOGO_PATH;
   }, []);
 
-  /* ===================== Quand on revient sur la home après navigation ===================== */
+  /* ── Fire pending scroll + modal after returning to home ── */
   useEffect(() => {
     if (isOnHomePage && pendingScroll) {
-      // Attendre que le DOM soit prêt
       const timer = setTimeout(() => {
         const element = document.getElementById(pendingScroll);
         if (element) {
@@ -115,13 +151,17 @@ const Navbar = () => {
             (navRef.current?.offsetHeight ?? 80);
           window.scrollTo({ top, behavior: "smooth" });
         }
+        if (pendingServiceId !== null) {
+          setTimeout(() => openServiceModal(pendingServiceId), 400);
+          setPendingServiceId(null);
+        }
         setPendingScroll(null);
       }, 100);
       return () => clearTimeout(timer);
     }
-  }, [isOnHomePage, pendingScroll]);
+  }, [isOnHomePage, pendingScroll, pendingServiceId, openServiceModal]);
 
-  /* ===================== Actif selon la route séparée ===================== */
+  /* ── Active state based on route ── */
   useEffect(() => {
     if (location.pathname === "/actu-page") setActive("Actualite");
     else if (location.pathname === "/chroniques-page") setActive("Chroniques");
@@ -129,21 +169,20 @@ const Navbar = () => {
     else if (!isOnHomePage) setActive("Accueil");
   }, [location.pathname]);
 
-  /* ===================== CLOSE DROPDOWN ON OUTSIDE CLICK ===================== */
+  /* ── Close dropdown on outside click ── */
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(e.target as Node)) {
         setOpenDropdown(null);
       }
     };
-
     if (openDropdown) {
       document.addEventListener("mousedown", handleClickOutside);
       return () => document.removeEventListener("mousedown", handleClickOutside);
     }
   }, [openDropdown]);
 
-  /* ===================== KEYBOARD NAVIGATION ===================== */
+  /* ── Keyboard navigation ── */
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -151,20 +190,16 @@ const Navbar = () => {
         setOpen(false);
       }
     };
-
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  /* ===================== SCROLL LISTENER (home seulement) ===================== */
+  /* ── Scroll listener (home) ── */
   useEffect(() => {
     if (!isOnHomePage) return;
-
     sectionsRef.current = document.querySelectorAll("section[id], div[id]");
-
     const onScroll = () => {
       setScrolled(window.scrollY > SCROLL_THRESHOLD);
-
       if (!sectionsRef.current) return;
       let current = "Accueil";
       sectionsRef.current.forEach((section) => {
@@ -173,32 +208,27 @@ const Navbar = () => {
       });
       setActive(current);
     };
-
     const throttledScroll = throttle(onScroll, THROTTLE_DELAY);
     window.addEventListener("scroll", throttledScroll, { passive: true });
     onScroll();
-
     return () => window.removeEventListener("scroll", throttledScroll as any);
   }, [isOnHomePage]);
 
-  /* ===================== SCROLL LISTENER (pages séparées) ===================== */
+  /* ── Scroll listener (other pages) ── */
   useEffect(() => {
     if (isOnHomePage) return;
-
     const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [isOnHomePage]);
 
-  /* ===================== NAVIGATION PRINCIPALE ===================== */
+  /* ── Main scroll navigation ── */
   const scrollToSection = useCallback(
     (sectionId: string) => {
       setOpenDropdown(null);
       setOpen(false);
       setActive(sectionId);
-
       if (isOnHomePage) {
-        // On est déjà sur la home → scroll direct
         const element = document.getElementById(sectionId);
         if (!element) return;
         const top =
@@ -207,7 +237,6 @@ const Navbar = () => {
           (navRef.current?.offsetHeight ?? 80);
         window.scrollTo({ top, behavior: "smooth" });
       } else {
-        // On est sur une page séparée → retour à la home puis scroll
         setPendingScroll(sectionId);
         navigate("/");
       }
@@ -215,16 +244,14 @@ const Navbar = () => {
     [isOnHomePage, navigate]
   );
 
-  /* ===================== LINK CLASS ===================== */
+  /* ── Link class helper ── */
   const linkClass = (id: string, children?: any[], isMobileView = false) => {
     const isActive =
       active === id || (children && children.some((c) => c.id === active));
-
     if (isMobileView) {
       return `w-full bg-[#0a4d7c] px-4 py-3 rounded-xl transition-colors duration-300 flex items-center justify-between font-medium
       ${isActive ? "bg-[#23c367] text-white shadow-lg" : "text-white hover:bg-white/10"}`;
     }
-
     return `px-4 py-2 bg-[#0a4d7c] rounded-full transition-colors duration-300 flex items-center gap-1.5 font-medium text-sm whitespace-nowrap
     ${isActive ? "bg-[#23c367] text-white shadow-lg" : "text-white hover:bg-[#23c367]/80"}`;
   };
@@ -232,14 +259,15 @@ const Navbar = () => {
   return (
     <header
       ref={navRef}
-      className={`sticky top-0 z-50 transition-all duration-300 border-b border-gray-200 bg-gradient-to-br from-[#e0f7f1] via-white to-[#f0f9ff] ${scrolled
+      className={`sticky top-0 z-50 transition-all duration-300 border-b border-gray-200 bg-gradient-to-br from-[#e0f7f1] via-white to-[#f0f9ff] ${
+        scrolled
           ? "backdrop-blur-md bg-gradient-to-br from-[#e0f7f1] via-white to-[#f0f9ff]"
           : "bg-transparent border-transparent"
-        }`}
+      }`}
     >
       <div className="px-4 md:px-6 py-3">
         <div className="grid grid-cols-2 md:grid-cols-3 items-center gap-4">
-          {/* ================= LOGO ================= */}
+          {/* LOGO */}
           <motion.div
             whileHover={isMobile ? {} : { scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
@@ -255,102 +283,83 @@ const Navbar = () => {
             />
           </motion.div>
 
-          {/* ================= NAV CENTER ================= */}
-          <nav
-            className="hidden lg:flex justify-center"
-            role="navigation"
-            aria-label="Navigation principale"
-          >
+          {/* NAV CENTER */}
+          <nav className="hidden lg:flex justify-center" role="navigation" aria-label="Navigation principale">
             <ul
               className="flex gap-2 items-center px-3 py-2 rounded-full transition-all duration-300"
-              style={{ backgroundColor: '#0a4d7c' }}
-            >              {navLinks
-              .filter((l) => l.label !== "Contact")
-              .map((link) => (
-                <li
-                  key={link.label}
-                  className="relative"
-                  onMouseEnter={() =>
-                    link.children && setOpenDropdown(link.label)
-                  }
-                  onMouseLeave={() => setOpenDropdown(null)}
-                >
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={linkClass(link.id, link.children)}
-                    onClick={() =>
-                      !link.children && scrollToSection(link.sectionId)
-                    }
-                    aria-expanded={
-                      link.children
-                        ? openDropdown === link.label
-                        : undefined
-                    }
-                    aria-haspopup={link.children ? "true" : undefined}
-                    aria-current={active === link.id ? "page" : undefined}
+              style={{ backgroundColor: "#0a4d7c" }}
+            >
+              {navLinks
+                .filter((l) => l.label !== "Contact")
+                .map((link) => (
+                  <li
+                    key={link.label}
+                    className="relative"
+                    onMouseEnter={() => link.children && setOpenDropdown(link.label)}
+                    onMouseLeave={() => setOpenDropdown(null)}
                   >
-                    {link.label}
-                    {link.children && (
-                      <motion.div
-                        animate={{
-                          rotate: openDropdown === link.label ? 180 : 0,
-                        }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <ChevronDown className="w-4 h-4" />
-                      </motion.div>
-                    )}
-                  </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={linkClass(link.id, link.children)}
+                      onClick={() => !link.children && scrollToSection(link.sectionId)}
+                      aria-expanded={link.children ? openDropdown === link.label : undefined}
+                      aria-haspopup={link.children ? "true" : undefined}
+                      aria-current={active === link.id ? "page" : undefined}
+                    >
+                      {link.label}
+                      {link.children && (
+                        <motion.div
+                          animate={{ rotate: openDropdown === link.label ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <ChevronDown className="w-4 h-4" />
+                        </motion.div>
+                      )}
+                    </motion.button>
 
-                  {/* DROPDOWN */}
-                  <AnimatePresence>
-                    {link.children && openDropdown === link.label && (
-                      <motion.ul
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 mt-2 w-60 bg-white rounded-2xl shadow-2xl p-2 border border-gray-100"
-                        role="menu"
-                      >
-                        {link.children.map((child) => (
-                          <motion.li
-                            key={child.id}
-                            whileHover={{ x: 4 }}
-                            transition={{ duration: 0.2 }}
-                            role="menuitem"
-                          >
-                            <button
-                              onClick={() => scrollToSection(child.sectionId)}
-                              style={{
-                                background:
-                                  active === child.id
-                                    ? "linear-gradient(to right, #23c367, #1fa85a)"
-                                    : "transparent hover:bg-[#23c367]/80",
-                              }}
-                              className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-200
-                                  ${active === child.id
-                                  ? "text-white shadow-lg"
-                                  : "text-[#0a4d7c] hover:bg-[#23c367]/10"
-                                }`}
-                              aria-current={
-                                active === child.id ? "page" : undefined
-                              }
-                            >
-                              {child.label}
-                            </button>
-                          </motion.li>
-                        ))}
-                      </motion.ul>
-                    )}
-                  </AnimatePresence>
-                </li>
-              ))}
+                    {/* DROPDOWN */}
+                    <AnimatePresence>
+                      {link.children && openDropdown === link.label && (
+                        <motion.ul
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-2xl p-2 border border-gray-100"
+                          role="menu"
+                        >
+                          {link.children.map((child) => (
+                            <motion.li key={child.id} whileHover={{ x: 4 }} transition={{ duration: 0.2 }} role="menuitem">
+                              <button
+                                onClick={() =>
+                                  "serviceId" in child
+                                    ? handleServiceChild(child.sectionId, (child as any).serviceId)
+                                    : scrollToSection(child.sectionId)
+                                }
+                                style={{
+                                  background:
+                                    active === child.id
+                                      ? "linear-gradient(to right, #23c367, #1fa85a)"
+                                      : "transparent",
+                                }}
+                                className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-200
+                                  ${active === child.id ? "text-white shadow-lg" : "text-[#0a4d7c] hover:bg-[#23c367]/10"}`}
+                                aria-current={active === child.id ? "page" : undefined}
+                              >
+                                {child.label}
+                              </button>
+                            </motion.li>
+                          ))}
+                        </motion.ul>
+                      )}
+                    </AnimatePresence>
+                  </li>
+                ))}
             </ul>
           </nav>
 
-          {/* ================= CONTACT RIGHT ================= */}
+          {/* CONTACT RIGHT */}
           <div className="hidden lg:flex justify-end">
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -361,42 +370,25 @@ const Navbar = () => {
               aria-label="Aller à la section contact"
             >
               <span className="relative z-10">Contact</span>
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: "linear-gradient(to right, #23c367, #1fa85a)",
-                }}
-              ></div>
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{
-                  background: "linear-gradient(to right, #1fa85a, #23c367)",
-                }}
-              ></div>
+              <div className="absolute inset-0" style={{ background: "linear-gradient(to right, #23c367, #1fa85a)" }} />
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "linear-gradient(to right, #1fa85a, #23c367)" }} />
             </motion.button>
           </div>
 
-          {/* ================= MOBILE BTN ================= */}
+          {/* MOBILE BTN */}
           <motion.button
             whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              setOpen(!open);
-              setOpenDropdown(null);
-            }}
+            onClick={() => { setOpen(!open); setOpenDropdown(null); }}
             className="lg:hidden justify-self-end w-12 h-12 flex items-center justify-center bg-[#23c367] rounded-xl shadow-lg transition-shadow duration-300 hover:shadow-xl"
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={open}
           >
-            {open ? (
-              <X className="w-6 h-6 text-white" />
-            ) : (
-              <Menu className="w-6 h-6 text-white" />
-            )}
+            {open ? <X className="w-6 h-6 text-white" /> : <Menu className="w-6 h-6 text-white" />}
           </motion.button>
         </div>
       </div>
 
-      {/* ================= MOBILE MENU ================= */}
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {open && (
           <motion.nav
@@ -408,36 +400,27 @@ const Navbar = () => {
             role="navigation"
             aria-label="Navigation mobile"
           >
-            <ul
-              className="flex flex-col gap-2 px-4 py-4 max-h-[70vh] overflow-y-auto"
-              style={{ WebkitOverflowScrolling: "touch" }}
-            >
+            <ul className="flex flex-col gap-2 px-4 py-4 max-h-[70vh] overflow-y-auto" style={{ WebkitOverflowScrolling: "touch" }}>
               {navLinks.map((link) => (
                 <li key={link.label} className="w-full">
                   <motion.button
                     whileTap={{ scale: 0.98 }}
                     onClick={() => {
                       if (link.children) {
-                        setOpenDropdown(
-                          openDropdown === link.label ? null : link.label
-                        );
+                        setOpenDropdown(openDropdown === link.label ? null : link.label);
                       } else {
                         scrollToSection(link.sectionId);
                       }
                     }}
                     className={linkClass(link.id, link.children, true)}
-                    aria-expanded={
-                      link.children ? openDropdown === link.label : undefined
-                    }
+                    aria-expanded={link.children ? openDropdown === link.label : undefined}
                     aria-haspopup={link.children ? "true" : undefined}
                     aria-current={active === link.id ? "page" : undefined}
                   >
                     <span>{link.label}</span>
                     {link.children && (
                       <motion.div
-                        animate={{
-                          rotate: openDropdown === link.label ? 180 : 0,
-                        }}
+                        animate={{ rotate: openDropdown === link.label ? 180 : 0 }}
                         transition={{ duration: 0.2 }}
                       >
                         <ChevronDown className="w-5 h-5" />
@@ -465,15 +448,14 @@ const Navbar = () => {
                             role="menuitem"
                           >
                             <button
-                              onClick={() => scrollToSection(child.sectionId)}
-                              className={`w-full text-left px-4 py-2.5 rounded-lg transition-colors duration-200 font-medium text-sm
-                                ${active === child.id
-                                  ? "bg-[#23c367] text-white shadow-lg"
-                                  : "text-white/90 hover:bg-white/10"
-                                }`}
-                              aria-current={
-                                active === child.id ? "page" : undefined
+                              onClick={() =>
+                                "serviceId" in child
+                                  ? handleServiceChild(child.sectionId, (child as any).serviceId)
+                                  : scrollToSection(child.sectionId)
                               }
+                              className={`w-full text-left px-4 py-2.5 rounded-lg transition-colors duration-200 font-medium text-sm
+                                ${active === child.id ? "bg-[#23c367] text-white shadow-lg" : "text-white/90 hover:bg-white/10"}`}
+                              aria-current={active === child.id ? "page" : undefined}
                             >
                               {child.label}
                             </button>

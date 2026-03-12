@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Briefcase,
   Truck,
@@ -33,6 +33,17 @@ const Services = () => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [showFormations, setShowFormations] = useState(false);
   const navigate = useNavigate();
+
+  // Listen for navbar service clicks
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const { serviceId } = (e as CustomEvent).detail;
+      const service = services.find((s) => s.id === serviceId) ?? null;
+      setSelectedService(service);
+    };
+    window.addEventListener("open-service-modal", handler);
+    return () => window.removeEventListener("open-service-modal", handler);
+  }, []);
 
   const services: Service[] = [
     {
@@ -73,7 +84,7 @@ const Services = () => {
     },
     {
       id: 5,
-      title: "Accompagnement et Recrutement",
+      title: "Accompagnement au Recrutement",
       description:
         "Support personnalisé pour la mise en œuvre de solutions de contrôle de gestion et d'optimisation des performances.",
       icon: <Play className="w-7 h-7" />,
@@ -151,7 +162,7 @@ const Services = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4"
+            className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4"
           >
             {services.map((service) => (
               <motion.div
@@ -196,10 +207,10 @@ const Services = () => {
 
                   {/* Bottom: title + desc + CTA */}
                   <div className="space-y-2">
-                    <h3 className="text-xl font-bold text-white leading-tight line-clamp-2">
+                    <h3 className="text-sm font-bold text-white leading-tight line-clamp-2">
                       {service.title}
                     </h3>
-                    <p className="text-white/90 text-base leading-relaxed">
+                    <p className="text-white/90 text-xs leading-relaxed">
                       {service.description}
                     </p>
                     <motion.button
