@@ -1,5 +1,6 @@
-import { Linkedin, Facebook, Instagram, MapPin, Clock, Mail, Phone } from "lucide-react";
+import { Linkedin, Facebook, MapPin, Clock, Mail, Phone, Youtube } from "lucide-react";
 import { motion } from "framer-motion";
+import { FaTiktok, FaWhatsapp } from "react-icons/fa";
 
 const logos = [
   "/logo1.png", "/logo2.png", "/logo3.jpeg", "/logo4.jpeg",
@@ -13,22 +14,34 @@ const Footer = () => {
   const socialLinks = [
     {
       icon: <Linkedin size={24} />,
-      href: "https://wa.me/237673846813",
+      href: "https://cm.linkedin.com/company/yapithe-partners",
       label: "LinkedIn",
       color: "hover:bg-blue-600",
     },
     {
       icon: <Facebook size={24} />,
-      href: "https://www.instagram.com/jp_graphic_design/",
+      href: "https://www.facebook.com/yapithe/?locale=fr_FR",
       label: "Facebook",
       color: "hover:bg-blue-700",
     },
     {
-      icon: <Instagram size={24} />,
-      href: "#",
-      label: "Instagram",
+      icon: <Youtube size={24} />,
+      href: "https://www.youtube.com/@cabinetyapithepartners302",
+      label: "Youtube",
       color: "hover:bg-linear-to-br hover:from-purple-600 hover:to-pink-600",
     },
+    {
+      icon: <FaTiktok size={24} />,
+      href: "https://www.tiktok.com/@yapitheandpartners?_r=1&_t=ZS-93izWRlWv8n",
+      label: "YouTube",
+      color: "hover:bg-black",
+    },
+    {
+      icon: <FaWhatsapp className="w-5 h-5" />,
+      href: "https://wa.me/237699948421?text=Bonjour%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20services.",
+      label: "WhatsApp",
+      color: "hover:bg-green-600",
+    }
   ];
 
   const contactInfo = [
