@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from './component/Navbar'
