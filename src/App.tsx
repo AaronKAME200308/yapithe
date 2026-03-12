@@ -15,7 +15,7 @@ import VoirPlus from './component/VoirPlus'
 import ActualitesPage from "./component/ActuPages";
 import FormationsPage from "./component/FormationPage";
 
-const WHATSAPP_NUMBER = "237600000000"; // ← remplacez par votre numéro
+const WHATSAPP_NUMBER = "237699948421"; // ← remplacez par votre numéro
 const WHATSAPP_MESSAGE = "Bonjour, je souhaite en savoir plus sur vos services.";
 
 function WhatsAppButton() {
