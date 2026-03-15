@@ -2,9 +2,41 @@
 
 export const articles = [
     {
+        id: 21,
+        category: "Expertise",
+        date: "Yaoundé, 2026",
+        number: "3",
+        title: "SEANCE DE DEDICACE DE L'OUVRAGE LE CONTRÔLE DE GESTION, HIER, AUJOURD'HUI ET DEMAIN",
+        excerpt:
+            `Le contrôle de gestion hier, aujourd'hui et
+demain explore l'évolution d'une fonction
+devenue un véritable levier stratégique de
+performance et de pérennité des
+organisations.`,
+        full: `Le contrôle de gestion hier, aujourd'hui et
+demain explore l'évolution d'une fonction
+devenue un véritable levier stratégique de
+performance et de pérennité des
+organisations. À travers une analyse claire
+et structurée, Michel Eugène YAPITHE
+retrace les fondements du contrôle de gestion,
+décrypte ses mutations technologiques,
+organisationnelles et culturelles, et projette
+les enjeux du métier de contrôleur
+de gestion de demain dans un contexte
+de performance durable.`,
+        media: [
+            { type: "image", src: "/post21_0.jpeg" },
+            { type: "video", src: "/post21_2.mp4" },
+            { type: "image", src: "/post21_1.jpeg" },
+            { type: "image", src: "/post21_3.jpeg" },
+            { type: "image", src: "/post21_4.jpeg" },
+        ],
+    },
+    {
         id: 1,
         category: "Expertise",
-        date: "2025",
+        date: "Douala, 2025",
         number: "3",
         title: "SEANCE DE DEDICACE DE L'OUVRAGE LE CONTRÔLE DE GESTION, HIER, AUJOURD'HUI ET DEMAIN",
         excerpt:
@@ -120,7 +152,7 @@ Pour y parvenir, notre accompagnement a reposé sur :
             { type: "image", src: "/post3_4.jpeg" },
             { type: "image", src: "/post3_5.jpeg" },
         ],
-        
+
     },
     {
         id: 5,
@@ -144,7 +176,7 @@ Nous remercions tous les participants pour leur implication et participation act
             { type: "image", src: "/post5_4.jpeg" },
             { type: "image", src: "/post5_5.jpeg" },
         ],
-        
+
     },
     {
         id: 6,
@@ -165,7 +197,7 @@ La première, fût dédiée aux Directeurs et sous Directeurs. Et la seconde aux
             { type: "image", src: "/post6_1.jpeg" },
             { type: "image", src: "/post6_2.jpeg" },
         ],
-        
+
     },
     {
         id: 7,
@@ -184,7 +216,7 @@ Nos remercions tous les participants pour leur présence active et leur discipli
         media: [
             { type: "image", src: "/post7_0.jpeg" },
         ],
-        
+
     },
     {
         id: 8,
@@ -212,11 +244,11 @@ Nous tenons à exprimer notre gratitude aux participants pour leurs interactions
             { type: "image", src: "/post8_2.jpeg" },
             { type: "image", src: "/post8_3.jpeg" },
             { type: "image", src: "/post8_4.jpeg" },
-            { type : "image", src: "/post8_5.jpeg"}
+            { type: "image", src: "/post8_5.jpeg" }
         ],
-        
-    },    
-     {
+
+    },
+    {
         id: 9,
         category: "Innovation",
         date: "2025",
@@ -238,7 +270,7 @@ Ce fût un intense moment d'échange et de partage. Nous remercions toute l'équ
             { type: "image", src: "/post9_4.jpeg" },
 
         ],
-        
+
     },
     {
         id: 10,
@@ -275,7 +307,7 @@ Nous remercions toute l’équipe de la Direction pour leur assiduité exemplair
             { type: "image", src: "/post10_8.jpeg" },
 
         ],
-        
+
     },
     {
         id: 11,
@@ -290,7 +322,7 @@ Nous remercions toute l’équipe de la Direction pour leur assiduité exemplair
         media: [
             { type: "image", src: "/post11_0.jpeg" },
         ],
-        
+
     },
     {
         id: 12,
@@ -307,7 +339,7 @@ C’est autour de ces sujets que nous avons eu le plaisir d’échanger et d’a
         media: [
             { type: "image", src: "/post12_0.jpeg" },
         ],
-        
+
     },
     {
         id: 13,
@@ -338,7 +370,7 @@ et bien d'autres analyses apportant des solutions concrètes aux problématiques
             { type: "image", src: "/post13_1.jpeg" },
             { type: "image", src: "/post13_2.jpeg" },
         ],
-        
+
     },
     {
         id: 14,
@@ -358,7 +390,7 @@ Nous rentrons avec une équipe unie, solidaire, volontaire, et surtout détermin
             { type: "image", src: "/post14_4.jpeg" },
             { type: "image", src: "/post14_5.jpeg" },
         ],
-        
+
     },
     {
         id: 15,
@@ -383,7 +415,7 @@ et l’implémentation d’un tableau de bord de pilotage opérationnel ou strat
             { type: "image", src: "/post15_3.jpeg" },
             { type: "image", src: "/post15_4.jpeg" },
         ],
-        
+
     },
     {
         id: 16,
@@ -410,9 +442,9 @@ Nous remercions une fois de plus le Groupe Castel pour cette confiance renouvel�
             { type: "image", src: "/post16_3.jpeg" },
             { type: "image", src: "/post16_4.jpeg" },
         ],
-        
+
     },
-     {
+    {
         id: 17,
         category: "formation",
         date: "2024",
@@ -428,7 +460,7 @@ Nous remercions une fois de plus le Groupe Castel pour cette confiance renouvel�
             { type: "image", src: "/post17_3.jpeg" },
             { type: "image", src: "/post17_4.jpeg" },
         ],
-        
+
     },
     {
         id: 18,
@@ -446,7 +478,7 @@ Nous remercions une fois de plus le Groupe Castel pour cette confiance renouvel�
             { type: "image", src: "/post18_3.jpeg" },
             { type: "image", src: "/post18_4.jpeg" },
         ],
-        
+
     },
     {
         id: 19,
@@ -464,7 +496,7 @@ Nous tenons à exprimer notre gratitude d'une part à la Direction Générale po
             { type: "image", src: "/post19_1.jpeg" },
             { type: "image", src: "/post19_2.jpeg" },
         ]
-        
+
     },
     {
         id: 20,
@@ -484,7 +516,7 @@ Comme nous avons l'habitude de le dire, le plus important n'est pas de construir
             { type: "image", src: "/post20_3.jpeg" },
             { type: "image", src: "/post20_4.jpeg" },
         ],
-        
+
     },
 ];
 

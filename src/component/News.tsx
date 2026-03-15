@@ -42,6 +42,16 @@ const arcLayer: Variants = {
 /* ================= SLIDER DATA ================= */
 const sliderData = [
   {
+    id: 4,
+    type: "image",
+    number: "",
+    title: "Dédicace",
+    desc: "Séance de dédicace de l'ouvrage Le Contrôle de Gestion, Hier, Aujourd'hui et Demain.",
+    media: "/post21_0.jpeg",
+    date: "12 Mars 2026",
+    category: "",
+  },
+  {
     id: 1,
     type: "image",
     number: "",
