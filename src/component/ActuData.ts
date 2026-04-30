@@ -1,6 +1,19 @@
 /* ─── DATA ─────────────────────────────────────────────────── */
 
 export const articles = [
+
+    {
+        id: 22,
+        category: "Expertise",
+        date: "Yaoundé, 2026",
+        number: "3",
+        title: "SEMINAIRE AVEC LE PORT AUTONOME DE KRIBI (PAK)",
+        excerpt:"",
+        full: ``,
+        media:[
+            { type: "video", src: "/post22_0.mp4" },
+        ]
+    },
     {
         id: 21,
         category: "Expertise",
@@ -31,6 +44,7 @@ de performance durable.`,
             { type: "image", src: "/post21_1.jpeg" },
             { type: "image", src: "/post21_3.jpeg" },
             { type: "image", src: "/post21_4.jpeg" },
+            { type: "video", src: "/post21_5.mp4" },
         ],
     },
     {

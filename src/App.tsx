@@ -15,6 +15,11 @@ import VoirPlus from './component/VoirPlus'
 import ActualitesPage from "./component/ActuPages";
 import FormationsPage from "./component/FormationPage";
 
+// ← Ajoutez ceci tout en haut, juste après les imports
+import MaintenancePage from './component/MaintenancePage';
+
+const IS_MAINTENANCE = true; // ← Mettez false pour réactiver le site
+
 const WHATSAPP_NUMBER = "237699948421"; // ← remplacez par votre numéro
 const WHATSAPP_MESSAGE = "Bonjour, je souhaite en savoir plus sur vos services.";
 
@@ -75,6 +80,10 @@ function App() {
                 style={{ background: 'linear-gradient(to right, #e0f7f1, #ffffff)' }}
                 className="min-h-screen w-full flex flex-col bg-portfolio-bg text-white"
               >
+                  {IS_MAINTENANCE ? (
+                    <MaintenancePage />
+                  ) : (
+                    <>
                 <Navbar />
 
                 <Routes>
@@ -101,6 +110,8 @@ function App() {
                 </Routes>
 
                 <Footer />
+                </>
+                  )}
                 <WhatsAppButton />
               </div>
             </Router>
